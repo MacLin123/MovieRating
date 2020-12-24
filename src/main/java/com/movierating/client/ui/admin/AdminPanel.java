@@ -1,7 +1,7 @@
 package com.movierating.client.ui.admin;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
@@ -11,6 +11,7 @@ import com.movierating.client.ui.movie.MovieLabel;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
+import java.util.Date;
 import java.util.List;
 
 public class AdminPanel extends Composite {
@@ -32,11 +33,17 @@ public class AdminPanel extends Composite {
     @UiField
     TextArea movieDescrTextArea;
 
+    @UiField
+    TextBox searchByTitleTextBox;
+
+    @UiField
+    Button searchMovieBtn;
+
 //    @UiField
 //    TextBox movieRatingTextBox;
 
-//    @UiField
-//    TextBox movieGanreTextBox;
+    @UiField
+    TextBox movieGanreTextBox;
 
     @UiField
     Button addMovieBtn;
@@ -50,13 +57,22 @@ public class AdminPanel extends Composite {
         addMovieBtn.addClickHandler(event -> {
             final String title = movieTitleTextBox.getText();
             final String description = movieDescrTextArea.getText();
+            final String dateString = "2020-05-05";
             if (!(title.isEmpty() && description.isEmpty())) {
-                addMovie(new Movie(title, description, 2, "4"));
+                DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
+                Date date = dateTimeFormat.parse(dateString);
+                addMovie(new Movie(title, description, "Comedy", date));
             }
+        });
+
+        searchMovieBtn.addClickHandler(event -> {
+            refreshMovies();
         });
 
         movieTitleTextBox.getElement().setAttribute("placeholder", "title");
         movieDescrTextArea.getElement().setAttribute("placeholder", "description");
+        searchByTitleTextBox.getElement().setAttribute("placeholder", "title to search");
+        movieGanreTextBox.getElement().setAttribute("placeholder", "ganre");
 
 //        movieTitleTextBox.addKeyUpHandler(event -> {
 //            if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
@@ -74,7 +90,11 @@ public class AdminPanel extends Composite {
      * get data from the server and refresh front-end
      */
     private void refreshMovies() {
-        adminService.getRecentMovies(String.valueOf(AMOUNT_VIEW_MOVIES), new MethodCallback<List<Movie>>() {
+        String searchTitle = searchByTitleTextBox.getText();
+        if (searchTitle.isEmpty()) {
+            return;
+        }
+        adminService.searchMovies(searchTitle, new MethodCallback<List<Movie>>() {
             @Override
             public void onFailure(Method method, Throwable exception) {
 

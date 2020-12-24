@@ -1,9 +1,10 @@
 package com.movierating.server.model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
-@Table(name="movies")
+@Table(name = "movies")
 @Entity
 public class Movie {
     @Id
@@ -14,11 +15,15 @@ public class Movie {
     private Integer rating;
     private String genre;
 
-    public Movie(String title, String description, Integer rating, String genre) {
+    @Column(name = "premier_date")
+    private Date premierDate;
+
+    public Movie(String title, String description, String genre, Date premierDate) {
         this.title = title;
         this.description = description;
-        this.rating = rating;
+//        this.rating = rating;
         this.genre = genre;
+        this.premierDate = premierDate;
     }
 
     public Movie() {

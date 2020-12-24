@@ -1,5 +1,6 @@
 package com.movierating.client.model;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Movie {
@@ -8,12 +9,14 @@ public class Movie {
     private String description;
     private Integer rating;
     private String genre;
+    private Date premierDate;
 
-    public Movie(String title, String description, Integer rating, String genre) {
+    public Movie(String title, String description, String genre,Date premierDate) {
         this.title = title;
         this.description = description;
-        this.rating = rating;
+//        this.rating = rating;
         this.genre = genre;
+        this.premierDate = premierDate;
     }
 
     public Movie() {

@@ -2,6 +2,7 @@ package com.movierating.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
 import com.movierating.client.ui.admin.AdminPanel;
 import org.fusesource.restygwt.client.Defaults;
