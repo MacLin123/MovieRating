@@ -3,6 +3,7 @@ package com.movierating.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.*;
+import com.movierating.client.ui.admin.AdminPanel;
 import org.fusesource.restygwt.client.Defaults;
 
 public class MovieRating implements EntryPoint {
@@ -10,10 +11,7 @@ public class MovieRating implements EntryPoint {
 
     public void onModuleLoad() {
         useCorrectRequestBaseUrl();
-        empFlexTable.setText(0, 0, "Id");
-        empFlexTable.setText(0, 1, "Name");
-        empFlexTable.setText(0, 2, "Role");
-        empFlexTable.setText(0, 3, "Remove");
+        RootPanel.get().add(new AdminPanel());
     }
     private void useCorrectRequestBaseUrl() {
         if (isDevelopmentMode()) {
