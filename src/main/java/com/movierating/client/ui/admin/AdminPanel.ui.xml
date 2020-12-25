@@ -96,6 +96,11 @@
             background-color: #014682;
             border-color: #01315a;
         }
+
+        .flowPanel_inline
+        {
+            display:inline;
+        }
     </ui:style>
 
     <g:HTMLPanel addStyleNames="{style.center}">
@@ -107,7 +112,7 @@
                 <g:Button ui:field="searchMovieBtn" addStyleNames="{style.input-group-search-button}">Search</g:Button>
             </div>
 
-            <g:FlowPanel ui:field="movieList">
+            <g:FlowPanel ui:field="movieList" addStyleNames="{style.flowPanel_inline}">
             </g:FlowPanel>
 
             <h2 class="{style.header2}">Create Movie</h2>
@@ -117,11 +122,15 @@
             </div>
 
             <div class="{style.input-group}">
-                <g:TextBox ui:field="movieGanreTextBox" addStyleNames="{style.input-group-text}"/>
+                <g:TextBox ui:field="movieGenreTextBox" addStyleNames="{style.input-group-text}"/>
             </div>
 
             <div class="{style.input-group}">
                 <g:TextArea ui:field="movieDescrTextArea" addStyleNames="{style.input-group-text}"/>
+            </div>
+
+            <div class="{style.input-group}">
+                <g:TextBox ui:field="movieDateTextBox" addStyleNames="{style.input-group-text}"/>
             </div>
 
             <div class="{style.input-group}">

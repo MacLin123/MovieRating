@@ -1,6 +1,8 @@
 package com.movierating.server.model;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -70,14 +72,24 @@ public class Movie {
         this.genre = genre;
     }
 
+    public Date getPremierDate() {
+        return premierDate;
+    }
+
+    public void setPremierDate(Date premierDate) {
+        this.premierDate = premierDate;
+    }
+
     @Override
     public String toString() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        String strDate = dateFormat.format(premierDate);
         return "Movie{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
+                "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", rating=" + rating +
                 ", genre='" + genre + '\'' +
+                ", premierDate=" + strDate +
                 '}';
     }
 

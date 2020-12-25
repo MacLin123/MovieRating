@@ -4,10 +4,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.movierating.client.controller.AdminService;
 import com.movierating.client.model.Movie;
 import com.movierating.client.ui.movie.MovieLabel;
+import com.movierating.client.ui.movie.MoviePopUp;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
@@ -34,19 +36,22 @@ public class AdminPanel extends Composite {
     TextArea movieDescrTextArea;
 
     @UiField
-    TextBox searchByTitleTextBox;
+    TextBox movieGenreTextBox;
 
     @UiField
-    Button searchMovieBtn;
+    TextBox movieDateTextBox;
 
 //    @UiField
 //    TextBox movieRatingTextBox;
 
     @UiField
-    TextBox movieGanreTextBox;
+    Button addMovieBtn;
 
     @UiField
-    Button addMovieBtn;
+    TextBox searchByTitleTextBox;
+
+    @UiField
+    Button searchMovieBtn;
 
 
     public AdminPanel() {
@@ -57,11 +62,13 @@ public class AdminPanel extends Composite {
         addMovieBtn.addClickHandler(event -> {
             final String title = movieTitleTextBox.getText();
             final String description = movieDescrTextArea.getText();
-            final String dateString = "2020-05-05";
-            if (!(title.isEmpty() && description.isEmpty())) {
+            final String genre = movieGenreTextBox.getText();
+            // TODO date filed verifying
+            final String dateString = movieDateTextBox.getText();
+            if (!(title.isEmpty() || description.isEmpty() || dateString.isEmpty())) {
                 DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
                 Date date = dateTimeFormat.parse(dateString);
-                addMovie(new Movie(title, description, "Comedy", date));
+                addMovie(new Movie(title, description, genre, date));
             }
         });
 
@@ -72,8 +79,8 @@ public class AdminPanel extends Composite {
         movieTitleTextBox.getElement().setAttribute("placeholder", "title");
         movieDescrTextArea.getElement().setAttribute("placeholder", "description");
         searchByTitleTextBox.getElement().setAttribute("placeholder", "title to search");
-        movieGanreTextBox.getElement().setAttribute("placeholder", "ganre");
-
+        movieGenreTextBox.getElement().setAttribute("placeholder", "genre");
+        movieDateTextBox.getElement().setAttribute("placeholder", "2000-01-25");
 //        movieTitleTextBox.addKeyUpHandler(event -> {
 //            if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 //                final String title = movieTitleTextBox.getText();
@@ -105,7 +112,18 @@ public class AdminPanel extends Composite {
                 movieList.clear();
                 for (final Movie movie : response) {
                     final MovieLabel movieLabel = new MovieLabel(movie);
-                    movieLabel.addClickHandler(movieToRemove -> removeMovie(movieToRemove));
+
+                    MoviePopUp moviePopUp = new MoviePopUp(movie);
+//                    moviePopUp.addClickHandler(event-> refreshMovies());
+                    movieLabel.addClickHandler(movie1 -> {
+                        moviePopUp.setPopupPositionAndShow((offsetWidth, offsetHeight) -> {
+                            int left = (Window.getClientWidth() - offsetWidth) / 3;
+                            int top = (Window.getClientHeight() - offsetHeight) / 3;
+                            moviePopUp.setPopupPosition(left, top);
+                        });
+                    });
+
+//                    movieLabel.addClickHandler(movieToRemove -> removeMovie(movieToRemove));
                     movieList.add(movieLabel);
                 }
             }
@@ -114,20 +132,6 @@ public class AdminPanel extends Composite {
              * Remove movie from the server
              * @param movieToRemove
              */
-
-            private void removeMovie(final Movie movieToRemove) {
-                adminService.deleteMovie(movieToRemove, new MethodCallback<Void>() {
-                    @Override
-                    public void onFailure(final Method method, final Throwable exception) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(final Method method, final Void response) {
-                        refreshMovies();
-                    }
-                });
-            }
         });
     }
 
@@ -137,15 +141,19 @@ public class AdminPanel extends Composite {
      * @param movie
      */
     private void addMovie(final Movie movie) {
+        GWT.log(movie.toString());
         adminService.addMovie(movie, new MethodCallback<Void>() {
             @Override
             public void onFailure(final Method method, final Throwable exception) {
-
+                GWT.log(exception.getMessage());
             }
 
             @Override
             public void onSuccess(final Method method, final Void response) {
                 movieTitleTextBox.setText("");
+                movieDescrTextArea.setText("");
+                movieDateTextBox.setText("");
+                movieGenreTextBox.setText("");
                 refreshMovies();
             }
         });

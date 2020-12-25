@@ -1,6 +1,12 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <g:HTMLPanel>
+    <ui:style>
 
+    </ui:style>
+    <g:HTMLPanel>
+        <g:TextBox ui:field="title"/>
+        <g:TextBox ui:field="genre"/>
+        <g:TextBox ui:field="description"/>
+        <g:TextBox ui:field="premierDate"/>
     </g:HTMLPanel>
 </ui:UiBinder>

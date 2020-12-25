@@ -11,5 +11,5 @@
             cursor: pointer;
         }
     </ui:style>
-    <g:Label ui:field="label" addStyleNames="{style.movie-label}"/>
+    <g:Label ui:field="title" addStyleNames="{style.movie-label}"/>
 </ui:UiBinder>

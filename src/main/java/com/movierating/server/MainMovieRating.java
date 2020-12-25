@@ -23,4 +23,14 @@ public class MainMovieRating {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
+
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/").allowedOrigins("http://localhost:8080");
+//            }
+//        };
+//    }
 }
