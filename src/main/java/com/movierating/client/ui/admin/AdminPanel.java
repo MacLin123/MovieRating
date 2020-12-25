@@ -24,7 +24,20 @@ public class AdminPanel extends Composite {
 
     private static final AdminService adminService = GWT.create(AdminService.class);
 
-    private static final int AMOUNT_VIEW_MOVIES = 10;
+    private static volatile AdminPanel instance;
+
+    public static AdminPanel getInstance() {
+        AdminPanel localInstance = instance;
+        if (localInstance == null) {
+            synchronized (AdminPanel.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = new AdminPanel();
+                }
+            }
+        }
+        return localInstance;
+    }
 
     @UiField
     FlowPanel movieList;
@@ -96,7 +109,8 @@ public class AdminPanel extends Composite {
     /**
      * get data from the server and refresh front-end
      */
-    private void refreshMovies() {
+    public void refreshMovies() {
+        GWT.log(searchByTitleTextBox.getText() + " title");
         String searchTitle = searchByTitleTextBox.getText();
         if (searchTitle.isEmpty()) {
             return;
@@ -115,6 +129,10 @@ public class AdminPanel extends Composite {
 
                     MoviePopUp moviePopUp = new MoviePopUp(movie);
 //                    moviePopUp.addClickHandler(event-> refreshMovies());
+                    moviePopUp.addCloseClickHandler(event -> {
+                        refreshMovies();
+                        moviePopUp.hide();
+                    });
                     movieLabel.addClickHandler(movie1 -> {
                         moviePopUp.setPopupPositionAndShow((offsetWidth, offsetHeight) -> {
                             int left = (Window.getClientWidth() - offsetWidth) / 3;
@@ -127,11 +145,6 @@ public class AdminPanel extends Composite {
                     movieList.add(movieLabel);
                 }
             }
-
-            /**
-             * Remove movie from the server
-             * @param movieToRemove
-             */
         });
     }
 

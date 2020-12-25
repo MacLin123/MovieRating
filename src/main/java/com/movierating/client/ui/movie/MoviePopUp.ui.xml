@@ -126,7 +126,9 @@
             <div class="{style.input-group}">
                 <g:Button ui:field="removeMovieBtn" addStyleNames="{style.input-group-button}">Remove</g:Button>
             </div>
-
+            <div class="{style.input-group}">
+                <g:Button ui:field="closePopUpBtn" addStyleNames="{style.input-group-button}"></g:Button>
+            </div>
         </div>
     </g:HTMLPanel>
 </ui:UiBinder>

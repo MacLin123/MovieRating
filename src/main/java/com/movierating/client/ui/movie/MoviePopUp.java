@@ -8,6 +8,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
 import com.movierating.client.controller.AdminService;
 import com.movierating.client.model.Movie;
+import com.movierating.client.ui.admin.AdminPanel;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
@@ -23,7 +24,7 @@ public class MoviePopUp extends PopupPanel {
 
     private static final AdminService adminService = GWT.create(AdminService.class);
 
-//    public interface MoviePopUpClickHandler {
+    //    public interface MoviePopUpClickHandler {
 //        void onClick(final Movie movie);
 //    }
 //    private final List<MoviePopUpClickHandler> clickHandlers;
@@ -48,11 +49,14 @@ public class MoviePopUp extends PopupPanel {
     @UiField
     Button removeMovieBtn;
 
-    List<ClickHandler> clickHandlers = new ArrayList<>();
+    @UiField
+    Button closePopUpBtn;
 
-
+//    List<ClickHandler> clickHandlers = new ArrayList<>();
+//    private static AdminPanel adminPanel;
 
     public MoviePopUp(final Movie movie) {
+
         GWT.log(String.valueOf(movie.getId()));
         setWidget(ourUiBinder.createAndBindUi(this));
         this.setAutoHideEnabled(true);
@@ -62,12 +66,14 @@ public class MoviePopUp extends PopupPanel {
         movieGenreTextBox.setText(movie.getGenre());
         movieDateTextBox.setText(movie.getPremierDateString());
 
+//        adminPanel = AdminPanel.getInstance();
+
         removeMovieBtn.addClickHandler(event -> {
             movieTitleTextBox.setText("");
             movieDescrTextArea.setText("");
             movieGenreTextBox.setText("");
             movieDateTextBox.setText("");
-           removeMovie(movie);
+            removeMovie(movie);
         });
 
         //Click Handlers
@@ -89,7 +95,7 @@ public class MoviePopUp extends PopupPanel {
             if (!(title.isEmpty() || description.isEmpty() || dateString.isEmpty())) {
                 DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
                 Date date = dateTimeFormat.parse(dateString);
-                updateMovie(new Movie(movie.getId(),title,description,genre,date));
+                updateMovie(new Movie(movie.getId(), title, description, genre, date));
             }
         });
 
@@ -117,12 +123,17 @@ public class MoviePopUp extends PopupPanel {
                 movieDescrTextArea.setText("");
                 movieDateTextBox.setText("");
                 movieGenreTextBox.setText("");
-                hide();
-                //TODO refresh
-//                refreshMovies();
+                closePopUpBtn.click();
+//                hide();
             }
         });
     }
+
+    /**
+     * Remove movie from the server
+     *
+     * @param movieToRemove
+     */
     private void removeMovie(final Movie movieToRemove) {
         adminService.deleteMovie(movieToRemove, new MethodCallback<Void>() {
             @Override
@@ -132,9 +143,12 @@ public class MoviePopUp extends PopupPanel {
 
             @Override
             public void onSuccess(final Method method, final Void response) {
-//                refreshMovies();
+                closePopUpBtn.click();
+//                hide();
             }
         });
     }
-
+    public void addCloseClickHandler(ClickHandler clickHandler) {
+        closePopUpBtn.addClickHandler(clickHandler);
+    }
 }
