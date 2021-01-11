@@ -11,6 +11,7 @@ public class Movie {
     private String description;
     private Integer rating;
     private String genre;
+    private byte[] coverImg;
 
     private Date premierDate;
 
@@ -21,6 +22,16 @@ public class Movie {
 //        this.rating = rating;
         this.genre = genre;
         this.premierDate = premierDate;
+    }
+
+    public Movie(Long id, String title, String description, String genre, Date premierDate, byte[] coverImg) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+//        this.rating = rating;
+        this.genre = genre;
+        this.premierDate = premierDate;
+        this.coverImg = coverImg;
     }
 
     public Movie(String title, String description, String genre, Date premierDate) {
@@ -111,6 +122,14 @@ public class Movie {
     @Override
     public int hashCode() {
         return Objects.hash(id, title);
+    }
+
+    public byte[] getCoverImg() {
+        return coverImg;
+    }
+
+    public void setCoverImg(byte[] coverImg) {
+        this.coverImg = coverImg;
     }
 }
 

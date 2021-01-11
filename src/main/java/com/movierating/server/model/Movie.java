@@ -17,6 +17,9 @@ public class Movie {
     private Integer rating;
     private String genre;
 
+    @Column(name = "cover_img")
+    private byte[] coverImg;
+
     @Column(name = "premier_date")
     private Date premierDate;
 
@@ -26,6 +29,15 @@ public class Movie {
 //        this.rating = rating;
         this.genre = genre;
         this.premierDate = premierDate;
+    }
+
+    public Movie(String title, String description, String genre, Date premierDate, byte[] coverImg) {
+        this.title = title;
+        this.description = description;
+//        this.rating = rating;
+        this.genre = genre;
+        this.premierDate = premierDate;
+        this.coverImg = coverImg;
     }
 
     public Movie() {
@@ -78,6 +90,14 @@ public class Movie {
 
     public void setPremierDate(Date premierDate) {
         this.premierDate = premierDate;
+    }
+
+    public byte[] getCoverImg() {
+        return coverImg;
+    }
+
+    public void setCoverImg(byte[] img) {
+        this.coverImg = img;
     }
 
     @Override

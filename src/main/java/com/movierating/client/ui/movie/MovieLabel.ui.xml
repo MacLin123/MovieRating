@@ -6,10 +6,39 @@
         }
 
         .movie-label:hover {
-            text-decoration: line-through;
             color: #999999;
-            cursor: pointer;
+        }
+
+        .movie-info {
+            width: 585px;
+            text-align: -webkit-match-parent;
+
+        }
+        .movie-info td {
+            border: none;
+            padding: 2px;
+
+        }
+        .movie-info-name {
+            color: #000;
+            font-weight: 600;
+            font-family: "Franklin Gothic",-apple-system,BlinkMacSystemFont,"PT Sans",Arial,Sans-Serif;
+            text-decoration: none;
+        }
+        .movie-description {
+            display: block;
         }
     </ui:style>
-    <g:Label ui:field="title" addStyleNames="{style.movie-label}"/>
+    <g:HTMLPanel addStyleNames="{style.movie-info}">
+        <g:HorizontalPanel>
+        <g:Label ui:field="title" addStyleNames="{style.movie-info-name}"/>
+        <g:Label ui:field="year"/>
+        </g:HorizontalPanel>
+        <g:Label ui:field="description" addStyleNames="{style.movie-description}"/>
+        <!--        <g:HorizontalPanel addStyleNames="{style.movie-panel}">-->
+        <!--            <g:Label ui:field="title" addStyleNames="{style.movie-label}"/>-->
+        <!--            <g:Label ui:field="description" addStyleNames="{style.movie-label}"/>-->
+        <!--&lt;!&ndash;            <g:Image ui:field="coverImage"/>&ndash;&gt;-->
+        <!--        </g:HorizontalPanel>-->
+    </g:HTMLPanel>
 </ui:UiBinder>

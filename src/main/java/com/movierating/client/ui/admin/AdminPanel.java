@@ -1,19 +1,16 @@
 package com.movierating.client.ui.admin;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.movierating.client.controller.AdminService;
 import com.movierating.client.model.Movie;
 import com.movierating.client.ui.movie.MovieLabel;
-import com.movierating.client.ui.movie.MoviePopUp;
+import com.movierating.client.utils.ImageUtils;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
-import java.util.Date;
 import java.util.List;
 
 public class AdminPanel extends Composite {
@@ -40,25 +37,25 @@ public class AdminPanel extends Composite {
     }
 
     @UiField
-    FlowPanel movieList;
+    FlexTable movieList;
 
-    @UiField
-    TextBox movieTitleTextBox;
-
-    @UiField
-    TextArea movieDescrTextArea;
-
-    @UiField
-    TextBox movieGenreTextBox;
-
-    @UiField
-    TextBox movieDateTextBox;
+//    @UiField
+//    TextBox movieTitleTextBox;
+//
+//    @UiField
+//    TextArea movieDescrTextArea;
+//
+//    @UiField
+//    TextBox movieGenreTextBox;
+//
+//    @UiField
+//    TextBox movieDateTextBox;
 
 //    @UiField
 //    TextBox movieRatingTextBox;
 
-    @UiField
-    Button addMovieBtn;
+//    @UiField
+//    Button addMovieBtn;
 
     @UiField
     TextBox searchByTitleTextBox;
@@ -72,28 +69,29 @@ public class AdminPanel extends Composite {
 
         refreshMovies();
 
-        addMovieBtn.addClickHandler(event -> {
-            final String title = movieTitleTextBox.getText();
-            final String description = movieDescrTextArea.getText();
-            final String genre = movieGenreTextBox.getText();
-            // TODO date filed verifying
-            final String dateString = movieDateTextBox.getText();
-            if (!(title.isEmpty() || description.isEmpty() || dateString.isEmpty())) {
-                DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
-                Date date = dateTimeFormat.parse(dateString);
-                addMovie(new Movie(title, description, genre, date));
-            }
-        });
+//        addMovieBtn.addClickHandler(event -> {
+//            final String title = movieTitleTextBox.getText();
+//            final String description = movieDescrTextArea.getText();
+//            final String genre = movieGenreTextBox.getText();
+//            // TODO date filed verifying
+//            final String dateString = movieDateTextBox.getText();
+//            if (!(title.isEmpty() || description.isEmpty() || dateString.isEmpty())) {
+//                DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
+//                Date date = dateTimeFormat.parse(dateString);
+//                addMovie(new Movie(title, description, genre, date));
+//            }
+//        });
 
         searchMovieBtn.addClickHandler(event -> {
             refreshMovies();
         });
 
-        movieTitleTextBox.getElement().setAttribute("placeholder", "title");
-        movieDescrTextArea.getElement().setAttribute("placeholder", "description");
+//        movieTitleTextBox.getElement().setAttribute("placeholder", "title");
+//        movieDescrTextArea.getElement().setAttribute("placeholder", "description");
         searchByTitleTextBox.getElement().setAttribute("placeholder", "title to search");
-        movieGenreTextBox.getElement().setAttribute("placeholder", "genre");
-        movieDateTextBox.getElement().setAttribute("placeholder", "2000-01-25");
+//        movieGenreTextBox.getElement().setAttribute("placeholder", "genre");
+//        movieDateTextBox.getElement().setAttribute("placeholder", "2000-01-25");
+
 //        movieTitleTextBox.addKeyUpHandler(event -> {
 //            if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 //                final String title = movieTitleTextBox.getText();
@@ -123,26 +121,30 @@ public class AdminPanel extends Composite {
 
             @Override
             public void onSuccess(Method method, List<Movie> response) {
-                movieList.clear();
+                movieList.removeAllRows();
                 for (final Movie movie : response) {
-                    final MovieLabel movieLabel = new MovieLabel(movie);
+//                    final MovieLabel movieLabel = new MovieLabel(movie);
 
-                    MoviePopUp moviePopUp = new MoviePopUp(movie);
-//                    moviePopUp.addClickHandler(event-> refreshMovies());
-                    moviePopUp.addCloseClickHandler(event -> {
-                        refreshMovies();
-                        moviePopUp.hide();
-                    });
-                    movieLabel.addClickHandler(movie1 -> {
-                        moviePopUp.setPopupPositionAndShow((offsetWidth, offsetHeight) -> {
-                            int left = (Window.getClientWidth() - offsetWidth) / 3;
-                            int top = (Window.getClientHeight() - offsetHeight) / 3;
-                            moviePopUp.setPopupPosition(left, top);
-                        });
-                    });
+//                    MoviePopUp moviePopUp = new MoviePopUp(movie);
+////                    moviePopUp.addClickHandler(event-> refreshMovies());
+//                    moviePopUp.addCloseClickHandler(event -> {
+//                        refreshMovies();
+//                        moviePopUp.hide();
+//                    });
+//                    movieLabel.addClickHandler(movie1 -> {
+//                        moviePopUp.setPopupPositionAndShow((offsetWidth, offsetHeight) -> {
+//                            int left = (Window.getClientWidth() - offsetWidth) / 3;
+//                            int top = (Window.getClientHeight() - offsetHeight) / 3;
+//                            moviePopUp.setPopupPosition(left, top);
+//                        });
+//                    });
 
 //                    movieLabel.addClickHandler(movieToRemove -> removeMovie(movieToRemove));
-                    movieList.add(movieLabel);
+                    int row = movieList.getRowCount();
+//                    movieList.setText(row, 0, movie.getTitle());
+                    movieList.setWidget(row, 0, new Image(ImageUtils.getImageData(movie.getCoverImg())));
+//                    movieList.setText(row, 2, movie.getDescription());
+                    movieList.setWidget(row,1,new MovieLabel(movie));
                 }
             }
         });
@@ -154,7 +156,6 @@ public class AdminPanel extends Composite {
      * @param movie
      */
     private void addMovie(final Movie movie) {
-        GWT.log(movie.toString());
         adminService.addMovie(movie, new MethodCallback<Void>() {
             @Override
             public void onFailure(final Method method, final Throwable exception) {
@@ -163,10 +164,10 @@ public class AdminPanel extends Composite {
 
             @Override
             public void onSuccess(final Method method, final Void response) {
-                movieTitleTextBox.setText("");
-                movieDescrTextArea.setText("");
-                movieDateTextBox.setText("");
-                movieGenreTextBox.setText("");
+//                movieTitleTextBox.setText("");
+//                movieDescrTextArea.setText("");
+//                movieDateTextBox.setText("");
+//                movieGenreTextBox.setText("");
                 refreshMovies();
             }
         });
