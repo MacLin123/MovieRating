@@ -3,9 +3,12 @@ package com.movierating.client.ui.admin;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
+import com.movierating.client.config.Pages;
 import com.movierating.client.controller.AdminService;
 import com.movierating.client.model.Movie;
+import com.movierating.client.ui.movie.MovieForm;
 import com.movierating.client.ui.movie.MovieLabel;
 import com.movierating.client.utils.ImageUtils;
 import org.fusesource.restygwt.client.Method;
@@ -142,9 +145,17 @@ public class AdminPanel extends Composite {
 //                    movieLabel.addClickHandler(movieToRemove -> removeMovie(movieToRemove));
                     int row = movieList.getRowCount();
 //                    movieList.setText(row, 0, movie.getTitle());
-                    movieList.setWidget(row, 0, new Image(ImageUtils.getImageData(movie.getCoverImg())));
+                    Image img = new Image(ImageUtils.getImageData(movie.getCoverImg()));
+                    img.addClickHandler(event -> {
+                        GWT.log("click on image");
+                        History.newItem(Pages.getUpdateMovie());
+                        RootPanel.get("content").clear();
+                        RootPanel.get("content").add(new MovieForm(movie, "Update Movie"));
+
+                    });
+                    movieList.setWidget(row, 0, img);
 //                    movieList.setText(row, 2, movie.getDescription());
-                    movieList.setWidget(row,1,new MovieLabel(movie));
+                    movieList.setWidget(row, 1, new MovieLabel(movie));
                 }
             }
         });

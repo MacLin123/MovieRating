@@ -1,0 +1,43 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:style>
+        .header-panel {
+            height: 50px;
+            border: 1px solid #e7e7e7;
+            /*background-color: #f3f3f3;*/
+            width: 100%;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #008CBA;
+
+        }
+
+        .header-elem {
+            /*    color: white;*/
+            /*    background-color: #008CBA;*/
+            /*    display: block;*/
+            /*    text-align: center;*/
+            /*    padding: 14px 16px;*/
+            /*    text-decoration: none;*/
+            /*}*/
+            float: left;
+        }
+
+        .header-elem a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+    </ui:style>
+    <g:HTMLPanel>
+        <ul class="{style.header-panel}" ui:field="header">
+            <g:Hyperlink addStyleNames="{style.header-elem}" ui:field="home">HOME</g:Hyperlink>
+            <g:Hyperlink addStyleNames="{style.header-elem}" ui:field="admin">ADMIN</g:Hyperlink>
+            <g:Hyperlink addStyleNames="{style.header-elem}" ui:field="createMovie">CREATE MOVIE</g:Hyperlink>
+        </ul>
+    </g:HTMLPanel>
+</ui:UiBinder>

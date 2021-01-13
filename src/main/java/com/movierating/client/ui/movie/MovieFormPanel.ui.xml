@@ -1,0 +1,166 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:style>
+        .center {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin: 0;
+            width: 80%;
+            padding-bottom: 20px;
+            padding-top: 40px;
+        }
+
+        .input-group {
+            /*display: flex;*/
+            width: 80%;
+            padding: 0 0 20px 20px;
+            flex-direction: row;
+            display: flow-root;
+            align-items: flex-start;
+            table-layout: fixed;
+        }
+
+        .input-group-text {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 17px;
+            border: 1px solid grey;
+            float: left;
+            margin: 8px 0;
+            box-sizing: border-box;
+
+            -webkit-transition: all 0.30s ease-in-out;
+            -moz-transition: all 0.30s ease-in-out;
+            -ms-transition: all 0.30s ease-in-out;
+            -o-transition: all 0.30s ease-in-out;
+            outline: none;
+            padding: 3px 0px 3px 3px;
+            margin: 5px 1px 3px 0px;
+            border: 1px solid #DDDDDD;
+
+        }
+
+        .input-group-text:focus {
+            box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+            padding: 3px 0px 3px 3px;
+            margin: 5px 1px 3px 0px;
+            border: 1px solid rgba(81, 203, 238, 1);
+        }
+
+        .button-group {
+            width: 80%;
+            padding: 20px 0 20px 20px;
+            flex-direction: row;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .input-button-group {
+            padding: 0.375rem 0.75rem;
+            color: #ffffff;
+            background-color: #2196f3;
+            border: none;
+            border: 1px solid #0275d8;
+            border-radius: 0 .25rem .25rem 0;
+            cursor: pointer;
+            margin-left: 10px;
+            width: 20%;
+        }
+        .input-button-group:hover {
+            background-color: #025aa5;
+            border-color: #01549b;
+        }
+
+        .input-button-group:active {
+            background-color: #014682;
+            border-color: #01315a;
+        }
+
+        .input-button-group-remove {
+            background-color: #FE0001;
+            border: 1px solid #e30d0d;
+        }
+
+        .input-button-group-remove:hover {
+            background-color: #cb0000;
+            border-color: #98000d;
+        }
+
+        .input-button-group-remove:active {
+            background-color: #772222;
+            border-color: #5d0000;
+        }
+
+        .input-group-date {
+            width: 30%;
+        }
+
+        .input-group thead, tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .char-label {
+            text-align: right;
+            padding: 0;
+        }
+
+        .label-group {
+            display: inherit;
+            margin: 0;
+        }
+
+        .image-form {
+            padding-bottom: 24px;
+        }
+    </ui:style>
+
+    <g:HTMLPanel addStyleNames="{style.center}">
+        <h1 ui:field="header" class="{style.header}"></h1>
+        <g:FormPanel ui:field="formPanel">
+            <g:VerticalPanel addStyleNames="{style.input-group}" ui:field="panel">
+
+                <g:Label ui:field="titleLabel" addStyleNames="{style.label-group}">Title</g:Label>
+                <g:TextBox name="title" addStyleNames="{style.input-group-text}" ui:field="movieTitleTextBox" maxLength="255"/>
+                <g:Label ui:field="movieTitleChars" addStyleNames="{style.char-label}">0/255</g:Label>
+
+                <g:Label ui:field="descrLabel" addStyleNames="{style.label-group}">Description</g:Label>
+                <g:TextArea name="description" ui:field="movieDescrTextArea" addStyleNames="{style.input-group-text}"/>
+                <g:Label ui:field="movieDescrChars" addStyleNames="{style.char-label}">0/255</g:Label>
+
+                <g:Label ui:field="genreLabel" addStyleNames="{style.label-group}">Genre</g:Label>
+                <g:TextBox name="genre" maxLength="255" ui:field="movieGenreTextBox" addStyleNames="{style.input-group-text}"/>
+                <g:Label ui:field="movieGenreChars" addStyleNames="{style.char-label}">0/255</g:Label>
+
+                <g:TextBox name="date" maxLength="255" ui:field="movieDateTextBox"
+                           addStyleNames="{style.input-group-text}"/>
+
+                <g:Label ui:field="coveImgLabel" addStyleNames="{style.label-group}">Cover photo</g:Label>
+                <g:Image ui:field="coverImg" addStyleNames="{style.image-form}"/>
+                <g:FileUpload name="file" ui:field="fileUpload"/>
+
+            </g:VerticalPanel>
+        </g:FormPanel>
+        <div class="{style.input-group}">
+            <g:Label ui:field="dateLabel" addStyleNames="{style.label-group}">Date</g:Label>
+            <input ui:field="dateElem" class="{style.input-group-text} {style.input-group-date}" type="date"
+                   value="2017-06-01"></input>
+        </div>
+        <div class="{style.button-group}">
+            <g:Button ui:field="submitMovieBtn" addStyleNames="{style.input-button-group}">Submit</g:Button>
+            <g:Button ui:field="removeMovieBtn"
+                      addStyleNames="{style.input-button-group} {style.input-button-group-remove}">Remove
+            </g:Button>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>

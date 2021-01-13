@@ -2,14 +2,17 @@ package com.movierating.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Node;
-import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.HeaderPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.movierating.client.config.Pages;
 import com.movierating.client.ui.admin.AdminPanel;
+import com.movierating.client.ui.header.Header;
+import com.movierating.client.ui.movie.MovieForm;
+import com.movierating.client.ui.movie.MovieFormPanel;
 import org.fusesource.restygwt.client.Defaults;
 
 public class MovieRating implements EntryPoint, ValueChangeHandler {
@@ -17,36 +20,51 @@ public class MovieRating implements EntryPoint, ValueChangeHandler {
 
     public void onModuleLoad() {
         useCorrectRequestBaseUrl();
-        RootPanel.get("admin-panel").add(new AdminPanel());
-//        RootPanel.get("newpage").add(new AdminPanel());
-        Hyperlink h1 = new Hyperlink("books","newpage");
-        RootPanel.get("newpage").add(h1);
+        RootPanel.get("content").add(new AdminPanel());
+        RootPanel.get("header").add(new Header());
+
+//        Hyperlink h1 = new Hyperlink("books","newpage");
+//        RootPanel.get("newpage").add(h1);
+
         History.addValueChangeHandler(this);
-        //when there is no token, the "home" token is set else changePage() is called.
-        //this is useful if a user has bookmarked a site other than the homepage.
-        if(History.getToken().isEmpty()){
-            History.newItem("home");
+        if (History.getToken().isEmpty()) {
+            History.newItem(Pages.getAdminPage());
         } else {
             changePage(History.getToken());
         }
     }
+
     public void onValueChange(ValueChangeEvent event) {
         changePage(History.getToken());
     }
+
     public void changePage(String token) {
-        if(History.getToken().equals("newpage")) {
+        String historyToken = History.getToken();
+        if (historyToken.equals(Pages.getCreateMovie())) {
 //            RootPanel.get("admin-panel").clear();
 
-            NodeList<Node> nodeList = RootPanel.get("content").getElement().getChildNodes();
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                if (nodeList.getItem(i) instanceof Element){
-                    Element elem = (Element) nodeList.getItem(i);
-                    elem.setInnerHTML("");
-                }
-            }
-            RootPanel.get("admin-panel").add(new AdminPanel());
+//            NodeList<Node> nodeList = RootPanel.get("content").getElement().getChildNodes();
+//            for (int i = 0; i < nodeList.getLength(); i++) {
+//                if (nodeList.getItem(i) instanceof Element){
+//                    Element elem = (Element) nodeList.getItem(i);
+//                    elem.setInnerHTML("");
+//                }
+//            }
+            RootPanel.get("content").clear();
+            RootPanel.get("content").add(new MovieForm("Create Movie"));
+        } else if (historyToken.equals(Pages.getAdminPage())) {
+            RootPanel.get("content").clear();
+            RootPanel.get("content").add(new AdminPanel());
+        } else if(historyToken.equals("create2")) {
+            RootPanel.get("content").clear();
+            RootPanel.get("content").add(new MovieFormPanel("Create Movie"));
         }
+//        else if(historyToken.startsWith("update-movie/")) {
+//            RootPanel.get("content").clear();
+//            RootPanel.get("content").add(new MovieForm(movie, "Update Movie"));
+//        }
     }
+
     private void useCorrectRequestBaseUrl() {
         if (isDevelopmentMode()) {
             Defaults.setServiceRoot("http://localhost:8080");

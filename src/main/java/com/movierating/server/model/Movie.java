@@ -102,7 +102,7 @@ public class Movie {
 
     @Override
     public String toString() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String strDate = dateFormat.format(premierDate);
         return "Movie{" +
                 "title='" + title + '\'' +
