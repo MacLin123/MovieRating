@@ -1,12 +1,14 @@
 package com.movierating.client.ui.movie;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.HeadingElement;
 import com.google.gwt.dom.client.InputElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
+import com.movierating.client.config.FileConfig;
 import com.movierating.client.controller.AdminService;
 import com.movierating.client.model.Movie;
 import com.movierating.client.resources.Resources;
@@ -70,6 +72,9 @@ public class MovieFormPanel extends Composite {
     @UiField
     VerticalPanel panel;
 
+    @UiField
+    FileUpload fileUpload;
+
     public MovieFormPanel(String headerText) {
         initWidget(ourUiBinder.createAndBindUi(this));
 
@@ -91,6 +96,11 @@ public class MovieFormPanel extends Composite {
         });
 
         submitMovieBtn.addClickHandler(event -> {
+            int size  = getFileSize(fileUpload.getElement());
+            if (size > FileConfig.MAX_FILE_SIZE.getValue()) {
+                Window.alert("Max size of file is 5MB");
+                return;
+            }
             movieDateTextBox.setText(dateElem.getValue());
             formPanel.submit();
         });
@@ -110,6 +120,9 @@ public class MovieFormPanel extends Composite {
         });
     }
 
+    private native int getFileSize(final Element data) /*-{
+        return data.files[0].size;
+    }-*/;
     private void initTextBoxLenHandler() {
         movieTitleTextBox.addKeyUpHandler(event -> {
             String titleLen = String.valueOf(movieTitleTextBox.getText().length());

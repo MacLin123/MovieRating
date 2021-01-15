@@ -1,5 +1,7 @@
 package com.movierating.server.model;
 
+import com.movierating.server.utils.DateUtils;
+
 import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -102,8 +104,7 @@ public class Movie {
 
     @Override
     public String toString() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String strDate = dateFormat.format(premierDate);
+        String strDate = DateUtils.dateToString(premierDate);
         return "Movie{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +

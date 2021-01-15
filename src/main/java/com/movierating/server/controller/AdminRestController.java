@@ -71,16 +71,13 @@ public class AdminRestController {
                                         @RequestParam String date, @RequestParam String title,
                                         @RequestParam String description, @RequestParam String genre) throws IOException {
         if (movieRepository.existsByTitleIgnoreCase(title)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "the movie you want to add already exists");
-        }
-
-        if (file.getSize() > (1024 * 1024 * 5)) {
             return ResponseEntity.badRequest()
                     .headers(responseHeaders)
-                    .body("max size of file is 5MB");
+                    .body("the movie you want to add already exists");
         }
 
         Movie movie = new Movie(title, description, genre, DateUtils.convertStringToDate(date), file.getBytes());
+        movieRepository.save(movie);
         logger.info("saved" + movie);
         return ResponseEntity.ok()
                 .headers(responseHeaders)
