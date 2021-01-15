@@ -1,2 +1,4 @@
-package com.movierating.server.config;public enum Config {
+package com.movierating.server.config;
+public enum Config {
+
 }

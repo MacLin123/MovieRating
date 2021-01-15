@@ -1,5 +1,6 @@
 package com.movierating.server.model;
 
+import com.movierating.server.utils.DateUtils;
 import com.movierating.server.utils.ImageUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,17 +23,9 @@ class LoadDatabase {
 
     @Bean
     CommandLineRunner initMovies(MovieRepository repository) {
-        Date date1 = null;
-        Date date2 = null;
-        Date date3 = null;
-        SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            date1 = sFormat.parse("1941-09-04");
-            date2 = sFormat.parse("1972-03-11");
-            date2 = sFormat.parse("2015-07-01");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date date1 = DateUtils.convertStringToDate("1941-09-04");
+        Date date2 = DateUtils.convertStringToDate("1972-03-11");
+        Date date3 = DateUtils.convertStringToDate("2015-07-01");
 
 //        String imgPath1 = "static/imgs/no_img.jpg";
         String imgPath2 = "static/imgs/citizen_kane.jpg";
@@ -42,21 +35,10 @@ class LoadDatabase {
         byte[] imgBytes2 = ImageUtils.getResourceImg(imgPath2, this);
         byte[] imgBytes3 = ImageUtils.getResourceImg(imgPath3, this);
         byte[] imgBytes4 = ImageUtils.getResourceImg(imgPath4, this);
-//        InputStream is = getClass().getClassLoader().getResourceAsStream(imgPath);
-//
-//        BufferedImage bufImage;
-//        byte[] imgBytes = null;
-//        try {
-//            bufImage = ImageIO.read(is);
-//            bufImage = ImageUtils.resize(bufImage,80,120);
-//            imgBytes = ImageUtils.toByteArray(bufImage,"jpg");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
         Movie movie1 = new Movie("Citizen Kane", "good film", "Drama", date1, imgBytes2);
         Movie movie2 = new Movie("The Godfather", "good film", "Drama", date2, imgBytes3);
-        Movie movie3 = new Movie("Terminator Genisys", "Arnold...", "Action", date2, imgBytes4);
+        Movie movie3 = new Movie("Terminator Genisys", "Arnold...", "Action", date3, imgBytes4);
 
         return args -> {
             log.info("Preloading " + repository.save(movie1));

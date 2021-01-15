@@ -2,6 +2,7 @@ package com.movierating.server.controller;
 
 import com.movierating.server.model.Movie;
 import com.movierating.server.model.MovieRepository;
+import com.movierating.server.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
+
+;
 
 @RestController()
 @RequestMapping("admin")
@@ -24,10 +24,14 @@ public class AdminRestController {
     private final MovieRepository movieRepository;
 
     private final Logger logger = LoggerFactory.getLogger(AdminRestController.class);
+    private HttpHeaders responseHeaders;
 
     @Autowired
     public AdminRestController(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
+        responseHeaders = new HttpHeaders();
+        responseHeaders.set("X-Frame-Options",
+                "SAMEORIGIN");
     }
 
     @ResponseBody
@@ -46,8 +50,7 @@ public class AdminRestController {
 
     @RequestMapping(value = "movies", method = RequestMethod.PUT)
     void addMovie(@RequestBody final Movie movie) {
-        List<Movie> movies = movieRepository.findByTitleIgnoreCase(movie.getTitle());
-        if ((movies != null) && (!movies.isEmpty())) {
+        if (movieRepository.existsByTitleIgnoreCase(movie.getTitle())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "the movie you want to add already exists");
         }
         movieRepository.save(movie);
@@ -67,26 +70,18 @@ public class AdminRestController {
     ResponseEntity<String> createMovie2(@RequestParam MultipartFile file,
                                         @RequestParam String date, @RequestParam String title,
                                         @RequestParam String description, @RequestParam String genre) throws IOException {
-//        if (!movieRepository.existsById(movie.getId())) {
-//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "movie not found");
-//        }
-//        movieRepository.save(movie);
-        File f = new File("src/main/resources/targetFile1.jpg");
-        logger.info("title " + file.getName());
-        logger.info("is empty? " + file.isEmpty());
-        logger.info("date " + date);
-        logger.info("title " + title);
-        logger.info("discr " + description);
-        logger.info("genre " + genre);
-
-
-        try (OutputStream os = new FileOutputStream(f)) {
-            os.write(file.getBytes());
+        if (movieRepository.existsByTitleIgnoreCase(title)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "the movie you want to add already exists");
         }
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("X-Frame-Options",
-                "SAMEORIGIN");
-//        ResponseEntity<String> responseEntity=  new ResponseEntity<>("movie has been saved",, HttpStatus.OK);
+
+        if (file.getSize() > (1024 * 1024 * 5)) {
+            return ResponseEntity.badRequest()
+                    .headers(responseHeaders)
+                    .body("max size of file is 5MB");
+        }
+
+        Movie movie = new Movie(title, description, genre, DateUtils.convertStringToDate(date), file.getBytes());
+        logger.info("saved" + movie);
         return ResponseEntity.ok()
                 .headers(responseHeaders)
                 .body("movie has been saved");

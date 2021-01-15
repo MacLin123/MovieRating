@@ -42,7 +42,21 @@ public class ImageUtils {
         byte[] imgBytes = null;
         try {
             bufImage = ImageIO.read(is);
-            bufImage = ImageUtils.resize(bufImage,80,120);
+            imgBytes = ImageUtils.toByteArray(bufImage,"jpg");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  imgBytes;
+    }
+
+    public static byte[] getResourceImg(String imgPath, Object obj,int width,int height) {
+        InputStream is = obj.getClass().getClassLoader().getResourceAsStream(imgPath);
+
+        BufferedImage bufImage;
+        byte[] imgBytes = null;
+        try {
+            bufImage = ImageIO.read(is);
+            bufImage = ImageUtils.resize(bufImage,width,height);
             imgBytes = ImageUtils.toByteArray(bufImage,"jpg");
         } catch (IOException e) {
             e.printStackTrace();

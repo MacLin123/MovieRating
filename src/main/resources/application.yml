@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/movieRatingDb
+    username: root
+    pasword: 1234
+  jpa:
+    hibernate:
+      ddl-auto: none
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+      enabled: true
+      resolve-lazily: false
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: false
