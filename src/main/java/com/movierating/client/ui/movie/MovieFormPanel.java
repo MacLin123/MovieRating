@@ -12,6 +12,7 @@ import com.movierating.client.config.FileConfig;
 import com.movierating.client.controller.AdminService;
 import com.movierating.client.model.Movie;
 import com.movierating.client.resources.Resources;
+import com.movierating.client.utils.ImageUtils;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
@@ -24,6 +25,8 @@ public class MovieFormPanel extends Composite {
     private static Resources resources = GWT.create(Resources.class);
 
     private static final AdminService adminService = GWT.create(AdminService.class);
+    private static final String URL_REQUEST_CREATE = "http://127.0.0.1:8080/admin/movies/create";
+    private static final String URL_REQUEST_UPDATE = "http://127.0.0.1:8080/admin/movies/update";
     @UiField
     HeadingElement header;
 
@@ -75,14 +78,21 @@ public class MovieFormPanel extends Composite {
     @UiField
     FileUpload fileUpload;
 
-    public MovieFormPanel(String headerText) {
-        initWidget(ourUiBinder.createAndBindUi(this));
-
-        coverImg.setResource(resources.emptyCover());
-
-        formPanel.setAction(" http://127.0.0.1:8080/admin/movies2");
-        formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
-        formPanel.setMethod(FormPanel.METHOD_POST);
+    /**
+     * Update movie constructor
+     *
+     * @param movie
+     * @param headerText
+     */
+    public MovieFormPanel(final Movie movie, String headerText) {
+        initCommonFormElements();
+        formPanel.setAction(URL_REQUEST_UPDATE + "/" + movie.getId());
+        header.setInnerHTML(headerText);
+        movieTitleTextBox.setText(movie.getTitle());
+        movieDescrTextArea.setText(movie.getDescription());
+        movieGenreTextBox.setText(movie.getGenre());
+        dateElem.setValue(movie.getPremierDateString());
+        coverImg.setUrl(ImageUtils.getImageData(movie.getCoverImg()));
 
         formPanel.addSubmitHandler(event -> {
             final String title = movieTitleTextBox.getText().trim();
@@ -96,7 +106,59 @@ public class MovieFormPanel extends Composite {
         });
 
         submitMovieBtn.addClickHandler(event -> {
-            int size  = getFileSize(fileUpload.getElement());
+            int size = getFileSize(fileUpload.getElement());
+            if (size > FileConfig.MAX_FILE_SIZE.getValue()) {
+                Window.alert("Max size of file is 5MB");
+                return;
+            }
+            movieDateTextBox.setText(dateElem.getValue());
+            formPanel.submit();
+//            History.newItem(Pages.getAdminPage());
+        });
+
+        removeMovieBtn.addClickHandler(event -> {
+            movieTitleTextBox.setText("");
+            movieDescrTextArea.setText("");
+            movieGenreTextBox.setText("");
+            //TODO delete by id
+//            removeMovie(movie);
+        });
+
+        initTextBoxLenHandler();
+        initTextBoxCharLen();
+    }
+
+    /**
+     * Create movie constructor
+     *
+     * @param headerText
+     */
+    public MovieFormPanel(String headerText) {
+        initCommonFormElements();
+        formPanel.setAction(URL_REQUEST_CREATE);
+        header.setInnerHTML(headerText);
+        coverImg.setResource(resources.emptyCover());
+//        initWidget(ourUiBinder.createAndBindUi(this));
+//
+//        coverImg.setResource(resources.emptyCover());
+//
+//        formPanel.setAction(URL_REQUEST);
+//        formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
+//        formPanel.setMethod(FormPanel.METHOD_POST);
+
+        formPanel.addSubmitHandler(event -> {
+            final String title = movieTitleTextBox.getText().trim();
+            final String description = movieDescrTextArea.getText().trim();
+            final String genre = movieGenreTextBox.getText().trim();
+            final String dateString = dateElem.getValue();
+            if (title.isEmpty() || description.isEmpty() || dateString.isEmpty() || genre.isEmpty()) {
+                Window.alert("All fields except cover photo should be filled");
+                event.cancel();
+            }
+        });
+
+        submitMovieBtn.addClickHandler(event -> {
+            int size = getFileSize(fileUpload.getElement());
             if (size > FileConfig.MAX_FILE_SIZE.getValue()) {
                 Window.alert("Max size of file is 5MB");
                 return;
@@ -105,24 +167,55 @@ public class MovieFormPanel extends Composite {
             formPanel.submit();
         });
 
-        movieDateTextBox.setVisible(false);
+//        movieDateTextBox.setVisible(false);
         removeMovieBtn.setVisible(false);
-        movieDescrTextArea.getElement().setAttribute("maxlength", "255");
-        header.setInnerHTML(headerText);
+//        movieDescrTextArea.getElement().setAttribute("maxlength", "255");
 
         initTextBoxLenHandler();
         initTextBoxCharLen();
 
 
-        formPanel.addSubmitCompleteHandler(event -> {
-            String results = event.getResults();
-            Window.alert((results == null) ? "Success" : results);
-        });
+//        formPanel.addSubmitCompleteHandler(event -> {
+//            String results = event.getResults();
+//            Window.alert(results);
+//        });
     }
 
     private native int getFileSize(final Element data) /*-{
-        return data.files[0].size;
+        if (data.files[0] != null) {
+            return data.files[0].size;
+        } else {
+            return 0;
+        }
     }-*/;
+
+    private void initCommonFormElements() {
+        initWidget(ourUiBinder.createAndBindUi(this));
+
+        formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
+        formPanel.setMethod(FormPanel.METHOD_POST);
+
+        movieDateTextBox.setVisible(false);
+        movieDescrTextArea.getElement().setAttribute("maxlength", "255");
+
+        formPanel.addSubmitCompleteHandler(event -> {
+            String results = event.getResults();
+            Window.alert((results != null) ? results : "Success");
+        });
+    }
+
+//    private void initSubmitButtonHandler() {
+//        submitMovieBtn.addClickHandler(event -> {
+//            int size = getFileSize(fileUpload.getElement());
+//            if (size > FileConfig.MAX_FILE_SIZE.getValue()) {
+//                Window.alert("Max size of file is 5MB");
+//                return;
+//            }
+//            movieDateTextBox.setText(dateElem.getValue());
+//            formPanel.submit();
+//        });
+//    }
+
     private void initTextBoxLenHandler() {
         movieTitleTextBox.addKeyUpHandler(event -> {
             String titleLen = String.valueOf(movieTitleTextBox.getText().length());
@@ -141,56 +234,56 @@ public class MovieFormPanel extends Composite {
 
     private void initTextBoxCharLen() {
         String titleLen = String.valueOf(movieTitleTextBox.getText().length());
-        String descrLen = String.valueOf(movieDescrChars.getText().length());
+        String descrLen = String.valueOf(movieDescrTextArea.getText().length());
         String genreLen = String.valueOf(movieGenreTextBox.getText().length());
         movieTitleChars.setText(titleLen + "/255");
         movieDescrChars.setText(descrLen + "/255");
         movieGenreChars.setText(genreLen + "/255");
     }
-
-    /**
-     * Add movie to the server
-     *
-     * @param movie
-     */
-    private void addMovie(final Movie movie) {
-        adminService.addMovie(movie, new MethodCallback<Void>() {
-            @Override
-            public void onFailure(final Method method, final Throwable exception) {
-                GWT.log(exception.getMessage());
-            }
-
-            @Override
-            public void onSuccess(final Method method, final Void response) {
-                Window.alert("Movies has been saved");
-                movieTitleTextBox.setText("");
-                movieDescrTextArea.setText("");
-                movieGenreTextBox.setText("");
-            }
-        });
-    }
-
-    /**
-     * Update movie to the server
-     *
-     * @param movie
-     */
-    private void updateMovie(final Movie movie) {
-        adminService.updateMovie(movie.getId(), movie, new MethodCallback<Void>() {
-            @Override
-            public void onFailure(final Method method, final Throwable exception) {
-                GWT.log(exception.getMessage());
-            }
-
-            @Override
-            public void onSuccess(final Method method, final Void response) {
-                movieTitleTextBox.setText("");
-                movieDescrTextArea.setText("");
-                movieGenreTextBox.setText("");
-                Window.alert("Movies has been updated");
-            }
-        });
-    }
+///**
+// * Add movie to the server
+// *
+// * @param movie
+// */
+//    private void addMovie(final Movie movie) {
+//        adminService.addMovie(movie, new MethodCallback<Void>() {
+//            @Override
+//            public void onFailure(final Method method, final Throwable exception) {
+//                GWT.log(exception.getMessage());
+//            }
+//
+//            @Override
+//            public void onSuccess(final Method method, final Void response) {
+//                Window.alert("Movies has been saved");
+//                movieTitleTextBox.setText("");
+//                movieDescrTextArea.setText("");
+//                movieGenreTextBox.setText("");
+//            }
+//        });
+//    }
+//
+//    /**
+//     * Update movie to the server
+//     *
+//     * @param movie
+//     */
+//    private void updateMovie(final Movie movie) {
+//        adminService.updateMovie(movie.getId(), movie, new MethodCallback<Void>() {
+//            @Override
+//            public void onFailure(final Method method, final Throwable exception) {
+//                GWT.log(exception.getMessage());
+//            }
+//
+//            @Override
+//            public void onSuccess(final Method method, final Void response) {
+//                movieTitleTextBox.setText("");
+//                movieDescrTextArea.setText("");
+//                movieGenreTextBox.setText("");
+//                Window.alert("Movies has been updated");
+//            }
+//        });
+//    }
+//
 
     /**
      * Remove movie from the server
@@ -211,70 +304,3 @@ public class MovieFormPanel extends Composite {
         });
     }
 }
-//
-//public class FormPanelExample implements EntryPoint {
-//
-//    public void onModuleLoad() {
-//        // Create a FormPanel and point it at a service.
-//        final FormPanel form = new FormPanel();
-//        form.setAction("/myFormHandler");
-//
-//        // Because we're going to add a FileUpload widget, we'll need to set the
-//        // form to use the POST method, and multipart MIME encoding.
-//        form.setEncoding(FormPanel.ENCODING_MULTIPART);
-//        form.setMethod(FormPanel.METHOD_POST);
-//
-//        // Create a panel to hold all of the form widgets.
-//        VerticalPanel panel = new VerticalPanel();
-//        form.setWidget(panel);
-//
-//        // Create a TextBox, giving it a name so that it will be submitted.
-//        final TextBox tb = new TextBox();
-//        tb.setName("textBoxFormElement");
-//        panel.add(tb);
-//
-//        // Create a ListBox, giving it a name and some values to be associated with
-//        // its options.
-//        ListBox lb = new ListBox();
-//        lb.setName("listBoxFormElement");
-//        lb.addItem("foo", "fooValue");
-//        lb.addItem("bar", "barValue");
-//        lb.addItem("baz", "bazValue");
-//        panel.add(lb);
-//
-//        // Create a FileUpload widget.
-//        FileUpload upload = new FileUpload();
-//        upload.setName("uploadFormElement");
-//        panel.add(upload);
-//
-//        // Add a 'submit' button.
-//        panel.add(new Button("Submit", new ClickHandler() {
-//            public void onClick(ClickEvent event) {
-//                form.submit();
-//            }
-//        }));
-//
-//        // Add an event handler to the form.
-//        form.addSubmitHandler(new FormPanel.SubmitHandler() {
-//            public void onSubmit(FormPanel.SubmitEvent event) {
-//                // This event is fired just before the form is submitted. We can take
-//                // this opportunity to perform validation.
-//                if (tb.getText().length() == 0) {
-//                    Window.alert("The text box must not be empty");
-//                    event.cancel();
-//                }
-//            }
-//        });
-//        form.addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
-//            public void onSubmitComplete(FormPanel.SubmitCompleteEvent event) {
-//                // When the form submission is successfully completed, this event is
-//                // fired. Assuming the service returned a response of type text/html,
-//                // we can get the result text here (see the FormPanel documentation for
-//                // further explanation).
-//                Window.alert(event.getResults());
-//            }
-//        });
-//
-//        RootPanel.get().add(form);
-//    }
-//

@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.*;
 import com.movierating.client.config.Pages;
 import com.movierating.client.controller.AdminService;
 import com.movierating.client.model.Movie;
-import com.movierating.client.ui.movie.MovieForm;
+import com.movierating.client.ui.movie.MovieFormPanel;
 import com.movierating.client.ui.movie.MovieLabel;
 import com.movierating.client.utils.ImageUtils;
 import org.fusesource.restygwt.client.Method;
@@ -150,7 +150,7 @@ public class AdminPanel extends Composite {
                         GWT.log("click on image");
                         History.newItem(Pages.getUpdateMovie());
                         RootPanel.get("content").clear();
-                        RootPanel.get("content").add(new MovieForm(movie, "Update Movie"));
+                        RootPanel.get("content").add(new MovieFormPanel(movie, "Update Movie"));
 
                     });
                     movieList.setWidget(row, 0, img);
@@ -161,27 +161,27 @@ public class AdminPanel extends Composite {
         });
     }
 
-    /**
-     * Add movie to the server
-     *
-     * @param movie
-     */
-    private void addMovie(final Movie movie) {
-        adminService.addMovie(movie, new MethodCallback<Void>() {
-            @Override
-            public void onFailure(final Method method, final Throwable exception) {
-                GWT.log(exception.getMessage());
-            }
-
-            @Override
-            public void onSuccess(final Method method, final Void response) {
-//                movieTitleTextBox.setText("");
-//                movieDescrTextArea.setText("");
-//                movieDateTextBox.setText("");
-//                movieGenreTextBox.setText("");
-                refreshMovies();
-            }
-        });
-    }
+//    /**
+//     * Add movie to the server
+//     *
+//     * @param movie
+//     */
+//    private void addMovie(final Movie movie) {
+//        adminService.addMovie(movie, new MethodCallback<Void>() {
+//            @Override
+//            public void onFailure(final Method method, final Throwable exception) {
+//                GWT.log(exception.getMessage());
+//            }
+//
+//            @Override
+//            public void onSuccess(final Method method, final Void response) {
+////                movieTitleTextBox.setText("");
+////                movieDescrTextArea.setText("");
+////                movieDateTextBox.setText("");
+////                movieGenreTextBox.setText("");
+//                refreshMovies();
+//            }
+//        });
+//    }
 
 }

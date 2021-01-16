@@ -41,6 +41,14 @@ public class Movie {
         this.premierDate = premierDate;
         this.coverImg = coverImg;
     }
+    public Movie(Long id,String title, String description, String genre, Date premierDate, byte[] coverImg) {
+        this.title = title;
+        this.description = description;
+//        this.rating = rating;
+        this.genre = genre;
+        this.premierDate = premierDate;
+        this.coverImg = coverImg;
+    }
 
     public Movie() {
 

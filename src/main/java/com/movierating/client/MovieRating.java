@@ -11,7 +11,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.movierating.client.config.Pages;
 import com.movierating.client.ui.admin.AdminPanel;
 import com.movierating.client.ui.header.Header;
-import com.movierating.client.ui.movie.MovieForm;
 import com.movierating.client.ui.movie.MovieFormPanel;
 import org.fusesource.restygwt.client.Defaults;
 
@@ -41,23 +40,11 @@ public class MovieRating implements EntryPoint, ValueChangeHandler {
     public void changePage(String token) {
         String historyToken = History.getToken();
         if (historyToken.equals(Pages.getCreateMovie())) {
-//            RootPanel.get("admin-panel").clear();
-
-//            NodeList<Node> nodeList = RootPanel.get("content").getElement().getChildNodes();
-//            for (int i = 0; i < nodeList.getLength(); i++) {
-//                if (nodeList.getItem(i) instanceof Element){
-//                    Element elem = (Element) nodeList.getItem(i);
-//                    elem.setInnerHTML("");
-//                }
-//            }
             RootPanel.get("content").clear();
-            RootPanel.get("content").add(new MovieForm("Create Movie"));
+            RootPanel.get("content").add(new MovieFormPanel("Create Movie"));
         } else if (historyToken.equals(Pages.getAdminPage())) {
             RootPanel.get("content").clear();
             RootPanel.get("content").add(new AdminPanel());
-        } else if(historyToken.equals("create2")) {
-            RootPanel.get("content").clear();
-            RootPanel.get("content").add(new MovieFormPanel("Create Movie"));
         }
 //        else if(historyToken.startsWith("update-movie/")) {
 //            RootPanel.get("content").clear();

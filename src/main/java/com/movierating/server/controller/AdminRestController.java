@@ -7,11 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.List;
@@ -48,28 +46,57 @@ public class AdminRestController {
         movieRepository.delete(movie);
     }
 
-    @RequestMapping(value = "movies", method = RequestMethod.PUT)
-    void addMovie(@RequestBody final Movie movie) {
-        if (movieRepository.existsByTitleIgnoreCase(movie.getTitle())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "the movie you want to add already exists");
-        }
-        movieRepository.save(movie);
-        logger.info("saved - " + movie);
-    }
+//    @RequestMapping(value = "movies", method = RequestMethod.PUT)
+//    void addMovie(@RequestBody final Movie movie) {
+//        if (movieRepository.existsByTitleIgnoreCase(movie.getTitle())) {
+//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "the movie you want to add already exists");
+//        }
+//        movieRepository.save(movie);
+//        logger.info("saved - " + movie);
+//    }
 
-    @RequestMapping(value = "movies/{id}", method = RequestMethod.POST)
-    void updateMovie(@PathVariable("id") Long id, @RequestBody final Movie movie) {
-        if (!movieRepository.existsById(movie.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "movie not found");
+//    @RequestMapping(value = "movies/{id}", method = RequestMethod.POST)
+//    void updateMovie(@PathVariable("id") Long id, @RequestBody final Movie movie) {
+//        if (!movieRepository.existsById(movie.getId())) {
+//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "movie not found");
+//        }
+//        movieRepository.save(movie);
+//        logger.info("updated - " + movie);
+//    }
+
+    @RequestMapping(value = "movies/update/{id}", method = RequestMethod.POST)
+    ResponseEntity<String> updateMovie(@PathVariable("id") Long id, @RequestParam MultipartFile file,
+                                       @RequestParam String date, @RequestParam String title,
+                                       @RequestParam String description, @RequestParam String genre) throws IOException {
+        if (!movieRepository.existsById(id)) {
+            return ResponseEntity.badRequest()
+                    .headers(responseHeaders)
+                    .body("movie not found");
         }
+        byte[] imgBytes = null;
+        if (file.isEmpty()) {
+            imgBytes = movieRepository.findById(id).get().getCoverImg();
+        } else {
+            imgBytes = file.getBytes();
+        }
+
+        Movie movie = movieRepository.getOne(id);
+        movie.setTitle(title);
+        movie.setDescription(description);
+        movie.setGenre(genre);
+        movie.setPremierDate(DateUtils.convertStringToDate(date));
+        movie.setCoverImg(imgBytes);
         movieRepository.save(movie);
         logger.info("updated - " + movie);
+        return ResponseEntity.ok()
+                .headers(responseHeaders)
+                .body("movie has been updated");
     }
 
-    @RequestMapping(value = "movies2", method = RequestMethod.POST)
-    ResponseEntity<String> createMovie2(@RequestParam MultipartFile file,
-                                        @RequestParam String date, @RequestParam String title,
-                                        @RequestParam String description, @RequestParam String genre) throws IOException {
+    @RequestMapping(value = "movies/create", method = RequestMethod.POST)
+    ResponseEntity<String> createMovie(@RequestParam MultipartFile file,
+                                       @RequestParam String date, @RequestParam String title,
+                                       @RequestParam String description, @RequestParam String genre) throws IOException {
         if (movieRepository.existsByTitleIgnoreCase(title)) {
             return ResponseEntity.badRequest()
                     .headers(responseHeaders)
@@ -78,7 +105,7 @@ public class AdminRestController {
 
         Movie movie = new Movie(title, description, genre, DateUtils.convertStringToDate(date), file.getBytes());
         movieRepository.save(movie);
-        logger.info("saved" + movie);
+        logger.info("saved - " + movie);
         return ResponseEntity.ok()
                 .headers(responseHeaders)
                 .body("movie has been saved");

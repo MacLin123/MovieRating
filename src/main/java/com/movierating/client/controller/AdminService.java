@@ -26,11 +26,11 @@ interface AdminService extends RestService {
     @Path("movies")
     void deleteMovie(final Movie movie, final MethodCallback<Void> callback);
 
-    @PUT
-    @Path("movies")
-    void addMovie(final Movie movie, final MethodCallback<Void> callback);
+//    @PUT
+//    @Path("movies")
+//    void addMovie(final Movie movie, final MethodCallback<Void> callback);
 
-    @POST
-    @Path("movies/{id}")
-    void updateMovie(@PathParam("id") Long id, final Movie movie, final MethodCallback<Void> callback);
+//    @POST
+//    @Path("movies/update/{id}")
+//    void updateMovie(@PathParam("id") Long id, final Movie movie, final MethodCallback<Void> callback);
 }
