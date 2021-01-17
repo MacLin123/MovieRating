@@ -98,27 +98,6 @@ public class MovieFormPanel extends Composite {
         dateElem.setValue(movie.getPremierDateString());
         coverImg.setUrl(ImageUtils.getImageData(movie.getCoverImg()));
 
-        formPanel.addSubmitHandler(event -> {
-            final String title = movieTitleTextBox.getText().trim();
-            final String description = movieDescrTextArea.getText().trim();
-            final String genre = movieGenreTextBox.getText().trim();
-            final String dateString = dateElem.getValue();
-            if (title.isEmpty() || description.isEmpty() || dateString.isEmpty() || genre.isEmpty()) {
-                Window.alert("All fields except cover photo should be filled");
-                event.cancel();
-            }
-        });
-
-        submitMovieBtn.addClickHandler(event -> {
-            int size = getFileSize(fileUpload.getElement());
-            if (size > FileConfig.MAX_FILE_SIZE.getValue()) {
-                Window.alert("Max size of file is 5MB");
-                return;
-            }
-            movieDateTextBox.setText(dateElem.getValue());
-            formPanel.submit();
-//            History.newItem(Pages.getAdminPage());
-        });
 
         removeMovieBtn.addClickHandler(event -> {
             movieTitleTextBox.setText("");
@@ -129,6 +108,12 @@ public class MovieFormPanel extends Composite {
 
         initTextBoxLenHandler();
         initTextBoxCharLen();
+        // The result html can be null as a result of submitting a form to a different domain.
+        formPanel.addSubmitCompleteHandler(event -> {
+            String results = event.getResults();
+            Window.alert((results != null) ? results : "Submitted");
+            History.newItem(Pages.getAdminPage());
+        });
     }
 
     /**
@@ -141,50 +126,16 @@ public class MovieFormPanel extends Composite {
         formPanel.setAction(URL_REQUEST_CREATE);
         header.setInnerHTML(headerText);
         coverImg.setResource(resources.emptyCover());
-//        initWidget(ourUiBinder.createAndBindUi(this));
-//
-//        coverImg.setResource(resources.emptyCover());
-//
-//        formPanel.setAction(URL_REQUEST);
-//        formPanel.setEncoding(FormPanel.ENCODING_MULTIPART);
-//        formPanel.setMethod(FormPanel.METHOD_POST);
 
-        formPanel.addSubmitHandler(event -> {
-            final String title = movieTitleTextBox.getText().trim();
-            final String description = movieDescrTextArea.getText().trim();
-            final String genre = movieGenreTextBox.getText().trim();
-            final String dateString = dateElem.getValue();
-            if (title.isEmpty() || description.isEmpty() || dateString.isEmpty() || genre.isEmpty()) {
-                Window.alert("All fields except cover photo should be filled");
-                event.cancel();
-            }
-        });
-
-        submitMovieBtn.addClickHandler(event -> {
-            int size = getFileSize(fileUpload.getElement());
-            if (size > FileConfig.MAX_FILE_SIZE.getValue()) {
-                Window.alert("Max size of file is 5MB");
-                return;
-            }
-            if((size != 0) && !fileValidation(fileUpload.getElement())) {
-                Window.alert("Invalid file extension, you should upload an image");
-                return;
-            }
-            movieDateTextBox.setText(dateElem.getValue());
-            formPanel.submit();
-        });
-
-//        movieDateTextBox.setVisible(false);
         removeMovieBtn.setVisible(false);
-//        movieDescrTextArea.getElement().setAttribute("maxlength", "255");
         initTextBoxLenHandler();
         initTextBoxCharLen();
 
-
-//        formPanel.addSubmitCompleteHandler(event -> {
-//            String results = event.getResults();
-//            Window.alert(results);
-//        });
+        // The result html can be null as a result of submitting a form to a different domain.
+        formPanel.addSubmitCompleteHandler(event -> {
+            String results = event.getResults();
+            Window.alert((results != null) ? results : "Submitted");
+        });
     }
 
     private native int getFileSize(final Element data) /*-{
@@ -217,24 +168,35 @@ public class MovieFormPanel extends Composite {
 
         movieDateTextBox.setVisible(false);
         movieDescrTextArea.getElement().setAttribute("maxlength", "255");
-        // The result html can be null as a result of submitting a form to a different domain.
-        formPanel.addSubmitCompleteHandler(event -> {
-            String results = event.getResults();
-            Window.alert((results != null) ? results : "Submitted");
+        initSubmitButtonHandler();
+
+        formPanel.addSubmitHandler(event -> {
+            final String title = movieTitleTextBox.getText().trim();
+            final String description = movieDescrTextArea.getText().trim();
+            final String genre = movieGenreTextBox.getText().trim();
+            final String dateString = dateElem.getValue();
+            if (title.isEmpty() || description.isEmpty() || dateString.isEmpty() || genre.isEmpty()) {
+                Window.alert("All fields except cover photo should be filled");
+                event.cancel();
+            }
         });
     }
 
-//    private void initSubmitButtonHandler() {
-//        submitMovieBtn.addClickHandler(event -> {
-//            int size = getFileSize(fileUpload.getElement());
-//            if (size > FileConfig.MAX_FILE_SIZE.getValue()) {
-//                Window.alert("Max size of file is 5MB");
-//                return;
-//            }
-//            movieDateTextBox.setText(dateElem.getValue());
-//            formPanel.submit();
-//        });
-//    }
+    private void initSubmitButtonHandler() {
+        submitMovieBtn.addClickHandler(event -> {
+        int size = getFileSize(fileUpload.getElement());
+        if (size > FileConfig.MAX_FILE_SIZE.getValue()) {
+            Window.alert("Max size of file is 5MB");
+            return;
+        }
+        if((size != 0) && !fileValidation(fileUpload.getElement())) {
+            Window.alert("Invalid file extension, you should upload an image");
+            return;
+        }
+        movieDateTextBox.setText(dateElem.getValue());
+        formPanel.submit();
+    });
+    }
 
     private void initTextBoxLenHandler() {
         movieTitleTextBox.addKeyUpHandler(event -> {

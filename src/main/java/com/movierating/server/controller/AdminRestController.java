@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -77,7 +78,7 @@ public class AdminRestController {
 //        logger.info("updated - " + movie);
 //    }
 
-    @RequestMapping(value = "movies/update/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "movies/update/{id}", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
     ResponseEntity<String> updateMovie(@PathVariable("id") Long id, @RequestParam MultipartFile file,
                                        @RequestParam String date, @RequestParam String title,
                                        @RequestParam String description, @RequestParam String genre) throws IOException {
@@ -115,7 +116,7 @@ public class AdminRestController {
                 .body("movie has been updated");
     }
 
-    @RequestMapping(value = "movies/create", method = RequestMethod.POST)
+    @RequestMapping(value = "movies/create", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
     ResponseEntity<String> createMovie(@RequestParam MultipartFile file,
                                        @RequestParam String date, @RequestParam String title,
                                        @RequestParam String description, @RequestParam String genre) throws IOException {
