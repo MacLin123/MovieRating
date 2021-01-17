@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 
 public class ImageUtils {
     public static byte[] toByteArray(BufferedImage bi, String format)
@@ -62,5 +63,10 @@ public class ImageUtils {
             e.printStackTrace();
         }
         return  imgBytes;
+    }
+    public static Optional<String> getExtensionByStringHandling(String filename) {
+        return Optional.ofNullable(filename)
+                .filter(f -> f.contains("."))
+                .map(f -> f.substring(filename.lastIndexOf(".") + 1));
     }
 }

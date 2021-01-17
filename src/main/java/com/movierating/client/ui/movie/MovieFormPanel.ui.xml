@@ -124,7 +124,6 @@
             padding-bottom: 24px;
         }
     </ui:style>
-
     <g:HTMLPanel addStyleNames="{style.center}">
         <h1 ui:field="header" class="{style.header}"></h1>
         <g:FormPanel ui:field="formPanel">

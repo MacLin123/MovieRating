@@ -5,14 +5,18 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.HeadingElement;
 import com.google.gwt.dom.client.InputElement;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.movierating.client.config.FileConfig;
+import com.movierating.client.config.Pages;
 import com.movierating.client.controller.AdminService;
 import com.movierating.client.model.Movie;
 import com.movierating.client.resources.Resources;
 import com.movierating.client.utils.ImageUtils;
+import org.fusesource.restygwt.client.Defaults;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
@@ -25,8 +29,8 @@ public class MovieFormPanel extends Composite {
     private static Resources resources = GWT.create(Resources.class);
 
     private static final AdminService adminService = GWT.create(AdminService.class);
-    private static final String URL_REQUEST_CREATE = "http://127.0.0.1:8080/admin/movies/create";
-    private static final String URL_REQUEST_UPDATE = "http://127.0.0.1:8080/admin/movies/update";
+    private static final String URL_REQUEST_CREATE = Defaults.getServiceRoot() + "/admin/movies/create";
+    private static final String URL_REQUEST_UPDATE = Defaults.getServiceRoot() + "/admin/movies/update";
     @UiField
     HeadingElement header;
 
@@ -120,8 +124,7 @@ public class MovieFormPanel extends Composite {
             movieTitleTextBox.setText("");
             movieDescrTextArea.setText("");
             movieGenreTextBox.setText("");
-            //TODO delete by id
-//            removeMovie(movie);
+            removeMovie(movie.getId());
         });
 
         initTextBoxLenHandler();
@@ -163,6 +166,10 @@ public class MovieFormPanel extends Composite {
                 Window.alert("Max size of file is 5MB");
                 return;
             }
+            if((size != 0) && !fileValidation(fileUpload.getElement())) {
+                Window.alert("Invalid file extension, you should upload an image");
+                return;
+            }
             movieDateTextBox.setText(dateElem.getValue());
             formPanel.submit();
         });
@@ -170,7 +177,6 @@ public class MovieFormPanel extends Composite {
 //        movieDateTextBox.setVisible(false);
         removeMovieBtn.setVisible(false);
 //        movieDescrTextArea.getElement().setAttribute("maxlength", "255");
-
         initTextBoxLenHandler();
         initTextBoxCharLen();
 
@@ -188,6 +194,20 @@ public class MovieFormPanel extends Composite {
             return 0;
         }
     }-*/;
+    private native boolean fileValidation(final Element fileInput) /*-{
+
+        var filePath = fileInput.value;
+
+        // Allowing file type
+        var allowedExtensions =
+            /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+        if (!allowedExtensions.exec(filePath)) {
+            fileInput.value = '';
+            return false;
+        }
+        return true;
+    }-*/;
 
     private void initCommonFormElements() {
         initWidget(ourUiBinder.createAndBindUi(this));
@@ -197,10 +217,10 @@ public class MovieFormPanel extends Composite {
 
         movieDateTextBox.setVisible(false);
         movieDescrTextArea.getElement().setAttribute("maxlength", "255");
-
+        // The result html can be null as a result of submitting a form to a different domain.
         formPanel.addSubmitCompleteHandler(event -> {
             String results = event.getResults();
-            Window.alert((results != null) ? results : "Success");
+            Window.alert((results != null) ? results : "Submitted");
         });
     }
 
@@ -288,10 +308,10 @@ public class MovieFormPanel extends Composite {
     /**
      * Remove movie from the server
      *
-     * @param movieToRemove
+     * @param idMovieToRemove
      */
-    private void removeMovie(final Movie movieToRemove) {
-        adminService.deleteMovie(movieToRemove, new MethodCallback<Void>() {
+    private void removeMovie(final Long idMovieToRemove) {
+        adminService.deleteMovie(idMovieToRemove, new MethodCallback<Void>() {
             @Override
             public void onFailure(final Method method, final Throwable exception) {
 
@@ -299,7 +319,8 @@ public class MovieFormPanel extends Composite {
 
             @Override
             public void onSuccess(final Method method, final Void response) {
-                Window.alert("Movies has been removed");
+                Window.alert(method.getResponse().getText());
+                History.newItem(Pages.getAdminPage());
             }
         });
     }

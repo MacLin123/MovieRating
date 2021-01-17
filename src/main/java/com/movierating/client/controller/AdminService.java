@@ -23,8 +23,8 @@ interface AdminService extends RestService {
     void searchMovies(String title, MethodCallback<List<Movie>> callback);
 
     @DELETE
-    @Path("movies")
-    void deleteMovie(final Movie movie, final MethodCallback<Void> callback);
+    @Path("movies/remove/{id}")
+    void deleteMovie(@PathParam("id") Long id, final MethodCallback<Void> callback);
 
 //    @PUT
 //    @Path("movies")
