@@ -1,22 +1,24 @@
 package com.movierating.server.controller;
 
 import com.movierating.server.model.Movie;
-import com.movierating.server.model.MovieRepository;
+import com.movierating.server.repository.MovieRepository;
 import com.movierating.server.utils.DateUtils;
 import com.movierating.server.utils.ImageUtils;
+import com.movierating.server.utils.MoviesUtils;
+import com.movierating.server.views.MovieViewMdImgDto;
+import com.movierating.server.views.MovieViewSmImgDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.List;
-
-;
 
 @RestController()
 @RequestMapping("admin")
@@ -24,29 +26,20 @@ public class AdminRestController {
     private final MovieRepository movieRepository;
 
     private final Logger logger = LoggerFactory.getLogger(AdminRestController.class);
-    private HttpHeaders responseHeaders;
 
     @Autowired
     public AdminRestController(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
-        responseHeaders = new HttpHeaders();
-        responseHeaders.set("X-Frame-Options",
-                "SAMEORIGIN");
     }
 
     @ResponseBody
     @RequestMapping(value = "movies", method = RequestMethod.POST)
-    public List<Movie> getSearchedMovies(@RequestBody String title) {
+    public List<MovieViewSmImgDto> getSearchedMovies(@RequestBody String title) {
         logger.info("Search querry");
-        List<Movie> movies = movieRepository.findByTitleContainingIgnoreCase(title);
-        logger.info(movies.toString());
-        return movies;
+        List<MovieViewSmImgDto> movieViews = movieRepository.findByTitleContainingIgnoreCase(title);
+        logger.info(movieViews.toString());
+        return movieViews;
     }
-
-//    @RequestMapping(value = "movies", method = RequestMethod.DELETE)
-//    void deleteMovie(@RequestBody final Movie movie) {
-//        movieRepository.delete(movie);
-//    }
 
     @RequestMapping(value = "movies/remove/{id}", method = RequestMethod.DELETE)
     ResponseEntity<String> deleteMovie(@PathVariable("id") Long id) {
@@ -84,13 +77,11 @@ public class AdminRestController {
                                        @RequestParam String description, @RequestParam String genre) throws IOException {
         if (!movieRepository.existsById(id)) {
             return ResponseEntity.badRequest()
-                    .headers(responseHeaders)
                     .body("movie not found");
         }
 
-        if((!file.isEmpty()) && (!isValidFileExt(file))){
+        if ((!file.isEmpty()) && (!isValidFileExt(file))) {
             return ResponseEntity.badRequest()
-//                    .headers(responseHeaders)
                     .body("image extension is not valid");
         }
 
@@ -112,8 +103,16 @@ public class AdminRestController {
         movieRepository.save(movie);
         logger.info("updated - " + movie);
         return ResponseEntity.ok()
-                .headers(responseHeaders)
                 .body("movie has been updated");
+    }
+
+    @RequestMapping(value = "movies/{id}", method = RequestMethod.GET)
+    MovieViewMdImgDto getMovie(@PathVariable("id") Long id) {
+        if (!movieRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "movie not found");
+        }
+        logger.info("GET - id = " + id);
+        return movieRepository.getById(id, MovieViewMdImgDto.class);
     }
 
     @RequestMapping(value = "movies/create", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
@@ -122,21 +121,19 @@ public class AdminRestController {
                                        @RequestParam String description, @RequestParam String genre) throws IOException {
         if (movieRepository.existsByTitleIgnoreCase(title)) {
             return ResponseEntity.badRequest()
-//                    .headers(responseHeaders)
                     .body("the movie you want to add already exists");
         }
 
-        if((!file.isEmpty()) && (!isValidFileExt(file))){
+        if ((!file.isEmpty()) && (!isValidFileExt(file))) {
             return ResponseEntity.badRequest()
-//                    .headers(responseHeaders)
                     .body("image extension is not valid");
         }
 
-        Movie movie = new Movie(title, description, genre, DateUtils.convertStringToDate(date), file.getBytes());
+        Movie movie = MoviesUtils.createMovie(file.getBytes(), title, description, genre, DateUtils.convertStringToDate(date));
+//        Movie movie = new Movie(title, description, genre, DateUtils.convertStringToDate(date), file.getBytes());
         movieRepository.save(movie);
         logger.info("saved - " + movie);
         return ResponseEntity.ok()
-//                .headers(responseHeaders)
                 .body("movie has been saved");
     }
 

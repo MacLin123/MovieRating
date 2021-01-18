@@ -33,4 +33,8 @@ interface AdminService extends RestService {
 //    @POST
 //    @Path("movies/update/{id}")
 //    void updateMovie(@PathParam("id") Long id, final Movie movie, final MethodCallback<Void> callback);
+
+    @GET
+    @Path("movies/{id}")
+    void getMovie(@PathParam("id") Long id, final MethodCallback<Movie> callback);
 }

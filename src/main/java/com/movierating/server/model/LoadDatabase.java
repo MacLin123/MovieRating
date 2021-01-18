@@ -1,5 +1,7 @@
 package com.movierating.server.model;
 
+import com.movierating.server.config.ConfigMovie;
+import com.movierating.server.repository.MovieRepository;
 import com.movierating.server.utils.DateUtils;
 import com.movierating.server.utils.ImageUtils;
 import org.slf4j.Logger;
@@ -8,9 +10,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 @Configuration
 class LoadDatabase {
@@ -27,23 +30,102 @@ class LoadDatabase {
         Date date2 = DateUtils.convertStringToDate("1972-03-11");
         Date date3 = DateUtils.convertStringToDate("2015-07-01");
 
-//        String imgPath1 = "static/imgs/no_img.jpg";
-        String imgPath2 = "static/imgs/citizen_kane.jpg";
-        String imgPath3 = "static/imgs/god_father.jpg";
-        String imgPath4 = "static/imgs/terminator_genesis.jpg";
-//        byte[] imgBytes1 = ImageUtils.getResourceImg(imgPath1, this);
-        byte[] imgBytes2 = ImageUtils.getResourceImg(imgPath2, this);
-        byte[] imgBytes3 = ImageUtils.getResourceImg(imgPath3, this);
-        byte[] imgBytes4 = ImageUtils.getResourceImg(imgPath4, this);
+//        String imgPath0 = "static/imgs/no_img.jpg";
+        String imgPath1 = "static/imgs/citizen_kane.jpg";
+        String imgPath2 = "static/imgs/god_father.jpg";
+        String imgPath3 = "static/imgs/terminator_genesis.jpg";
 
-        Movie movie1 = new Movie("Citizen Kane", "good film", "Drama", date1, imgBytes2);
-        Movie movie2 = new Movie("The Godfather", "good film", "Drama", date2, imgBytes3);
-        Movie movie3 = new Movie("Terminator Genisys", "Arnold...", "Action", date3, imgBytes4);
+        ArrayList<Movie> movies = new ArrayList<>();
+
+        movies.add(createMovie(imgPath1, "Citizen Kane", "good film", "Drama", date1));
+        movies.add(createMovie(imgPath2, "The Godfather", "good film", "Drama", date2));
+        movies.add(createMovie(imgPath3, "Terminator Genisys", "Arnold...", "Action", date3));
+
+//        //new releases
+        Date date4 = DateUtils.convertStringToDate("2020-12-25");
+        String imgPath4 = "static/imgs/ww1984.jpg";
+        String description4 = "Diana Prince lives quietly among mortals in the vibrant, sleek 1980s -- an era of excess driven by the pursuit of having it all. Though she's come into her full powers, she maintains a low profile by curating ancient artifacts, and only performing heroic acts incognito. But soon, Diana will have to muster all of her strength, wisdom and courage as she finds herself squaring off against Maxwell Lord and the Cheetah, a villainess who possesses superhuman strength and agility.";
+        movies.add(createMovie(imgPath4, "Wonder Woman 1984", description4,
+                "Action, Fantasy, Adventure", date4));
+
+        Date date5 = DateUtils.convertStringToDate("2020-12-18");
+        String imgPath5 = "static/imgs/monster_hunter.jpg";
+        String description5 = "Behind our world, there is another -- a world of dangerous and powerful monsters that rule their domain with deadly ferocity. When Lt. Artemis and her loyal soldiers are transported from our world to the new one, the unflappable lieutenant receives the shock of her life. In a desperate battle for survival against enormous enemies with incredible powers and unstoppable, terrifying attacks, Artemis teams up with a mysterious hunter who has found a way to fight back.";
+        movies.add(createMovie(imgPath5, "Monster Hunter", description5,
+                "Adventure, Action, Fantasy", date5));
+
+        Date date6 = DateUtils.convertStringToDate("2020-12-18");
+        String imgPath6 = "static/imgs/skyline.jpg";
+        String description6 = "When a virus threatens to turn friendly alien hybrids against humans, Capt. Rose Corley and her team of elite soldiers embark on a mission to an extraterrestrial world to save what's left of mankind.";
+        movies.add(createMovie(imgPath6, "Skylines", description6,
+                "Mystery And Thriller, Action, Sci Fi", date6));
+
+        Date date7 = DateUtils.convertStringToDate("2020-01-10");
+        String imgPath7 = "static/imgs/1917.jpg";
+        String description7 = "During World War I, two British soldiers -- Lance Cpl. Schofield and Lance Cpl. Blake -- receive seemingly impossible orders. In a race against time, they must cross over into enemy territory to deliver a message that could potentially save 1,600 of their fellow comrades -- including Blake's own brother.";
+        movies.add(createMovie(imgPath7, "1917", description7, "War, Drama, History", date7));
+
+        Date date8 = DateUtils.convertStringToDate("2020-12-25");
+        String imgPath8 = "static/imgs/soul.jpg";
+        String description8 = "Joe is a middle-school band teacher whose life hasn't quite gone the way he expected. His true passion is jazz -- and he's good. But when he travels to another realm to help someone find their passion, he soon discovers what it means to have soul.";
+        movies.add(createMovie(imgPath8, "Soul", description8,
+                "Comedy, Kids And Family, Animation, Adventure", date8));
+
+
+        Date date9 = DateUtils.convertStringToDate("2020-07-30");
+        String imgPath9 = "static/imgs/host.jpg";
+        String description9 = "Six friends accidentally invite the attention of a demonic presence during an online séance and begin noticing strange occurrences in their homes.";
+        movies.add(createMovie(imgPath9, "Host", description9,
+                "Horror, Mystery And Thriller", date9));
+
+        Date date10 = DateUtils.convertStringToDate("2020-03-17");
+        String imgPath10 = "static/imgs/blow_the_man_down.jpg";
+        String description10 = "Sisters have to cover up a crime while grieving their father's death.";
+        movies.add(createMovie(imgPath10, "Blow The Man Down", description10,
+                "Drama, Comedy", date10));
+
+        Date date11 = DateUtils.convertStringToDate("2020-09-18");
+        String imgPath11 = "static/imgs/rocks.jpg";
+        String description11 = "A London teen takes care of her younger brother after their mother abruptly leaves.";
+        movies.add(createMovie(imgPath11, "Rocks", description11, "Drama", date11));
+
+        Date date12 = DateUtils.convertStringToDate("2020-02-28");
+        String imgPath12 = "static/imgs/the_invisible_man.jpg";
+        String description12 = "After staging his own suicide, a crazed scientist uses his power to become invisible to stalk and terrorize his ex-girlfriend. When the police refuse to believe her story, she decides to take matters into her own hands and fight back.";
+        movies.add(createMovie(imgPath12, "The Invisible Man", description12,
+                "Mystery And Thriller, Horror", date12));
 
         return args -> {
-            log.info("Preloading " + repository.save(movie1));
-            log.info("Preloading " + repository.save(movie2));
-            log.info("Preloading " + repository.save(movie3));
+            loadToDBMovie(repository, movies);
         };
+    }
+
+    private void loadToDBMovie(MovieRepository repository, ArrayList<Movie> movies) {
+        for (Movie movie : movies) {
+            log.info("Preloading " + repository.save(movie));
+        }
+    }
+
+    private Movie createMovie(String imgPath, String title, String description, String genre, Date date) {
+        HashMap<String, byte[]> imgBytes = new HashMap<>();
+        BufferedImage img1 = ImageUtils.getResourceImgBuf(imgPath, this);
+
+        imgBytes.put(ConfigMovie.IMG_COVER_KEY.getText(),
+                ImageUtils.toByteArray(ImageUtils.resize(img1,
+                        ConfigMovie.IMG_COVER_WIDTH.getValue(),
+                        ConfigMovie.IMG_COVER_HEIGHT.getValue()),
+                        ConfigMovie.DEFAULT_IMAGE_FORMAT.getText()));
+
+        imgBytes.put(ConfigMovie.IMG_MEDIUM_KEY.getText(),
+                ImageUtils.toByteArray(ImageUtils.resize(img1,
+                        ConfigMovie.IMG_MEDIUM_WIDTH.getValue(),
+                        ConfigMovie.IMG_MEDIUM_HEIGHT.getValue()),
+                        ConfigMovie.DEFAULT_IMAGE_FORMAT.getText()));
+
+        imgBytes.put(ConfigMovie.IMG_LARGE_KEY.getText(), ImageUtils.toByteArray(img1,
+                ConfigMovie.DEFAULT_IMAGE_FORMAT.getText()));
+
+        return new Movie(title, description, genre, date,
+                imgBytes);
     }
 }

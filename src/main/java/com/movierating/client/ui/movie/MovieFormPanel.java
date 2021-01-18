@@ -1,14 +1,11 @@
 package com.movierating.client.ui.movie;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.*;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.HeadingElement;
-import com.google.gwt.dom.client.InputElement;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiConstructor;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.*;
 import com.google.gwt.user.client.ui.*;
 import com.movierating.client.config.FileConfig;
 import com.movierating.client.config.Pages;
@@ -29,8 +26,8 @@ public class MovieFormPanel extends Composite {
     private static Resources resources = GWT.create(Resources.class);
 
     private static final AdminService adminService = GWT.create(AdminService.class);
-    private static final String URL_REQUEST_CREATE = Defaults.getServiceRoot() + "/admin/movies/create";
-    private static final String URL_REQUEST_UPDATE = Defaults.getServiceRoot() + "/admin/movies/update";
+    private static final String URL_REQUEST_CREATE = Defaults.getServiceRoot() + "admin/movies/create";
+    private static final String URL_REQUEST_UPDATE = Defaults.getServiceRoot() + "admin/movies/update";
     @UiField
     HeadingElement header;
 
@@ -85,29 +82,15 @@ public class MovieFormPanel extends Composite {
     /**
      * Update movie constructor
      *
-     * @param movie
+     * @param id
      * @param headerText
      */
-    public MovieFormPanel(final Movie movie, String headerText) {
+    public MovieFormPanel(final Long id, String headerText) {
+        getMovie(id);
         initCommonFormElements();
-        formPanel.setAction(URL_REQUEST_UPDATE + "/" + movie.getId());
         header.setInnerHTML(headerText);
-        movieTitleTextBox.setText(movie.getTitle());
-        movieDescrTextArea.setText(movie.getDescription());
-        movieGenreTextBox.setText(movie.getGenre());
-        dateElem.setValue(movie.getPremierDateString());
-        coverImg.setUrl(ImageUtils.getImageData(movie.getCoverImg()));
-
-
-        removeMovieBtn.addClickHandler(event -> {
-            movieTitleTextBox.setText("");
-            movieDescrTextArea.setText("");
-            movieGenreTextBox.setText("");
-            removeMovie(movie.getId());
-        });
 
         initTextBoxLenHandler();
-        initTextBoxCharLen();
         // The result html can be null as a result of submitting a form to a different domain.
         formPanel.addSubmitCompleteHandler(event -> {
             String results = event.getResults();
@@ -130,6 +113,7 @@ public class MovieFormPanel extends Composite {
         removeMovieBtn.setVisible(false);
         initTextBoxLenHandler();
         initTextBoxCharLen();
+
 
         // The result html can be null as a result of submitting a form to a different domain.
         formPanel.addSubmitCompleteHandler(event -> {
@@ -167,7 +151,7 @@ public class MovieFormPanel extends Composite {
         formPanel.setMethod(FormPanel.METHOD_POST);
 
         movieDateTextBox.setVisible(false);
-        movieDescrTextArea.getElement().setAttribute("maxlength", "255");
+        movieDescrTextArea.getElement().setAttribute("maxlength", "500");
         initSubmitButtonHandler();
 
         formPanel.addSubmitHandler(event -> {
@@ -205,7 +189,7 @@ public class MovieFormPanel extends Composite {
         });
         movieDescrTextArea.addKeyUpHandler(event -> {
             String descrLen = String.valueOf(movieDescrTextArea.getText().length());
-            movieDescrChars.setText(descrLen + "/255");
+            movieDescrChars.setText(descrLen + "/500");
         });
 
         movieGenreTextBox.addKeyUpHandler(event -> {
@@ -219,8 +203,37 @@ public class MovieFormPanel extends Composite {
         String descrLen = String.valueOf(movieDescrTextArea.getText().length());
         String genreLen = String.valueOf(movieGenreTextBox.getText().length());
         movieTitleChars.setText(titleLen + "/255");
-        movieDescrChars.setText(descrLen + "/255");
+        movieDescrChars.setText(descrLen + "/500");
         movieGenreChars.setText(genreLen + "/255");
+    }
+
+
+    private void getMovie(Long id) {
+        adminService.getMovie(id, new MethodCallback<Movie>() {
+            @Override
+            public void onFailure(Method method, Throwable exception) {
+                Window.alert(exception.getMessage());
+            }
+
+            @Override
+            public void onSuccess(Method method, Movie movie) {
+                formPanel.setAction(URL_REQUEST_UPDATE + "/" + movie.getId());
+                movieTitleTextBox.setText(movie.getTitle());
+                movieDescrTextArea.setText(movie.getDescription());
+                movieGenreTextBox.setText(movie.getGenre());
+                dateElem.setValue(movie.getPremierDateString());
+                coverImg.setUrl(ImageUtils.getImageData(movie.getCoverImg()));
+
+
+                removeMovieBtn.addClickHandler(event -> {
+                    movieTitleTextBox.setText("");
+                    movieDescrTextArea.setText("");
+                    movieGenreTextBox.setText("");
+                    removeMovie(movie.getId());
+                });
+                initTextBoxCharLen();
+            }
+        });
     }
 ///**
 // * Add movie to the server

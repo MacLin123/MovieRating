@@ -19,9 +19,9 @@
 //
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
-//        http.headers().frameOptions().sameOrigin();
-////        http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(
-////                new WhiteListedAllowFromStrategy(
-////                        Arrays.asList("http://127.0.0.1:8888","http://127.0.0.1:8080"))));
+////        http.headers().frameOptions().sameOrigin();
+//        http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(
+//                new WhiteListedAllowFromStrategy(
+//                        Arrays.asList("http://my-site.com:8888","http://my-site.com:8080"))));
 //    }
 //}

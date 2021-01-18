@@ -1,11 +1,11 @@
 package com.movierating.server.model;
 
+import com.movierating.server.config.ConfigMovie;
 import com.movierating.server.utils.DateUtils;
 
 import javax.persistence.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Objects;
 
 @Table(name = "movies")
@@ -22,6 +22,12 @@ public class Movie {
     @Column(name = "cover_img")
     private byte[] coverImg;
 
+    @Column(name = "medium_img")
+    private byte[] mediumImg;
+
+    @Column(name = "large_img")
+    private byte[] largeImg;
+
     @Column(name = "premier_date")
     private Date premierDate;
 
@@ -33,15 +39,30 @@ public class Movie {
         this.premierDate = premierDate;
     }
 
-    public Movie(String title, String description, String genre, Date premierDate, byte[] coverImg) {
+    public Movie(String title, String description, String genre, Date premierDate,
+                 byte[] coverImg,byte[] mediumImg, byte[] largeImg) {
         this.title = title;
         this.description = description;
 //        this.rating = rating;
         this.genre = genre;
         this.premierDate = premierDate;
         this.coverImg = coverImg;
+        this.mediumImg = mediumImg;
+        this.largeImg = largeImg;
     }
-    public Movie(Long id,String title, String description, String genre, Date premierDate, byte[] coverImg) {
+    public Movie(String title, String description, String genre, Date premierDate,
+                 HashMap<String,byte[]> imgMap) {
+        this.title = title;
+        this.description = description;
+//        this.rating = rating;
+        this.genre = genre;
+        this.premierDate = premierDate;
+        this.coverImg = imgMap.get(ConfigMovie.IMG_COVER_KEY.getText());
+        this.mediumImg = imgMap.get(ConfigMovie.IMG_MEDIUM_KEY.getText());
+        this.largeImg = imgMap.get(ConfigMovie.IMG_LARGE_KEY.getText());
+    }
+    public Movie(Long id,String title, String description, String genre, Date premierDate,
+                 byte[] coverImg) {
         this.title = title;
         this.description = description;
 //        this.rating = rating;
@@ -110,6 +131,22 @@ public class Movie {
         this.coverImg = img;
     }
 
+    public byte[] getMediumImg() {
+        return mediumImg;
+    }
+
+    public void setMediumImg(byte[] mediumImg) {
+        this.mediumImg = mediumImg;
+    }
+
+    public byte[] getLargeImg() {
+        return largeImg;
+    }
+
+    public void setLargeImg(byte[] largeImg) {
+        this.largeImg = largeImg;
+    }
+
     @Override
     public String toString() {
         String strDate = DateUtils.dateToString(premierDate);
@@ -134,4 +171,5 @@ public class Movie {
     public int hashCode() {
         return Objects.hash(id, title);
     }
+
 }

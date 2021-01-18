@@ -1,6 +1,7 @@
 package com.movierating.client.ui.admin;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.History;
@@ -18,6 +19,34 @@ import java.util.List;
 
 public class AdminPanel extends Composite {
     interface AdminPanelUiBinder extends UiBinder<HTMLPanel, AdminPanel> {
+    }
+    interface MyStyle extends CssResource{
+
+        @ClassName("admin-panel")
+        String adminPanel();
+
+        String header2();
+
+        @ClassName("input-group-button")
+        String inputGroupButton();
+
+        @ClassName("input-group-text")
+        String inputGroupText();
+
+        @ClassName("img-admin")
+        String imgAdmin();
+
+        String center();
+
+        String header();
+
+        String flex_table();
+
+        @ClassName("input-group-search-button")
+        String inputGroupSearchButton();
+
+        @ClassName("input-group")
+        String inputGroup();
     }
 
     private static AdminPanelUiBinder ourUiBinder = GWT.create(AdminPanelUiBinder.class);
@@ -65,6 +94,9 @@ public class AdminPanel extends Composite {
 
     @UiField
     Button searchMovieBtn;
+
+    @UiField
+    MyStyle style;
 
 
     public AdminPanel() {
@@ -146,11 +178,12 @@ public class AdminPanel extends Composite {
                     int row = movieList.getRowCount();
 //                    movieList.setText(row, 0, movie.getTitle());
                     Image img = new Image(ImageUtils.getImageData(movie.getCoverImg()));
+                    img.addStyleName(style.imgAdmin());
                     img.addClickHandler(event -> {
                         GWT.log("click on image");
                         History.newItem(Pages.getUpdateMovie());
                         RootPanel.get("content").clear();
-                        RootPanel.get("content").add(new MovieFormPanel(movie, "Update Movie"));
+                        RootPanel.get("content").add(new MovieFormPanel(movie.getId(), "Update Movie"));
 
                     });
                     movieList.setWidget(row, 0, img);

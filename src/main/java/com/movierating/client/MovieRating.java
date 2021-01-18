@@ -11,6 +11,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.movierating.client.config.Pages;
 import com.movierating.client.ui.admin.AdminPanel;
 import com.movierating.client.ui.header.Header;
+import com.movierating.client.ui.home.HomePage;
 import com.movierating.client.ui.movie.MovieFormPanel;
 import org.fusesource.restygwt.client.Defaults;
 
@@ -46,15 +47,15 @@ public class MovieRating implements EntryPoint, ValueChangeHandler {
             RootPanel.get("content").clear();
             RootPanel.get("content").add(new AdminPanel());
         }
-//        else if(historyToken.startsWith("update-movie/")) {
-//            RootPanel.get("content").clear();
-//            RootPanel.get("content").add(new MovieForm(movie, "Update Movie"));
-//        }
+        else if(historyToken.equals(Pages.getHomePage())) {
+            RootPanel.get("content").clear();
+            RootPanel.get("content").add(new HomePage());
+        }
     }
 
     private void useCorrectRequestBaseUrl() {
         if (isDevelopmentMode()) {
-            Defaults.setServiceRoot("http://localhost:8080");
+            Defaults.setServiceRoot("http://127.0.0.1:8080");
         } else {
             Defaults.setServiceRoot(GWT.getHostPageBaseURL());
         }

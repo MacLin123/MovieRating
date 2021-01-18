@@ -184,7 +184,7 @@
             <div class="{style.input-group}">
                 <label class="{style.label-group}">Description</label>
                 <g:TextArea ui:field="movieDescrTextArea" addStyleNames="{style.input-group-text}"/>
-                <g:Label ui:field="movieDescrChars" addStyleNames="{style.char-label}">0/255</g:Label>
+                <g:Label ui:field="movieDescrChars" addStyleNames="{style.char-label}">0/500</g:Label>
             </div>
             <div class="{style.input-group}">
                 <label class="{style.label-group}">Genres</label>

@@ -1,30 +1,51 @@
 package com.movierating.server.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 
 public class ImageUtils {
-    public static byte[] toByteArray(BufferedImage bi, String format)
-            throws IOException {
+    private static final Logger log = LoggerFactory.getLogger(ImageUtils.class);
+
+    /**
+     *
+     * @param bi
+     * @param format of file (jpg,png, etc...)
+     * @return
+     * @throws IOException
+     */
+    public static byte[] toByteArray(BufferedImage bi, String format) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(bi, format, baos);
+        try {
+            ImageIO.write(bi, format, baos);
+        } catch (IOException e) {
+            log.warn("Image write problem, message = " + e.getMessage());
+        }
         byte[] bytes = baos.toByteArray();
         return bytes;
     }
 
-    //    public static BufferedImage toBufferedImage(byte[] bytes)
-//            throws IOException {
-//
-//        InputStream is = new ByteArrayInputStream(bytes);
-//        BufferedImage bi = ImageIO.read(is);
-//        return bi;
-//
-//    }
+    public static BufferedImage toBufferedImage(byte[] bytes) {
+
+        InputStream is = new ByteArrayInputStream(bytes);
+        BufferedImage bi = null;
+        try {
+            bi = ImageIO.read(is);
+        } catch (IOException e) {
+            log.warn("Image read problem, message = " + e.getMessage());
+        }
+        return bi;
+
+    }
+
     public static BufferedImage resize(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_BGR);
@@ -36,34 +57,58 @@ public class ImageUtils {
         return dimg;
     }
 
-    public static byte[] getResourceImg(String imgPath, Object obj) {
+    public static byte[] getResourceImgBytes(String imgPath, Object obj) {
         InputStream is = obj.getClass().getClassLoader().getResourceAsStream(imgPath);
 
         BufferedImage bufImage;
         byte[] imgBytes = null;
         try {
             bufImage = ImageIO.read(is);
-            imgBytes = ImageUtils.toByteArray(bufImage,"jpg");
+            imgBytes = ImageUtils.toByteArray(bufImage, "jpg");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  imgBytes;
+        return imgBytes;
     }
 
-    public static byte[] getResourceImg(String imgPath, Object obj,int width,int height) {
+    public static byte[] getResourceImgBytes(String imgPath, Object obj, int width, int height) {
         InputStream is = obj.getClass().getClassLoader().getResourceAsStream(imgPath);
 
         BufferedImage bufImage;
         byte[] imgBytes = null;
         try {
             bufImage = ImageIO.read(is);
-            bufImage = ImageUtils.resize(bufImage,width,height);
-            imgBytes = ImageUtils.toByteArray(bufImage,"jpg");
+            bufImage = ImageUtils.resize(bufImage, width, height);
+            imgBytes = ImageUtils.toByteArray(bufImage, "jpg");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  imgBytes;
+        return imgBytes;
     }
+    public static BufferedImage getResourceImgBuf(String imgPath, Object obj, int width, int height) {
+        InputStream is = obj.getClass().getClassLoader().getResourceAsStream(imgPath);
+
+        BufferedImage bufImage = null;
+        try {
+            bufImage = ImageIO.read(is);
+            bufImage = ImageUtils.resize(bufImage, width, height);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bufImage;
+    }
+    public static BufferedImage getResourceImgBuf(String imgPath, Object obj) {
+        InputStream is = obj.getClass().getClassLoader().getResourceAsStream(imgPath);
+
+        BufferedImage bufImage = null;
+        try {
+            bufImage = ImageIO.read(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bufImage;
+    }
+
     public static Optional<String> getExtensionByStringHandling(String filename) {
         return Optional.ofNullable(filename)
                 .filter(f -> f.contains("."))

@@ -1,14 +1,15 @@
 package com.movierating.client.ui.movie;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.*;
-import com.google.gwt.user.datepicker.client.CalendarUtil;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.movierating.client.model.Movie;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class MovieLabel extends Composite {
     }
 
     private final List<MovieLabelClickHandler> clickHandlers;
+    private static final int MAX_DESCRIPTION_LEN = 150;
 
     @UiField
     Label title;
@@ -40,8 +42,12 @@ public class MovieLabel extends Composite {
 //        ourUiBinder.createAndBindUi(this);
 //        coverImage = new Image(ImageUtils.getImageData(movie.getCoverImg()));
         title.setText(movie.getTitle());
-        description.setText(movie.getDescription());
-        String yearStr = "(" +  DateTimeFormat.getFormat("yyyy").format(movie.getPremierDate()) + ")";
+        String descrToInsert = movie.getDescription();
+        if (descrToInsert.length() > MAX_DESCRIPTION_LEN) {
+            descrToInsert = descrToInsert.substring(0, MAX_DESCRIPTION_LEN) + "...";
+        }
+        description.setText(descrToInsert);
+        String yearStr = "(" + DateTimeFormat.getFormat("yyyy").format(movie.getPremierDate()) + ")";
         year.setText(yearStr);
         clickHandlers = new ArrayList<>();
         addDomHandler(event -> {
