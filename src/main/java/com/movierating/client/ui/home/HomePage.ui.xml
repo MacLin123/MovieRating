@@ -15,11 +15,17 @@
         }
 
         .movie-lists{
-            width: 50%
+            width: 100%
         }
+
+        .movie-lists td {
+            width: 60%;
+        }
+
 
         .glider-style{
             width: 70%;
+            max-width: 920px;
             margin: 20px 0 20px 20px;
         }
 

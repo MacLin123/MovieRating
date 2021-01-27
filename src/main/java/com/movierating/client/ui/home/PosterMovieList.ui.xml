@@ -1,6 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <ui:style>
+    <ui:style type="com.movierating.client.ui.home.PosterMovieList.MyStyle">
         .carousel-home {
             padding-top: 100px;
         }
@@ -8,36 +8,34 @@
         .releases-header {
             text-align: left;
             margin: 0;
-            width: 80%;
-            margin-bottom: 7px;
-            /*padding-bottom: 20px;*/
-            padding-top: 40px;
+            width: 70%;
+            max-width: 800px;
+            /*margin-bottom: 7px;*/
+            /*padding-top: 40px;*/
+            display: inline-block;
         }
-        .home-panel{
+
+        .home-panel {
             padding-left: 16px;
             /*max-width: 1000px;*/
             overflow: hidden;
         }
-        .poster-panel{
+
+        .poster-panel {
             float: left;
         }
-        .h2{
-            font-family: "Open Sans", Arial, "Trebuchet MS", Verdana, sans-serif;
-            font-weight: 500;
+
+        .h2 {
             font-size: 1.25rem;
-            letter-spacing: 0;
-            line-height: 1.2;
-            padding-left: 9px;
-            text-transform: uppercase;
-            margin-bottom: 1em;
-            width: 80%;
+            width: 63%;
+            font-weight: 500;
         }
 
         .viewAllButton {
             text-transform: uppercase;
-            background: none!important;
+            background: none !important;
             border: none;
-            padding: 0!important;
+            padding: 0 !important;
             cursor: pointer;
 
             background-color: transparent;
@@ -51,11 +49,33 @@
             cursor: pointer;
         }
 
+        .glider-style {
+            width: 70%;
+            max-width: 920px;
+            margin: 20px 0 20px 20px;
+        }
+
+        .div-header{
+            font-family: "Open Sans", Arial, "Trebuchet MS", Verdana, sans-serif;
+            font-size: 1.25rem;
+            line-height: 1.2;
+            text-transform: uppercase;
+
+            margin-bottom: 7px;
+            padding-top: 40px;
+            padding-left: 20px;
+        }
+
+
+
     </ui:style>
     <g:HTMLPanel addStyleNames="{style.home-panel}">
-        <h2 class="{style.releases-header} {style.h2}">New Releases
+        <div class="{style.div-header}">
+            <h2 ui:field="header" class="{style.releases-header} {style.h2}"></h2>
             <g:Button addStyleNames="{style.viewAllButton}" ui:field="viewAllBtn">View all</g:Button>
-        </h2>
+        </div>
+        <div ui:field="newReleasesDiv">
+        </div>
         <g:FlowPanel ui:field="posterPanel" addStyleNames="{style.poster-panel}">
         </g:FlowPanel>
     </g:HTMLPanel>

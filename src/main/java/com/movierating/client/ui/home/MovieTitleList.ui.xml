@@ -1,6 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <ui:style>
+    <ui:style type="com.movierating.client.ui.home.MovieTitleList.MyStyle">
         .viewAllButton {
             text-transform: uppercase;
             background: none !important;
@@ -34,15 +34,30 @@
         .releases-header {
             text-align: left;
             margin: 0;
-            width: 80%;
+            width: 100%;
             margin-bottom: 7px;
             /*padding-bottom: 20px;*/
             padding-top: 40px;
         }
-        .best-movies-list{
 
-            padding:5px 5px 5px  9px;
+        .best-movies-list {
+            padding: 2px;
+            margin-bottom: 6px;
+            width: 100%;
+        }
 
+        .best-movies-list thead,tbody, tr {
+            width: 80%;
+        }
+
+        .best-movies-list-cell-global {
+            text-align: left;
+            width: 10%;
+        }
+
+        .best-movies-list-cell-title {
+            text-align: left;
+            width: 80%;
         }
 
 
@@ -51,6 +66,8 @@
         <h2 ui:field="bestMoviesHeader" class="{style.releases-header} {style.h2}">Best Movies
             <g:Button addStyleNames="{style.viewAllButton}" ui:field="viewAllCur">View all</g:Button>
         </h2>
-        <g:VerticalPanel addStyleNames="{style.best-movies-list}" ui:field="bestMoviesPanel"></g:VerticalPanel>
+        <g:FlexTable addStyleNames="{style.best-movies-list}" ui:field="bestMoviesTable">
+        </g:FlexTable>
+        <!--        <g:VerticalPanel addStyleNames="{style.best-movies-list}" ui:field="bestMoviesPanel"></g:VerticalPanel>-->
     </g:HTMLPanel>
 </ui:UiBinder>

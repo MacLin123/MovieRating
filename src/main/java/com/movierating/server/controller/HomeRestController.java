@@ -48,7 +48,7 @@ public class HomeRestController {
 //        Instant before = now.plus(Duration.ofDays(365));
 //        Date start = Date.from(before);
 
-        List<MovieViewMdImgDto> movieViews = movieRepository.findFirst5ByPremierDateAfter(new Date(), MovieViewMdImgDto.class);
+        List<MovieViewMdImgDto> movieViews = movieRepository.findFirst10ByPremierDateAfter(new Date(), MovieViewMdImgDto.class);
         logger.info("GET - " + movieViews);
         return movieViews;
     }

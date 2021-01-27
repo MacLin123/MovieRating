@@ -20,7 +20,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     <T> List<T> findFirst10ByPremierDateBetween(Date start, Date end, Class<T> type);
 
-    <T> List<T> findFirst5ByPremierDateAfter(Date start, Class<T> type);
+    <T> List<T> findFirst10ByPremierDateAfter(Date start, Class<T> type);
 
 
 //    @Query(nativeQuery = true, value = "" +
