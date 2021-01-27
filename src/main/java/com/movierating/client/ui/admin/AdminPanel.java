@@ -27,12 +27,6 @@ public class AdminPanel extends Composite {
 
         String header2();
 
-        @ClassName("input-group-button")
-        String inputGroupButton();
-
-        @ClassName("input-group-text")
-        String inputGroupText();
-
         @ClassName("img-admin")
         String imgAdmin();
 
@@ -42,11 +36,17 @@ public class AdminPanel extends Composite {
 
         String flex_table();
 
+        @ClassName("input-group-search")
+        String inputGroupSearch();
+
+        @ClassName("input-group-button")
+        String inputGroupButton();
+
+        @ClassName("input-group-search-text")
+        String inputGroupSearchText();
+
         @ClassName("input-group-search-button")
         String inputGroupSearchButton();
-
-        @ClassName("input-group")
-        String inputGroup();
     }
 
     private static AdminPanelUiBinder ourUiBinder = GWT.create(AdminPanelUiBinder.class);
@@ -143,7 +143,6 @@ public class AdminPanel extends Composite {
      * get data from the server and refresh front-end
      */
     public void refreshMovies() {
-        GWT.log(searchByTitleTextBox.getText() + " title");
         String searchTitle = searchByTitleTextBox.getText();
         if (searchTitle.isEmpty()) {
             return;
@@ -181,7 +180,7 @@ public class AdminPanel extends Composite {
                     img.addStyleName(style.imgAdmin());
                     img.addClickHandler(event -> {
                         GWT.log("click on image");
-                        History.newItem(Pages.getUpdateMovie());
+                        History.newItem(Pages.UPDATE_MOVIE.getStrValue());
                         RootPanel.get("content").clear();
                         RootPanel.get("content").add(new MovieFormPanel(movie.getId(), "Update Movie"));
 

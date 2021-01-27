@@ -11,19 +11,23 @@ public enum Pages {
         this.strValue = strValue;
     }
 
-    public static String getCreateMovie() {
-        return CREATE_MOVIE.strValue;
+    public String getStrValue() {
+        return strValue;
     }
 
-    public static String getUpdateMovie() {
-        return UPDATE_MOVIE.strValue;
-    }
+//    public static String getCreateMovie() {
+//        return CREATE_MOVIE.strValue;
+//    }
 
-    public static String getAdminPage() {
-        return ADMIN.strValue;
-    }
-    public static String getHomePage() {
-        return HOME.strValue;
-    }
+//    public static String getUpdateMovie() {
+//        return UPDATE_MOVIE.strValue;
+//    }
+
+//    public static String getAdminPage() {
+//        return ADMIN.strValue;
+//    }
+//    public static String getHomePage() {
+//        return HOME.strValue;
+//    }
 
 }

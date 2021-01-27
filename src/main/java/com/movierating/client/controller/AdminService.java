@@ -37,4 +37,5 @@ interface AdminService extends RestService {
     @GET
     @Path("movies/{id}")
     void getMovie(@PathParam("id") Long id, final MethodCallback<Movie> callback);
+
 }

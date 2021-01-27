@@ -19,10 +19,6 @@ import java.util.HashMap;
 class LoadDatabase {
 
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
-    private final String sDate = "01/12/2020";
-    private final String endDate = "31/12/2020";
-    private Date dateStart = null;
-    private Date dateEnd = null;
 
     @Bean
     CommandLineRunner initMovies(MovieRepository repository) {
@@ -94,6 +90,49 @@ class LoadDatabase {
         String description12 = "After staging his own suicide, a crazed scientist uses his power to become invisible to stalk and terrorize his ex-girlfriend. When the police refuse to believe her story, she decides to take matters into her own hands and fight back.";
         movies.add(createMovie(imgPath12, "The Invisible Man", description12,
                 "Mystery And Thriller, Horror", date12));
+
+        //upcoming movies
+        Date date13 = DateUtils.convertStringToDate("2021-12-22");
+        String imgPath13 = "static/imgs/the_nightingale.jpg";
+        String description13 = "The lives of two sisters living in France are torn apart at the onset of World War II. Based on Kristin Hannah's novel 'The Nightingale'.";
+        movies.add(createMovie(imgPath13, "The Nightingale", description13,
+                "Drama, History, War", date13));
+
+        Date date14 = DateUtils.convertStringToDate("2022-01-15");
+        String imgPath14 = "static/imgs/the_355.jpg";
+        String description14 = "Five women band together to stop a global organization from acquiring a weapon that could thrust the teetering world into total chaos.";
+        movies.add(createMovie(imgPath14, "The 355", description14,
+                "Mystery And Thriller, Action", date14));
+
+        Date date15 = DateUtils.convertStringToDate("2021-12-10");
+        String imgPath15 = "static/imgs/west_side_story.jpg";
+        String description15 = "Two teenagers from different ethnic backgrounds fall in love in 1950s New York City.";
+        movies.add(createMovie(imgPath15, "West Side Story", description15,
+                "Musical", date15));
+
+        Date date16 = DateUtils.convertStringToDate("2021-12-22");
+        String imgPath16 = "static/imgs/the_matrix_4.jpg";
+        String description16 = "The further adventures of Neo and Trinity.";
+        movies.add(createMovie(imgPath16, "The Matrix 4", description16,
+                "Sci Fi, Action", date16));
+
+        Date date17 = DateUtils.convertStringToDate("2021-12-22");
+        String imgPath17 = "static/imgs/sing2.jpg";
+        String description17 = "Buster Moon and his friends must persuade reclusive rock star Clay Calloway to join them for the opening of a new show.";
+        movies.add(createMovie(imgPath17, "Sing 2", description17,
+                "Comedy, Animation, Kids And Family, Musical", date17));
+
+        Date date18 = DateUtils.convertStringToDate("2022-01-14");
+        String imgPath18 = "static/imgs/scream5.jpg";
+        String description18 = "A new installment of the 'Scream' horror franchise will follow a woman returning to her home town to try to find out who has been committing a series of vicious crimes.";
+        movies.add(createMovie(imgPath18, "Scream 5", description18,
+                "Mystery And Thriller, Horror", date18));
+
+        Date date19 = DateUtils.convertStringToDate("2021-12-22");
+        String imgPath19 = "static/imgs/sherlock_holmes3.jpg";
+        String description19 = "The further adventures of Detective Sherlock Holmes and Dr. John Watson.";
+        movies.add(createMovie(imgPath19, "Sherlock Holmes 3", description19,
+                "Mystery And Thriller, Adventure", date19));
 
         return args -> {
             loadToDBMovie(repository, movies);

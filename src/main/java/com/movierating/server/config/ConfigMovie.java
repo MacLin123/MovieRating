@@ -8,7 +8,8 @@ public enum ConfigMovie {
     IMG_COVER_KEY("coverImg"),
     IMG_MEDIUM_KEY("mediumImg"),
     IMG_LARGE_KEY("largeImg"),
-    DEFAULT_IMAGE_FORMAT("jpg");
+    DEFAULT_IMAGE_FORMAT("jpg"),
+    MAX_RATING(100);
     private int value;
     private String text;
 

@@ -1,7 +1,41 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
-             xmlns:my="urn:import:com.movierating.client.ui.home">
+             xmlns:my='urn:import:com.movierating.client.ui.home'>
+    <ui:style type="com.movierating.client.ui.home.HomePage.MyStyle">
+        .carousel-home {
+            padding-top: 100px;
+        }
+
+        .releases-header {
+            text-align: center;
+            margin: 0;
+            width: 80%;
+            padding-bottom: 20px;
+            padding-top: 40px;
+        }
+
+        .movie-lists{
+            width: 50%
+        }
+
+        .glider-style{
+            width: 70%;
+            margin: 20px 0 20px 20px;
+        }
+
+    </ui:style>
     <g:HTMLPanel>
-        <my:CarouselWidget ui:field="carousel"></my:CarouselWidget>
+        <my:PosterMovieList ui:field="newReleaseMovies">
+        </my:PosterMovieList>
+        <my:PosterMovieList ui:field="upcomingReleaseMovies">
+        </my:PosterMovieList>
+
+        <g:HorizontalPanel addStyleNames="{style.movie-lists}">
+            <my:MovieTitleList>
+            </my:MovieTitleList>
+
+            <my:MovieTitleList>
+            </my:MovieTitleList>
+        </g:HorizontalPanel>
     </g:HTMLPanel>
 </ui:UiBinder>

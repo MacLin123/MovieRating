@@ -31,8 +31,8 @@ public class Header extends Composite {
 
     public Header() {
         initWidget(ourUiBinder.createAndBindUi(this));
-        home.setTargetHistoryToken(Pages.getHomePage());
-        admin.setTargetHistoryToken(Pages.getAdminPage());
-        createMovie.setTargetHistoryToken(Pages.getCreateMovie());
+        home.setTargetHistoryToken(Pages.HOME.getStrValue());
+        admin.setTargetHistoryToken(Pages.ADMIN.getStrValue());
+        createMovie.setTargetHistoryToken(Pages.CREATE_MOVIE.getStrValue());
     }
 }

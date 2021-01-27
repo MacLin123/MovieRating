@@ -1,15 +1,15 @@
-/*body {*/
-/*    background-color: white;*/
-/*    color: black;*/
-/*    font-family: Arial, sans-serif;*/
-/*    font-size: small;*/
-/*    margin: 8px;*/
+/*!*body {*!*/
+/*!*    background-color: white;*!*/
+/*!*    color: black;*!*/
+/*!*    font-family: Arial, sans-serif;*!*/
+/*!*    font-size: small;*!*/
+/*!*    margin: 8px;*!*/
+/*!*}*!*/
+
+/*.sideCarousel {*/
+/*    z-index: 0;*/
 /*}*/
 
-.sideCarousel {
-    z-index: 0;
-}
-
-.centerCarousel {
-    z-index: 1;
-}
+/*.centerCarousel {*/
+/*    z-index: 1;*/
+/*}*/

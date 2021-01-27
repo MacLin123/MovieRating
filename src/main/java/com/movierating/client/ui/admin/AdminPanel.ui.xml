@@ -5,9 +5,6 @@
             font-family: 'Roboto', sans-serif;
             font-size: 16px;
             line-height: 24px;
-            width: 100%;
-            height: 100%;
-            margin: 0;
             background-color: #FFFFFF;
         }
 
@@ -52,7 +49,7 @@
             padding-bottom: 20px;
         }
 
-        .input-group {
+        .input-group-search {
             display: flex;
             width: 40%;
             padding-top: 20px;
@@ -61,7 +58,7 @@
             transition: width 0.1s ease-in-out;
         }
 
-        .input-group-text {
+        .input-group-search-text {
             width: 100%;
             padding: 10px;
             font-size: 17px;
@@ -122,6 +119,13 @@
             width: 80px;
             height: 120px;
         }
+        .flex_table tr,thead,tbody {
+            display: table-row;
+            vertical-align: center;
+            border-color: inherit;
+
+
+        }
 
     </ui:style>
 
@@ -129,8 +133,8 @@
         <div class="{style.admin-panel}">
             <h1 class="{style.header}">Admin Page</h1>
 
-            <div class="{style.input-group}">
-                <g:TextBox ui:field="searchByTitleTextBox" addStyleNames="{style.input-group-text}"/>
+            <div class="{style.input-group-search}">
+                <g:TextBox ui:field="searchByTitleTextBox" addStyleNames="{style.input-group-search-text}"/>
                 <g:Button ui:field="searchMovieBtn" addStyleNames="{style.input-group-search-button}">Search</g:Button>
             </div>
 

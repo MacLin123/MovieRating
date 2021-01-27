@@ -23,7 +23,7 @@ public class MovieFormPanel extends Composite {
 
     private static MovieFormPanelUiBinder ourUiBinder = GWT.create(MovieFormPanelUiBinder.class);
 
-    private static Resources resources = GWT.create(Resources.class);
+//    private static Resources resources = GWT.create(Resources.class);
 
     private static final AdminService adminService = GWT.create(AdminService.class);
     private static final String URL_REQUEST_CREATE = Defaults.getServiceRoot() + "admin/movies/create";
@@ -95,7 +95,7 @@ public class MovieFormPanel extends Composite {
         formPanel.addSubmitCompleteHandler(event -> {
             String results = event.getResults();
             Window.alert((results != null) ? results : "Submitted");
-            History.newItem(Pages.getAdminPage());
+            History.newItem(Pages.ADMIN.getStrValue());
         });
     }
 
@@ -108,7 +108,7 @@ public class MovieFormPanel extends Composite {
         initCommonFormElements();
         formPanel.setAction(URL_REQUEST_CREATE);
         header.setInnerHTML(headerText);
-        coverImg.setResource(resources.emptyCover());
+        coverImg.setResource(Resources.INSTANCE.emptyCover());
 
         removeMovieBtn.setVisible(false);
         initTextBoxLenHandler();
@@ -295,7 +295,7 @@ public class MovieFormPanel extends Composite {
             @Override
             public void onSuccess(final Method method, final Void response) {
                 Window.alert(method.getResponse().getText());
-                History.newItem(Pages.getAdminPage());
+                History.newItem(Pages.ADMIN.getStrValue());
             }
         });
     }

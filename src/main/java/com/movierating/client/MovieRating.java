@@ -5,8 +5,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.ui.HeaderPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.movierating.client.config.Pages;
 import com.movierating.client.ui.admin.AdminPanel;
@@ -20,6 +18,7 @@ public class MovieRating implements EntryPoint, ValueChangeHandler {
 
     public void onModuleLoad() {
         useCorrectRequestBaseUrl();
+
         RootPanel.get("content").add(new AdminPanel());
         RootPanel.get("header").add(new Header());
 
@@ -28,7 +27,7 @@ public class MovieRating implements EntryPoint, ValueChangeHandler {
 
         History.addValueChangeHandler(this);
         if (History.getToken().isEmpty()) {
-            History.newItem(Pages.getAdminPage());
+            History.newItem(Pages.ADMIN.getStrValue());
         } else {
             changePage(History.getToken());
         }
@@ -40,14 +39,13 @@ public class MovieRating implements EntryPoint, ValueChangeHandler {
 
     public void changePage(String token) {
         String historyToken = History.getToken();
-        if (historyToken.equals(Pages.getCreateMovie())) {
+        if (historyToken.equals(Pages.CREATE_MOVIE.getStrValue())) {
             RootPanel.get("content").clear();
             RootPanel.get("content").add(new MovieFormPanel("Create Movie"));
-        } else if (historyToken.equals(Pages.getAdminPage())) {
+        } else if (historyToken.equals(Pages.ADMIN.getStrValue())) {
             RootPanel.get("content").clear();
             RootPanel.get("content").add(new AdminPanel());
-        }
-        else if(historyToken.equals(Pages.getHomePage())) {
+        } else if (historyToken.equals(Pages.HOME.getStrValue())) {
             RootPanel.get("content").clear();
             RootPanel.get("content").add(new HomePage());
         }
@@ -64,4 +62,5 @@ public class MovieRating implements EntryPoint, ValueChangeHandler {
     private static native boolean isDevelopmentMode()/*-{
         return typeof $wnd.__gwt_sdm !== 'undefined';
     }-*/;
+
 }

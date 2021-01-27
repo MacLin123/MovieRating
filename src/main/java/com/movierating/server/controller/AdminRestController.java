@@ -36,7 +36,7 @@ public class AdminRestController {
     @RequestMapping(value = "movies", method = RequestMethod.POST)
     public List<MovieViewSmImgDto> getSearchedMovies(@RequestBody String title) {
         logger.info("Search querry");
-        List<MovieViewSmImgDto> movieViews = movieRepository.findByTitleContainingIgnoreCase(title);
+        List<MovieViewSmImgDto> movieViews = movieRepository.findByTitleContainingIgnoreCase(title,MovieViewSmImgDto.class);
         logger.info(movieViews.toString());
         return movieViews;
     }

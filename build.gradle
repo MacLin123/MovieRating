@@ -34,6 +34,7 @@ sourceSets {
 }
 
 dependencies {
+
     compileOnly("com.google.gwt:gwt-user:${GWT_VERSION}")
     compileOnly("com.google.gwt:gwt-dev:${GWT_VERSION}")
     compileOnly('org.fusesource.restygwt:restygwt:2.2.3')
