@@ -134,6 +134,51 @@ class LoadDatabase {
         movies.add(createMovie(imgPath19, "Sherlock Holmes 3", description19,
                 "Mystery And Thriller, Adventure", date19));
 
+        //2021 movies that has released
+
+        Date date20 = DateUtils.convertStringToDate("2021-01-01");
+        String imgPath20 = "static/imgs/breach.jpg";
+        String description20 = "Fleeing a devastating plague on Earth, an interstellar ark comes under attack from a new threat -- a shape-shifting alien force intent on slaughtering what's left of humanity.";
+        movies.add(createMovie(imgPath20, "Breach", description20,
+                "Action, Sci Fi", date20));
+
+        Date date21 = DateUtils.convertStringToDate("2021-01-04");
+        String imgPath21 = "static/imgs/castle_in_the_ground.jpg";
+        String description21 = "A grieving teen befriends his charismatic but troubled neighbor, only to become ensnared in a world of addiction and violence as the opioid epidemic takes hold of his small town.";
+        movies.add(createMovie(imgPath21, "Castle In The Ground", description21,
+                "Drama", date21));
+
+        Date date22 = DateUtils.convertStringToDate("2021-01-07");
+        String imgPath22 = "static/imgs/the_very_excellent_mr_dundee.jpg";
+        String description22 = "Paul Hogan is reluctantly thrust back into the spotlight as he desperately attempts to restore his sullied reputation on the eve of being knighted.";
+        movies.add(createMovie(imgPath22, "The Very Excellent Mr. Dundee", description22,
+                "Comedy", date22));
+
+        Date date23 = DateUtils.convertStringToDate("2021-01-15");
+        String imgPath23 = "static/imgs/marksman.jpg";
+        String description23 = "Hardened Arizona rancher Jim Hanson (Liam Neeson) simply wants to be left alone as he fends off eviction notices and tries to make a living on an isolated stretch of borderland. But everything changes when Hanson, an ex-Marine sharpshooter, witnesses 11-year-old migrant Miguel (Jacob Perez) fleeing with his mother Rosa (Teresa Ruiz) from drug cartel assassins led by the ruthless Mauricio (Juan Pablo Raba). After being caught in a shoot-out, a dying Rosa begs Jim to take her son to safety to her family in Chicago. Defying his cop daughter Sarah (Katheryn Winnick), Jim sneaks Miguel out of the local U.S. Customs and Border Patrol station and together, they hit the road with the group of killers in pursuit. Jim and Miguel slowly begin to overcome their differences and begin to forge an unlikely friendship, while Mauricio and his fellow assassins blaze a cold-blooded trail, hot on their heels. When they finally meet on a Midwestern farm, a fight to the death ensues as Jim uses his military skills and code of honor to defend the boy he's come to love.";
+        movies.add(createMovie(imgPath23, "The Marksman", description23,
+                "Action, Mystery And Thriller", date23));
+
+        Date date24 = DateUtils.convertStringToDate("2021-01-29");
+        String imgPath24 = "static/imgs/the_little_things.jpg";
+        String description24 = "Deputy Sheriff Joe \"Deke\" Deacon joins forces with Sgt. Jim Baxter to search for a serial killer who's terrorizing Los Angeles. As they track the culprit, Baxter is unaware that the investigation is dredging up echoes of Deke's past, uncovering disturbing secrets that could threaten more than his case.";
+        movies.add(createMovie(imgPath24, "The Little Things", description24,
+                "Mystery And Thriller, Crime, Drama", date24));
+
+        Date date25 = DateUtils.convertStringToDate("2021-01-31");
+        String imgPath25 = "static/imgs/prisoners_of_the_ghostland.jpg";
+        String description25 = "A notorious criminal must break an evil curse in order to rescue an abducted girl who has mysteriously disappeared.";
+        movies.add(createMovie(imgPath25, "Prisoners Of The Ghostland", description25,
+                "Action, Horror, Mystery And Thriller", date25));
+
+        // 2020
+        Date date26 = DateUtils.convertStringToDate("2020-09-04");
+        String imgPath26 = "static/imgs/mulan.jpg";
+        String description26 = "To save her ailing father from serving in the Imperial Army, a fearless young woman disguises herself as a man to battle northern invaders in China.";
+        movies.add(createMovie(imgPath26, "Mulan", description26,
+                "Action, Adventure", date26));
+
         return args -> {
             loadToDBMovie(repository, movies);
         };

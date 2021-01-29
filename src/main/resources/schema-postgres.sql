@@ -1,9 +1,9 @@
 DROP TABLE IF EXISTS movies;
 CREATE TABLE IF NOT EXISTS movies
 (
-    id           serial PRIMARY key,
+    id           bigserial PRIMARY key,
     title        VARCHAR(255),
-    description  VARCHAR(500),
+    description  VARCHAR(2000),
     rating       INTEGER,
     genre        VARCHAR(255),
     premier_date DATE,

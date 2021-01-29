@@ -27,7 +27,6 @@ public class DateUtils {
     }
 
     public static String dateToString(Date date) {
-
         DateFormat formatter = new SimpleDateFormat(formatDate);
         String formattedDate = formatter.format(date);
         return formattedDate;

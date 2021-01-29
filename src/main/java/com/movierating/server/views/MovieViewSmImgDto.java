@@ -31,6 +31,12 @@ public class MovieViewSmImgDto {
 
     }
 
+    public MovieViewSmImgDto(Long id, String title, Integer rating) {
+        this.id = id;
+        this.title = title;
+        this.rating = rating;
+    }
+
     public Long getId() {
         return id;
     }
@@ -89,7 +95,10 @@ public class MovieViewSmImgDto {
 
     @Override
     public String toString() {
-        String strDate = DateUtils.dateToString(premierDate);
+        String strDate = "";
+        if (premierDate != null) {
+            strDate = DateUtils.dateToString(premierDate);
+        }
         return "MovieViewSmImgDto{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +

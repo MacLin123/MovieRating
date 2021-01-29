@@ -151,7 +151,7 @@ public class MovieFormPanel extends Composite {
         formPanel.setMethod(FormPanel.METHOD_POST);
 
         movieDateTextBox.setVisible(false);
-        movieDescrTextArea.getElement().setAttribute("maxlength", "500");
+        movieDescrTextArea.getElement().setAttribute("maxlength", "2000");
         initSubmitButtonHandler();
 
         formPanel.addSubmitHandler(event -> {
@@ -189,7 +189,7 @@ public class MovieFormPanel extends Composite {
         });
         movieDescrTextArea.addKeyUpHandler(event -> {
             String descrLen = String.valueOf(movieDescrTextArea.getText().length());
-            movieDescrChars.setText(descrLen + "/500");
+            movieDescrChars.setText(descrLen + "/2000");
         });
 
         movieGenreTextBox.addKeyUpHandler(event -> {
@@ -203,7 +203,7 @@ public class MovieFormPanel extends Composite {
         String descrLen = String.valueOf(movieDescrTextArea.getText().length());
         String genreLen = String.valueOf(movieGenreTextBox.getText().length());
         movieTitleChars.setText(titleLen + "/255");
-        movieDescrChars.setText(descrLen + "/500");
+        movieDescrChars.setText(descrLen + "/2000");
         movieGenreChars.setText(genreLen + "/255");
     }
 

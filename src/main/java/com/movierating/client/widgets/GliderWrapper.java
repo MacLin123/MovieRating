@@ -12,18 +12,19 @@ public class GliderWrapper {
 
     public native void createGlider(Element whereToInsert) /*-{
         if ($doc.readyState != "loading") {
-
+            var id = @Sequence::getNextVal()();
+            var gliderClass = "glider" + id;
             var carousel = $doc.createElement("div");
             carousel.className = "glider-contain multiple";
-            carousel.id = "glider" + @Sequence::getNextVal()();
-            carousel.innerHTML = "<div class=\"glider\">" +
+            carousel.id = "glider" + id;
+            carousel.innerHTML = "<div class=\"" + gliderClass + "\">" +
                 "</div>" +
                 "<button aria-label=\"Previous\" class=\"glider-prev\">«</button>" +
                 "<button aria-label=\"Next\" class=\"glider-next\">»</button>" +
                 "<div role=\"tablist\" class=\"dots\"></div>";
             whereToInsert.insertAdjacentElement("beforeend", carousel);
 
-            var glider = new $wnd.Glider($doc.querySelector('.glider'), {
+            var glider = new $wnd.Glider($doc.querySelector("." + gliderClass), {
                 slidesToShow: 5,
                 slidesToScroll: 5,
                 srollLock: true,

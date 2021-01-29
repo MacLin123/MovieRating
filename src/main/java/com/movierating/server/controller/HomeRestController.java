@@ -7,6 +7,7 @@ import com.movierating.server.views.MovieViewSmImgDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -68,7 +69,7 @@ public class HomeRestController {
         Date end = DateUtils.convertStringToDate(year + "-12-31");
 
         List<MovieViewSmImgDto> movieViews = movieRepository.
-                findFirst10ByPremierDateBetweenOrderByRatingDesc(start, end, MovieViewSmImgDto.class);
+                findFirst10BestMovies(start, end, PageRequest.of(0,10));
         logger.info("GET - " + movieViews);
         return movieViews;
     }
