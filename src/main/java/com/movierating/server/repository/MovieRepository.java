@@ -22,6 +22,8 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     <T> List<T> findFirst10ByPremierDateAfter(Date start, Class<T> type);
 
+    <T> List<T> findFirst10ByPremierDateBetweenOrderByRatingDesc(Date start, Date end, Class<T> type);
+
 
 //    @Query(nativeQuery = true, value = "" +
 //            "SELECT title,description,rating,genre,premier_date,:img_type " +

@@ -6,6 +6,7 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
+import com.movierating.client.resources.styles.MovieScoreStyle;
 
 public class MoviePoster extends Composite {
     interface MoviePosterUiBinder extends UiBinder<HTMLPanel, MoviePoster> {
@@ -17,19 +18,10 @@ public class MoviePoster extends Composite {
 
         String img_wrapper();
 
-        String large();
-
-        String moviescore_w();
-
-        String positive();
 
         String poster();
 
         String title_wrapper();
-
-        String negative();
-
-        String mixed();
     }
 
     @UiField
@@ -50,6 +42,9 @@ public class MoviePoster extends Composite {
     @UiField
     Label titleLabel;
 
+    @UiField
+    MovieScoreStyle movieScoreStyle;
+
     public MoviePoster() {
         initWidget(ourUiBinder.createAndBindUi(this));
     }
@@ -63,13 +58,7 @@ public class MoviePoster extends Composite {
         if(rating == null) {
             return;
         }
-        if (rating >= 70){
-            ratingDiv.addClassName(style.positive());
-        }else if (rating < 50) {
-            ratingDiv.addClassName(style.negative());
-        } else{
-            ratingDiv.addClassName(style.mixed());
-        }
+        initRatingStyle(rating);
         ratingDiv.setInnerText(String.valueOf(rating));
 
 
@@ -77,5 +66,15 @@ public class MoviePoster extends Composite {
 //        posterPanel.add(new Label(title));
 //        posterPanel.add(new Label(title));
 //        posterPanel.insert(image, DockLayoutPanel.Direction.SOUTH,50,new Label(title));
+    }
+
+    private void initRatingStyle(Integer rating) {
+        if (rating >= 70){
+            ratingDiv.addClassName(movieScoreStyle.positive());
+        }else if (rating < 50) {
+            ratingDiv.addClassName(movieScoreStyle.negative());
+        } else{
+            ratingDiv.addClassName(movieScoreStyle.mixed());
+        }
     }
 }

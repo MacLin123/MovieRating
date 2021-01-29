@@ -235,50 +235,6 @@ public class MovieFormPanel extends Composite {
             }
         });
     }
-///**
-// * Add movie to the server
-// *
-// * @param movie
-// */
-//    private void addMovie(final Movie movie) {
-//        adminService.addMovie(movie, new MethodCallback<Void>() {
-//            @Override
-//            public void onFailure(final Method method, final Throwable exception) {
-//                GWT.log(exception.getMessage());
-//            }
-//
-//            @Override
-//            public void onSuccess(final Method method, final Void response) {
-//                Window.alert("Movies has been saved");
-//                movieTitleTextBox.setText("");
-//                movieDescrTextArea.setText("");
-//                movieGenreTextBox.setText("");
-//            }
-//        });
-//    }
-//
-//    /**
-//     * Update movie to the server
-//     *
-//     * @param movie
-//     */
-//    private void updateMovie(final Movie movie) {
-//        adminService.updateMovie(movie.getId(), movie, new MethodCallback<Void>() {
-//            @Override
-//            public void onFailure(final Method method, final Throwable exception) {
-//                GWT.log(exception.getMessage());
-//            }
-//
-//            @Override
-//            public void onSuccess(final Method method, final Void response) {
-//                movieTitleTextBox.setText("");
-//                movieDescrTextArea.setText("");
-//                movieGenreTextBox.setText("");
-//                Window.alert("Movies has been updated");
-//            }
-//        });
-//    }
-//
 
     /**
      * Remove movie from the server

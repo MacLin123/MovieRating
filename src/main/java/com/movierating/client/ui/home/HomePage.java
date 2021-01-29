@@ -2,9 +2,8 @@ package com.movierating.client.ui.home;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.ScriptInjector;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.StyleInjector;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -12,7 +11,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.movierating.client.config.PosterConfig;
 import com.movierating.client.resources.Resources;
-import com.movierating.client.widgets.GliderWrapper;
+
+import java.util.Date;
 
 public class HomePage extends Composite {
     interface HomePageUiBinder extends UiBinder<HTMLPanel, HomePage> {
@@ -47,10 +47,20 @@ public class HomePage extends Composite {
     @UiField
     MyStyle style;
 
+    @UiField(provided = true)
+    MovieTitleList curYearMovieList;
+
+    @UiField(provided = true)
+    MovieTitleList prevYearMovieList;
+
     public HomePage() {
         injectResources();
-        newReleaseMovies = new PosterMovieList(PosterConfig.POSTER_NEW_RELEASES);
         upcomingReleaseMovies = new PosterMovieList(PosterConfig.POSTER_UPCOMING);
+        newReleaseMovies = new PosterMovieList(PosterConfig.POSTER_NEW_RELEASES);
+        int currentYear = Integer.parseInt(DateTimeFormat.getFormat("yyyy").format(new Date()));
+        prevYearMovieList = new MovieTitleList(currentYear - 1);
+        curYearMovieList = new MovieTitleList(currentYear);
+
         initWidget(ourUiBinder.createAndBindUi(this));
     }
 
@@ -61,36 +71,4 @@ public class HomePage extends Composite {
                 .inject();
         StyleInjector.inject(Resources.INSTANCE.gliderCss().getText());
     }
-
-
-//    private native String addCarousel() /*-{
-//        if ($doc.readyState != "loading") {
-//            var curDiv = $doc.getElementById("content");
-//
-//            var carousel = $doc.createElement("div");
-//            carousel.className = "glider-contain multiple";
-//            carousel.id = "glider1";
-//            carousel.innerHTML = "<div class=\"glider\">" +
-//                "</div>" +
-//                "<button aria-label=\"Previous\" class=\"glider-prev\">«</button>" +
-//                "<button aria-label=\"Next\" class=\"glider-next\">»</button>" +
-//                "<div role=\"tablist\" class=\"dots\"></div>";
-//            curDiv.insertAdjacentElement("beforeend", carousel);
-//            var glider = new $wnd.Glider($doc.querySelector('.glider'), {
-//                slidesToShow: 5,
-//                slidesToScroll: 5,
-//                srollLock: true,
-//                arrows: {
-//                    prev: '.glider-prev',
-//                    next: '.glider-next'
-//                }
-//            });
-//            return glider;
-//        }
-//    }-*/;
-
-//    private native void addItem(Object glider, Element itemToAdd) /*-{
-//        glider.addItem(element);
-//
-//    }-*/;
 }

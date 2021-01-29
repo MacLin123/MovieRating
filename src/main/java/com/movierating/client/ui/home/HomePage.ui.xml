@@ -15,11 +15,8 @@
         }
 
         .movie-lists{
-            width: 100%
-        }
-
-        .movie-lists td {
-            width: 60%;
+            width: 80%;
+            padding-left: 36px;
         }
 
 
@@ -27,6 +24,9 @@
             width: 70%;
             max-width: 920px;
             margin: 20px 0 20px 20px;
+        }
+        .first_td{
+            padding-right: 50px;
         }
 
     </ui:style>
@@ -37,10 +37,10 @@
         </my:PosterMovieList>
 
         <g:HorizontalPanel addStyleNames="{style.movie-lists}">
-            <my:MovieTitleList>
+            <my:MovieTitleList addStyleNames="{style.first_td}" ui:field="prevYearMovieList">
             </my:MovieTitleList>
 
-            <my:MovieTitleList>
+            <my:MovieTitleList ui:field="curYearMovieList">
             </my:MovieTitleList>
         </g:HorizontalPanel>
     </g:HTMLPanel>

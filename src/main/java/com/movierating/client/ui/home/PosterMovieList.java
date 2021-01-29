@@ -11,6 +11,7 @@ import com.movierating.client.config.PosterConfig;
 import com.movierating.client.controller.HomeService;
 import com.movierating.client.model.Movie;
 import com.movierating.client.resources.Resources;
+import com.movierating.client.resources.styles.MovieHeaderStyle;
 import com.movierating.client.utils.ImageUtils;
 import com.movierating.client.widgets.GliderWrapper;
 import org.fusesource.restygwt.client.Method;
@@ -31,18 +32,8 @@ public class PosterMovieList extends Composite {
         @ClassName("glider-style")
         String gliderStyle();
 
-        @ClassName("releases-header")
-        String releasesHeader();
-
         @ClassName("poster-panel")
         String posterPanel();
-
-        @ClassName("carousel-home")
-        String carouselHome();
-
-        String viewAllButton();
-
-        String h2();
 
         @ClassName("home-panel")
         String homePanel();
@@ -60,6 +51,9 @@ public class PosterMovieList extends Composite {
 
     @UiField
     MyStyle style;
+
+    @UiField
+    MovieHeaderStyle headerStyles;
 
     GliderWrapper gliderWrapper;
 
@@ -116,6 +110,8 @@ public class PosterMovieList extends Composite {
             }
         }
     }
+
+
     private void initGliderWrapper(){
         gliderWrapper = new GliderWrapper();
         gliderWrapper.createGlider(newReleasesDiv);

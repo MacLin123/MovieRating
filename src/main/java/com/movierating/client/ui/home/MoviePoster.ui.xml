@@ -14,10 +14,12 @@
             overflow: hidden;
             vertical-align: top;
         }
+
         .img_wrapper {
             position: relative;
         }
-        .title_wrapper{
+
+        .title_wrapper {
             font-weight: bold;
             padding: 2px 4px 2px 6px;
             margin-top: 8px;
@@ -27,39 +29,9 @@
             text-align: left;
             line-height: 1.1rem;
         }
-        .moviescore_w {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-
-            vertical-align: middle;
-            text-align: center;
-            color: #fff!important;
-            font-family: Arial,Helvetica,sans-serif;
-            font-style: normal!important;
-            font-weight: bold!important;
-            background-color: transparent;
-            height: 2em;
-            width: 2em;
-            line-height: 2em;
-            font-size: 17px;
-            border-radius: 6px;
-        }
-        .moviescore_w.positive {
-            background-color: #6c3;
-        }
-        .moviescore_w.negative {
-            background-color: #f00;
-        }
-
-        .moviescore_w.mixed {
-            background-color: #fc3;
-        }
-
-        .moviescore_w.large{
-            font-size: 25px;
-        }
     </ui:style>
+    <ui:style type="com.movierating.client.resources.styles.MovieScoreStyle"
+              field="movieScoreStyle" src="../../resources/staticfiles/css/MovieScore.css"/>
     <g:HTMLPanel addStyleNames="{style.poster}">
         <div ui:field="imgDiv" class="{style.img_wrapper}">
             <g:Image ui:field="posterImage"></g:Image>
@@ -69,9 +41,10 @@
             <g:Label ui:field="titleLabel"></g:Label>
         </div>
 
-        <div ui:field="ratingDiv" class="{style.moviescore_w} {style.large}">
+        <div ui:field="ratingDiv"
+             class="{movieScoreStyle.moviescore_w} {movieScoreStyle.large} {movieScoreStyle.moviescore_w_img}">
         </div>
-<!--                <g:VerticalPanel ui:field="posterPanel">-->
-<!--                </g:VerticalPanel>-->
+        <!--                <g:VerticalPanel ui:field="posterPanel">-->
+        <!--                </g:VerticalPanel>-->
     </g:HTMLPanel>
 </ui:UiBinder>
