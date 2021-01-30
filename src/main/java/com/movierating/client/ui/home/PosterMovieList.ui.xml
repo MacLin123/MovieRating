@@ -16,6 +16,7 @@
             width: 70%;
             max-width: 920px;
             margin: 20px 0 20px 20px;
+            position: relative;
         }
 
     </ui:style>
@@ -29,7 +30,5 @@
         </div>
         <div ui:field="newReleasesDiv">
         </div>
-        <g:FlowPanel ui:field="posterPanel" addStyleNames="{style.poster-panel}">
-        </g:FlowPanel>
     </g:HTMLPanel>
 </ui:UiBinder>

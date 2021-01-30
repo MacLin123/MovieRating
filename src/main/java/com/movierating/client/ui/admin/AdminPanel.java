@@ -179,7 +179,6 @@ public class AdminPanel extends Composite {
                     Image img = new Image(ImageUtils.getImageData(movie.getCoverImg()));
                     img.addStyleName(style.imgAdmin());
                     img.addClickHandler(event -> {
-                        GWT.log("click on image");
                         History.newItem(Pages.UPDATE_MOVIE.getStrValue());
                         RootPanel.get("content").clear();
                         RootPanel.get("content").add(new MovieFormPanel(movie.getId(), "Update Movie"));

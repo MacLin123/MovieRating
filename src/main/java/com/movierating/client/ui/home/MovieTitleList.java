@@ -37,6 +37,9 @@ public class MovieTitleList extends Composite {
 
         @ClassName("best-movies-list-row")
         String bestMoviesListRow();
+
+        @ClassName("div-header")
+        String divHeader();
     }
 
     @UiField

@@ -11,6 +11,7 @@ import com.movierating.client.ui.admin.AdminPanel;
 import com.movierating.client.ui.header.Header;
 import com.movierating.client.ui.home.HomePage;
 import com.movierating.client.ui.movie.MovieFormPanel;
+import com.movierating.client.ui.movie.MoviePage;
 import org.fusesource.restygwt.client.Defaults;
 
 public class MovieRating implements EntryPoint, ValueChangeHandler {
@@ -19,7 +20,8 @@ public class MovieRating implements EntryPoint, ValueChangeHandler {
     public void onModuleLoad() {
         useCorrectRequestBaseUrl();
 
-        RootPanel.get("content").add(new AdminPanel());
+        RootPanel.get("content").add(new MoviePage());
+//        RootPanel.get("content").add(new AdminPanel());
         RootPanel.get("header").add(new Header());
 
 //        Hyperlink h1 = new Hyperlink("books","newpage");

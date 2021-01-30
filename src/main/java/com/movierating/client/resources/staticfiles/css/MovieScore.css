@@ -38,3 +38,8 @@
     top: 6px;
     right: 6px;
 }
+
+
+.moviescore_w.larger {
+    font-size: 35px;
+}

@@ -1,17 +1,25 @@
 package com.movierating.client.ui.home;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.HeadingElement;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
+import com.movierating.client.config.Pages;
 import com.movierating.client.config.PosterConfig;
 import com.movierating.client.controller.HomeService;
 import com.movierating.client.model.Movie;
 import com.movierating.client.resources.Resources;
 import com.movierating.client.resources.styles.MovieHeaderStyle;
+import com.movierating.client.ui.movie.MovieFormPanel;
+import com.movierating.client.ui.movie.MoviePage;
 import com.movierating.client.utils.ImageUtils;
 import com.movierating.client.widgets.GliderWrapper;
 import org.fusesource.restygwt.client.Method;
@@ -44,9 +52,6 @@ public class PosterMovieList extends Composite {
     Element header;
 
     @UiField
-    FlowPanel posterPanel;
-
-    @UiField
     Button viewAllBtn;
 
     @UiField
@@ -73,7 +78,6 @@ public class PosterMovieList extends Composite {
 
     public PosterMovieList(PosterConfig typeOfPoster) {
         initWidget(ourUiBinder.createAndBindUi(this));
-
         if (typeOfPoster.equals(PosterConfig.POSTER_NEW_RELEASES)) {
             getNewReleases();
             header.setInnerText("New Releases");
@@ -101,18 +105,28 @@ public class PosterMovieList extends Composite {
         @Override
         public void onSuccess(Method method, List<Movie> movies) {
             initGliderWrapper();
-            posterPanel.clear();
+//            GWT.debugger();
             for (Movie movie : movies) {
-                MoviePoster moviePoster = new MoviePoster(new Image(ImageUtils.getImageData(movie.getCoverImg())),
-                        movie.getTitle(), movie.getRating());
-//                posterPanel.add(moviePoster);
+                Image image = new Image(ImageUtils.getImageData(movie.getCoverImg()));
+//                image.addClickHandler(event -> {
+//                    Window.alert("fsdfsf");
+//                    History.newItem(Pages.DETAILS_MOVIE.getStrValue());
+//                    RootPanel.get("content").clear();
+////                    RootPanel.get("content").add(new MoviePage());
+//                });
+                MoviePoster moviePoster = new MoviePoster(image, movie.getTitle(), movie.getRating());
                 gliderWrapper.addItem(moviePoster.getElement());
             }
+            //remove layering styles( js added these classes every timi
+            gliderWrapper.getGliderElem().removeClassName("glider");
+            gliderWrapper.getGliderElem().removeClassName("glider-contain");
+
+
         }
     }
 
 
-    private void initGliderWrapper(){
+    private void initGliderWrapper() {
         gliderWrapper = new GliderWrapper();
         gliderWrapper.createGlider(newReleasesDiv);
         gliderWrapper.getGliderElem().addClassName(style.gliderStyle());

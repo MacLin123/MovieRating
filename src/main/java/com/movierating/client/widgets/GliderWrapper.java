@@ -1,6 +1,10 @@
 package com.movierating.client.widgets;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.movierating.client.config.Pages;
+import com.movierating.client.ui.movie.MoviePage;
 
 public class GliderWrapper {
     private Object glider;
@@ -41,6 +45,9 @@ public class GliderWrapper {
 
     public native void addItem(Element itemToAdd) /*-{
         var that = this;
+        itemToAdd.addEventListener("click", function () {
+            that.@GliderWrapper::posterClick()();
+        });
         that.glider.addItem(itemToAdd);
 
     }-*/;
@@ -55,4 +62,9 @@ public class GliderWrapper {
         return that.glider;
     }-*/;
 
+    private void posterClick() {
+        History.newItem(Pages.DETAILS_MOVIE.getStrValue());
+        RootPanel.get("content").clear();
+        RootPanel.get("content").add(new MoviePage());
+    }
 }
