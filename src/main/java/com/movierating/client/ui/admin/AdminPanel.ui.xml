@@ -8,7 +8,7 @@
             background-color: #FFFFFF;
         }
 
-        img:hover {
+        .admin-panel img:hover {
             cursor: pointer;
         }
 

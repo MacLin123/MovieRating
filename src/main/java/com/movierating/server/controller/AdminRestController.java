@@ -5,8 +5,8 @@ import com.movierating.server.repository.MovieRepository;
 import com.movierating.server.utils.DateUtils;
 import com.movierating.server.utils.ImageUtils;
 import com.movierating.server.utils.MoviesUtils;
-import com.movierating.server.views.MovieViewMdImgDto;
-import com.movierating.server.views.MovieViewSmImgDto;
+import com.movierating.server.views.MovieViewMdImg;
+import com.movierating.server.views.MovieViewSmImg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +34,15 @@ public class AdminRestController {
 
     @ResponseBody
     @RequestMapping(value = "movies", method = RequestMethod.POST)
-    public List<MovieViewSmImgDto> getSearchedMovies(@RequestBody String title) {
+    public List<MovieViewSmImg> getSearchedMovies(@RequestBody String title) {
         logger.info("Search querry");
-        List<MovieViewSmImgDto> movieViews = movieRepository.findByTitleContainingIgnoreCase(title,MovieViewSmImgDto.class);
+        List<MovieViewSmImg> movieViews = movieRepository.findByTitleContainingIgnoreCase(title, MovieViewSmImg.class);
         logger.info(movieViews.toString());
         return movieViews;
     }
 
     @RequestMapping(value = "movies/remove/{id}", method = RequestMethod.DELETE)
-    ResponseEntity<String> deleteMovie(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deleteMovie(@PathVariable("id") Long id) {
         if (!movieRepository.existsById(id)) {
             return ResponseEntity.badRequest()
                     .body("movie not found");
@@ -72,7 +72,7 @@ public class AdminRestController {
 //    }
 
     @RequestMapping(value = "movies/update/{id}", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
-    ResponseEntity<String> updateMovie(@PathVariable("id") Long id, @RequestParam MultipartFile file,
+    public ResponseEntity<String> updateMovie(@PathVariable("id") Long id, @RequestParam MultipartFile file,
                                        @RequestParam String date, @RequestParam String title,
                                        @RequestParam String description, @RequestParam String genre) throws IOException {
         if (!movieRepository.existsById(id)) {
@@ -107,16 +107,16 @@ public class AdminRestController {
     }
 
     @RequestMapping(value = "movies/{id}", method = RequestMethod.GET)
-    MovieViewMdImgDto getMovie(@PathVariable("id") Long id) {
+    public MovieViewMdImg getMovie(@PathVariable("id") Long id) {
         if (!movieRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "movie not found");
         }
         logger.info("GET - id = " + id);
-        return movieRepository.getById(id, MovieViewMdImgDto.class);
+        return movieRepository.getById(id, MovieViewMdImg.class);
     }
 
     @RequestMapping(value = "movies/create", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
-    ResponseEntity<String> createMovie(@RequestParam MultipartFile file,
+    public ResponseEntity<String> createMovie(@RequestParam MultipartFile file,
                                        @RequestParam String date, @RequestParam String title,
                                        @RequestParam String description, @RequestParam String genre) throws IOException {
         if (movieRepository.existsByTitleIgnoreCase(title)) {

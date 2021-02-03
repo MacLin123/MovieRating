@@ -22,20 +22,25 @@ class LoadDatabase {
 
     @Bean
     CommandLineRunner initMovies(MovieRepository repository) {
-        Date date1 = DateUtils.convertStringToDate("1941-09-04");
-        Date date2 = DateUtils.convertStringToDate("1972-03-11");
-        Date date3 = DateUtils.convertStringToDate("2015-07-01");
-
-//        String imgPath0 = "static/imgs/no_img.jpg";
-        String imgPath1 = "static/imgs/citizen_kane.jpg";
-        String imgPath2 = "static/imgs/god_father.jpg";
-        String imgPath3 = "static/imgs/terminator_genesis.jpg";
 
         ArrayList<Movie> movies = new ArrayList<>();
 
-        movies.add(createMovie(imgPath1, "Citizen Kane", "good film", "Drama", date1));
-        movies.add(createMovie(imgPath2, "The Godfather", "good film", "Drama", date2));
-        movies.add(createMovie(imgPath3, "Terminator Genisys", "Arnold...", "Action", date3));
+//        String imgPath0 = "static/imgs/no_img.jpg";
+
+        Date date1 = DateUtils.convertStringToDate("1941-09-04");
+        String imgPath1 = "static/imgs/citizen_kane.jpg";
+        String description1 = "When a reporter is assigned to decipher newspaper magnate Charles Foster Kane's (Orson Welles) dying words, his investigation gradually reveals the fascinating portrait of a complex man who rose from obscurity to staggering heights. Though Kane's friend and colleague Jedediah Leland (Joseph Cotten), and his mistress, Susan Alexander (Dorothy Comingore), shed fragments of light on Kane's life, the reporter fears he may never penetrate the mystery of the elusive man's final word, \"Rosebud.\"";
+        movies.add(createMovie(imgPath1, "Citizen Kane", description1, "Drama", date1));
+
+        Date date2 = DateUtils.convertStringToDate("1972-03-11");
+        String imgPath2 = "static/imgs/god_father.jpg";
+        String description2 = "An organized crime dynasty's aging patriarch transfers control of his clandestine empire to his reluctant son.";
+        movies.add(createMovie(imgPath2, "The Godfather", description2, "Drama", date2));
+
+        Date date3 = DateUtils.convertStringToDate("2015-07-01");
+        String imgPath3 = "static/imgs/terminator_genesis.jpg";
+        String description3 = "When John Connor, leader of the human resistance, sends Sgt. Kyle Reese back to 1984 to protect Sarah Connor and safeguard the future, an unexpected turn of events creates a fractured timeline.";
+        movies.add(createMovie(imgPath3, "Terminator Genisys", description3, "Action", date3));
 
 //        //new releases
         Date date4 = DateUtils.convertStringToDate("2020-12-25");
@@ -65,14 +70,14 @@ class LoadDatabase {
         String imgPath8 = "static/imgs/soul.jpg";
         String description8 = "Joe is a middle-school band teacher whose life hasn't quite gone the way he expected. His true passion is jazz -- and he's good. But when he travels to another realm to help someone find their passion, he soon discovers what it means to have soul.";
         movies.add(createMovie(imgPath8, "Soul", description8,
-                "Comedy, Kids And Family, Animation, Adventure", date8));
+                "Comedy, Kids, Family, Animation, Adventure", date8));
 
 
         Date date9 = DateUtils.convertStringToDate("2020-07-30");
         String imgPath9 = "static/imgs/host.jpg";
         String description9 = "Six friends accidentally invite the attention of a demonic presence during an online séance and begin noticing strange occurrences in their homes.";
         movies.add(createMovie(imgPath9, "Host", description9,
-                "Horror, Mystery And Thriller", date9));
+                "Horror, Mystery, Thriller", date9));
 
         Date date10 = DateUtils.convertStringToDate("2020-03-17");
         String imgPath10 = "static/imgs/blow_the_man_down.jpg";
@@ -89,7 +94,7 @@ class LoadDatabase {
         String imgPath12 = "static/imgs/the_invisible_man.jpg";
         String description12 = "After staging his own suicide, a crazed scientist uses his power to become invisible to stalk and terrorize his ex-girlfriend. When the police refuse to believe her story, she decides to take matters into her own hands and fight back.";
         movies.add(createMovie(imgPath12, "The Invisible Man", description12,
-                "Mystery And Thriller, Horror", date12));
+                "Mystery, Thriller, Horror", date12));
 
         //upcoming movies
         Date date13 = DateUtils.convertStringToDate("2021-12-22");
@@ -102,7 +107,7 @@ class LoadDatabase {
         String imgPath14 = "static/imgs/the_355.jpg";
         String description14 = "Five women band together to stop a global organization from acquiring a weapon that could thrust the teetering world into total chaos.";
         movies.add(createMovie(imgPath14, "The 355", description14,
-                "Mystery And Thriller, Action", date14));
+                "Mystery, Thriller, Action", date14));
 
         Date date15 = DateUtils.convertStringToDate("2021-12-10");
         String imgPath15 = "static/imgs/west_side_story.jpg";
@@ -126,13 +131,13 @@ class LoadDatabase {
         String imgPath18 = "static/imgs/scream5.jpg";
         String description18 = "A new installment of the 'Scream' horror franchise will follow a woman returning to her home town to try to find out who has been committing a series of vicious crimes.";
         movies.add(createMovie(imgPath18, "Scream 5", description18,
-                "Mystery And Thriller, Horror", date18));
+                "Mystery, Thriller, Horror", date18));
 
         Date date19 = DateUtils.convertStringToDate("2021-12-22");
         String imgPath19 = "static/imgs/sherlock_holmes3.jpg";
         String description19 = "The further adventures of Detective Sherlock Holmes and Dr. John Watson.";
         movies.add(createMovie(imgPath19, "Sherlock Holmes 3", description19,
-                "Mystery And Thriller, Adventure", date19));
+                "Mystery, Thriller, Adventure", date19));
 
         //2021 movies that has released
 
@@ -156,15 +161,15 @@ class LoadDatabase {
 
         Date date23 = DateUtils.convertStringToDate("2021-01-15");
         String imgPath23 = "static/imgs/marksman.jpg";
-        String description23 = "Hardened Arizona rancher Jim Hanson (Liam Neeson) simply wants to be left alone as he fends off eviction notices and tries to make a living on an isolated stretch of borderland. But everything changes when Hanson, an ex-Marine sharpshooter, witnesses 11-year-old migrant Miguel (Jacob Perez) fleeing with his mother Rosa (Teresa Ruiz) from drug cartel assassins led by the ruthless Mauricio (Juan Pablo Raba). After being caught in a shoot-out, a dying Rosa begs Jim to take her son to safety to her family in Chicago. Defying his cop daughter Sarah (Katheryn Winnick), Jim sneaks Miguel out of the local U.S. Customs and Border Patrol station and together, they hit the road with the group of killers in pursuit. Jim and Miguel slowly begin to overcome their differences and begin to forge an unlikely friendship, while Mauricio and his fellow assassins blaze a cold-blooded trail, hot on their heels. When they finally meet on a Midwestern farm, a fight to the death ensues as Jim uses his military skills and code of honor to defend the boy he's come to love.";
+        String description23 = "A rancher on the Arizona border becomes the unlikely defender of a young Mexican boy desperately fleeing the cartel assassins who've pursued him into the U.S.";
         movies.add(createMovie(imgPath23, "The Marksman", description23,
-                "Action, Mystery And Thriller", date23));
+                "Action, Mystery, Thriller", date23));
 
         Date date24 = DateUtils.convertStringToDate("2021-01-29");
         String imgPath24 = "static/imgs/the_little_things.jpg";
         String description24 = "Deputy Sheriff Joe \"Deke\" Deacon joins forces with Sgt. Jim Baxter to search for a serial killer who's terrorizing Los Angeles. As they track the culprit, Baxter is unaware that the investigation is dredging up echoes of Deke's past, uncovering disturbing secrets that could threaten more than his case.";
         movies.add(createMovie(imgPath24, "The Little Things", description24,
-                "Mystery And Thriller, Crime, Drama", date24));
+                "Mystery, Thriller, Crime, Drama", date24));
 
         Date date25 = DateUtils.convertStringToDate("2021-01-31");
         String imgPath25 = "static/imgs/prisoners_of_the_ghostland.jpg";

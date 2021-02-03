@@ -16,19 +16,4 @@ public enum Pages {
         return strValue;
     }
 
-//    public static String getCreateMovie() {
-//        return CREATE_MOVIE.strValue;
-//    }
-
-//    public static String getUpdateMovie() {
-//        return UPDATE_MOVIE.strValue;
-//    }
-
-//    public static String getAdminPage() {
-//        return ADMIN.strValue;
-//    }
-//    public static String getHomePage() {
-//        return HOME.strValue;
-//    }
-
 }

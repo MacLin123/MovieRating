@@ -6,7 +6,7 @@ import com.movierating.server.utils.DateUtils;
 import java.util.Date;
 import java.util.Objects;
 
-public class MovieViewLgImgDto {
+public class MovieViewSmImg {
     private Long id;
     private String title;
     private String description;
@@ -17,18 +17,24 @@ public class MovieViewLgImgDto {
 
     private Date premierDate;
 
-    public MovieViewLgImgDto(Movie movie) {
+    public MovieViewSmImg(Movie movie) {
         this.id = movie.getId();
         this.title = movie.getTitle();
         this.description = movie.getDescription();
         this.rating = movie.getRating();
         this.genre = movie.getGenre();
         this.premierDate = movie.getPremierDate();
-        this.coverImg = movie.getLargeImg();
+        this.coverImg = movie.getCoverImg();
     }
 
-    public MovieViewLgImgDto() {
+    public MovieViewSmImg() {
 
+    }
+
+    public MovieViewSmImg(Long id, String title, Integer rating) {
+        this.id = id;
+        this.title = title;
+        this.rating = rating;
     }
 
     public Long getId() {
@@ -89,8 +95,11 @@ public class MovieViewLgImgDto {
 
     @Override
     public String toString() {
-        String strDate = DateUtils.dateToString(premierDate);
-        return "MovieViewMdImgDto{" +
+        String strDate = "";
+        if (premierDate != null) {
+            strDate = DateUtils.dateToString(premierDate);
+        }
+        return "MovieViewSmImg{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", rating=" + rating +
@@ -103,7 +112,7 @@ public class MovieViewLgImgDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MovieViewLgImgDto movie = (MovieViewLgImgDto) o;
+        MovieViewSmImg movie = (MovieViewSmImg) o;
         return id.equals(movie.id) && title.equals(movie.title);
     }
 

@@ -6,7 +6,7 @@ import com.movierating.server.utils.DateUtils;
 import java.util.Date;
 import java.util.Objects;
 
-public class MovieViewMdImgDto {
+public class MovieViewMdImg {
     private Long id;
     private String title;
     private String description;
@@ -17,7 +17,7 @@ public class MovieViewMdImgDto {
 
     private Date premierDate;
 
-    public MovieViewMdImgDto(Movie movie) {
+    public MovieViewMdImg(Movie movie) {
         this.id = movie.getId();
         this.title = movie.getTitle();
         this.description = movie.getDescription();
@@ -27,7 +27,7 @@ public class MovieViewMdImgDto {
         this.coverImg = movie.getMediumImg();
     }
 
-    public MovieViewMdImgDto() {
+    public MovieViewMdImg() {
 
     }
 
@@ -90,7 +90,7 @@ public class MovieViewMdImgDto {
     @Override
     public String toString() {
         String strDate = DateUtils.dateToString(premierDate);
-        return "MovieViewMdImgDto{" +
+        return "MovieViewMdImg{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", rating=" + rating +
@@ -103,7 +103,7 @@ public class MovieViewMdImgDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MovieViewMdImgDto movie = (MovieViewMdImgDto) o;
+        MovieViewMdImg movie = (MovieViewMdImg) o;
         return id.equals(movie.id) && title.equals(movie.title);
     }
 

@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS movies
 (
     id           bigserial PRIMARY key,
     title        VARCHAR(255),
-    description  VARCHAR(2000),
+    description  VARCHAR(500),
     rating       INTEGER,
     genre        VARCHAR(255),
     premier_date DATE,

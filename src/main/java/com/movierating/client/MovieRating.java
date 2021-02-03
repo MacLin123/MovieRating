@@ -20,8 +20,7 @@ public class MovieRating implements EntryPoint, ValueChangeHandler {
     public void onModuleLoad() {
         useCorrectRequestBaseUrl();
 
-        RootPanel.get("content").add(new MoviePage());
-//        RootPanel.get("content").add(new AdminPanel());
+        RootPanel.get("content").add(new AdminPanel());
         RootPanel.get("header").add(new Header());
 
 //        Hyperlink h1 = new Hyperlink("books","newpage");
@@ -50,6 +49,9 @@ public class MovieRating implements EntryPoint, ValueChangeHandler {
         } else if (historyToken.equals(Pages.HOME.getStrValue())) {
             RootPanel.get("content").clear();
             RootPanel.get("content").add(new HomePage());
+        } else if (historyToken.equals("mp")) {
+            RootPanel.get("content").clear();
+            RootPanel.get("content").add(new MoviePage(1L));
         }
     }
 

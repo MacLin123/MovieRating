@@ -1,5 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+>
     <ui:style>
         .score-panel-wrap {
             padding: 0;
@@ -9,7 +10,7 @@
 
         .cover-wrap {
             display: grid;
-            grid-template-columns:320px 1fr;
+            grid-template-columns:320px 800px;
             grid-gap: 0;
         }
 
@@ -35,13 +36,12 @@
         .mop-ratings-wrap__title_top {
             font-family: "Open Sans", Arial, "Trebuchet MS", Verdana, sans-serif;
             position: relative;
-            left: 50px;
+            /*left: 50px;*/
             letter-spacing: 0.5px;
             /*transform: translateX(-10%);*/
             display: flex;
             flex-wrap: nowrap;
-            padding: 80px 10px 0;
-            margin: 0;
+            padding: 50px 0 0 0;
             max-width: 75%;
         }
 
@@ -76,24 +76,124 @@
 
 
         .infoDiv {
-            padding-top: 50px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            margin-top: 40px;
+            display: flex;
+            width: fit-content;
+            border-top: 1px solid rgba(66, 66, 66, 0.5);
+            border-bottom: 1px solid rgba(66, 66, 66, 0.5);
+            padding-right: 5px;
+
         }
-        .release_year{
+
+        .release_year {
             opacity: 0.8;
             font-weight: 400;
         }
-        .title_text{
+
+        .title_text {
             white-space: nowrap;
             color: #000;
             font-weight: 700;
             width: 100%;
-            font-size: 2.2rem;
+            font-size: 2.0rem;
         }
-        .title_span{
+
+        .title_span {
             padding-right: 10px;
         }
 
-    </ui:style>
+        .facts {
+            padding-left: 5px;
+            padding-top: 5px;
+            display: flex;
+            opacity: 0.7;
+        }
+
+        .release {
+        }
+
+        .genres {
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .genres:before {
+            line-height: 1;
+            content: '\2022';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 10px;
+            display: inline-flex;
+            align-content: center;
+            align-items: center;
+        }
+
+        .score_label {
+            line-height: 70px;
+            padding-right: 100px;
+            white-space: nowrap;
+
+            color: #000;
+            font-weight: 700;
+            font-size: 2.0rem;
+            text-transform: uppercase;
+
+        }
+
+        .description {
+
+        }
+
+        .score-div {
+            padding-left: 60px;
+            padding-bottom: 0;
+        }
+
+        .descr-header {
+            margin-top: 40px;
+            margin-bottom: 0;
+        }
+
+        .descr-label {
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-family: 'Source Sans Pro', Arial, sans-serif;
+            line-height: 1.5em;
+        }
+
+        .block_title {
+            font-family: "Open Sans", Arial, "Trebuchet MS", Verdana, sans-serif;
+            position: relative;
+            letter-spacing: 0.5px;
+            display: flex;
+            flex-wrap: nowrap;
+            padding: 0;
+            max-width: 75%;
+            margin-left: 400px;
+        }
+
+        .block_title_text {
+            white-space: nowrap;
+            color: #000;
+            font-weight: 700;
+            font-size: 2.0rem;
+        }
+
+        .same-genre-block {
+            margin-left: 100px;
+
+        }
+
+        .player_youtube {
+            margin-left: 60px;
+
+        }</ui:style>
 
     <ui:style type="com.movierating.client.resources.styles.MovieScoreStyle"
               field="movieScoreStyle" src="../../resources/staticfiles/css/MovieScore.css"/>
@@ -101,16 +201,42 @@
     <g:HTMLPanel addStyleNames="{style.movie-page-styles}">
         <div class="{style.score-panel-wrap} {style.cover-wrap}">
             <g:Image addStyleNames="{style.coverLargeImage}" ui:field="coverMedium"></g:Image>
-            <div class="{style.mop-ratings-wrap} {style.score-panel-wrap}">
+            <div class="{style.mop-ratings-wrap} {style.score-panel-wrap} {style.score-div}">
                 <div class="{style.title_text} {style.mop-ratings-wrap__title_top}">
-                    <span class="{style.title_span}">Citizen Kane</span>
-                    <span class="{style.release_year}">(2021)</span>
+                    <span ui:field="titleElem" class="{style.title_span}"></span>
+                    <span ui:field="yearElem" class="{style.release_year}"></span>
                 </div>
-                <div class="{style.infoDiv}" >
+                <div class="{style.facts}">
+                    <span ui:field="premierDateElem" class="{style.release}">
+                    </span>
+                    <span ui:field="genreElem" class="{style.genres}">
+                    </span>
+                </div>
+                <div class="{style.infoDiv}">
+                    <span class="{style.score_label}">Movie Score</span>
                     <div ui:field="ratingDiv" class=" {movieScoreStyle.moviescore_w} {movieScoreStyle.larger}">
+                    </div>
                 </div>
+                <div class="{style.description}">
+                    <h3 class="{style.descr-header}">Description</h3>
+                    <g:Label ui:field="descrLabel" addStyleNames="{style.descr-label}"></g:Label>
                 </div>
             </div>
         </div>
+        <g:LazyPanel ui:field="sameGenrePanel" addStyleNames="{style.same-genre-block}">
+            <!--            <my:PosterMovieList ui:field="sameGenreList"/>-->
+        </g:LazyPanel>
+        <!--        <div>-->
+        <!--            <div class="{style.block_title_text} {style.block_title}">-->
+        <!--                <span class="{style.title_span}">You might also like</span>-->
+        <!--                <my:PosterMovieList ui:field="sameGenreList"/>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <g:HTML ui:field="mediaContainer" >-->
+        <!--            <video src="https://youtu.be/LOOC9yxqASw" autoplay="true" controls="controls" ui:field="mediaPlayer" height="100%" width="100%">-->
+        <!--            </video>-->
+        <!--        </g:HTML>-->
+
+        <div class="{style.player_youtube}" id="player_youtube" title="M7lc1UVf-VE" ></div>
     </g:HTMLPanel>
 </ui:UiBinder>

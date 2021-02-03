@@ -137,7 +137,7 @@
 
                 <g:Label ui:field="descrLabel" addStyleNames="{style.label-group}">Description</g:Label>
                 <g:TextArea name="description" ui:field="movieDescrTextArea" addStyleNames="{style.input-group-text}"/>
-                <g:Label ui:field="movieDescrChars" addStyleNames="{style.char-label}">0/2000</g:Label>
+                <g:Label ui:field="movieDescrChars" addStyleNames="{style.char-label}">0/500</g:Label>
 
                 <g:Label ui:field="genreLabel" addStyleNames="{style.label-group}">Genre</g:Label>
                 <g:TextBox name="genre" maxLength="255" ui:field="movieGenreTextBox" addStyleNames="{style.input-group-text}"/>

@@ -19,4 +19,6 @@ public interface MovieScoreStyle extends CssResource {
     String small();
 
     String larger();
+
+    String neutral();
 }

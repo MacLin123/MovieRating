@@ -15,32 +15,26 @@ public class Movie {
 
     private Date premierDate;
 
-    public Movie(Long id, String title, String description, String genre, Date premierDate) {
+    public Movie(Long id, String title, String description, String genre, Integer rating, Date premierDate) {
         this.id = id;
         this.title = title;
         this.description = description;
-//        this.rating = rating;
+        this.rating = rating;
         this.genre = genre;
         this.premierDate = premierDate;
     }
 
-    public Movie(Long id, String title, String description, String genre, Date premierDate, byte[] coverImg) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-//        this.rating = rating;
-        this.genre = genre;
-        this.premierDate = premierDate;
+    public Movie(Long id, String title, String description, String genre, Integer rating, Date premierDate, byte[] coverImg) {
+        this(id, title, description, genre, rating, premierDate);
         this.coverImg = coverImg;
     }
 
-    public Movie(String title, String description, String genre, Date premierDate) {
-        this.title = title;
-        this.description = description;
-//        this.rating = rating;
-        this.genre = genre;
-        this.premierDate = premierDate;
-    }
+//    public Movie(String title, String description, String genre, Date premierDate) {
+//        this.title = title;
+//        this.description = description;
+//        this.genre = genre;
+//        this.premierDate = premierDate;
+//    }
 
     public Movie() {
 

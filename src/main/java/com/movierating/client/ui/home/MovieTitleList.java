@@ -5,11 +5,15 @@ import com.google.gwt.dom.client.HeadingElement;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.*;
+import com.movierating.client.config.Pages;
 import com.movierating.client.controller.HomeService;
 import com.movierating.client.model.Movie;
 import com.movierating.client.resources.styles.MovieHeaderStyle;
 import com.movierating.client.resources.styles.MovieScoreStyle;
+import com.movierating.client.ui.movie.MoviePage;
+import com.movierating.client.utils.ScoreUtils;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
@@ -40,6 +44,9 @@ public class MovieTitleList extends Composite {
 
         @ClassName("div-header")
         String divHeader();
+
+        @ClassName("rating-label")
+        String ratingLabel();
     }
 
     @UiField
@@ -84,8 +91,17 @@ public class MovieTitleList extends Composite {
                 bestMoviesTable.clear();
                 for (Movie movie : movies) {
                     int row = bestMoviesTable.getRowCount();
-                    bestMoviesTable.setText(row, 0, movie.getTitle());
+                    //title
+                    Label title = new Label(movie.getTitle());
+                    bestMoviesTable.setWidget(row, 0, title);
 
+                    title.addClickHandler(event -> {
+                        History.newItem(Pages.DETAILS_MOVIE.getStrValue());
+                        RootPanel.get("content").clear();
+                        RootPanel.get("content").add(new MoviePage(movie.getId()));
+                    });
+
+                    //rating
                     Integer ratingVal = movie.getRating();
                     String ratingStr = (ratingVal != null) ?
                             String.valueOf(ratingVal) : "";
@@ -96,6 +112,7 @@ public class MovieTitleList extends Composite {
 
                     initCellStyle(row);
                     initRatingStyle(ratingVal, rating);
+                    title.addStyleName(style.ratingLabel());
                 }
             }
         });
@@ -105,18 +122,12 @@ public class MovieTitleList extends Composite {
         ratingLabel.addStyleName(movieScoreStyle.small());
         ratingLabel.addStyleName(movieScoreStyle.moviescore_w());
 
-        if (rating == null) return;
-        if (rating >= 70) {
-            ratingLabel.addStyleName(movieScoreStyle.positive());
-        } else if (rating < 50) {
-            ratingLabel.addStyleName(movieScoreStyle.negative());
-        } else {
-            ratingLabel.addStyleName(movieScoreStyle.mixed());
-        }
+        ScoreUtils.initRatingMarkStyle(rating, ratingLabel, movieScoreStyle);
     }
 
     private void initCellStyle(int row) {
         bestMoviesTable.getCellFormatter().addStyleName(row, 0, style.bestMoviesListCellTitle());
+//        bestMoviesTable.getCellFormatter().addStyleName(row, 0, style.ratingLabel());
         bestMoviesTable.getCellFormatter().addStyleName(row, 1, style.bestMoviesListCellGlobal());
 
         for (int i = 0; i < COL_AMOUNT; i++) {

@@ -43,10 +43,10 @@ public class GliderWrapper {
         }
     }-*/;
 
-    public native void addItem(Element itemToAdd) /*-{
+    public native void addItem(Element itemToAdd, Long movieId) /*-{
         var that = this;
         itemToAdd.addEventListener("click", function () {
-            that.@GliderWrapper::posterClick()();
+            that.@GliderWrapper::posterClick(*)(movieId);
         });
         that.glider.addItem(itemToAdd);
 
@@ -62,9 +62,9 @@ public class GliderWrapper {
         return that.glider;
     }-*/;
 
-    private void posterClick() {
+    private void posterClick(Long movieId) {
         History.newItem(Pages.DETAILS_MOVIE.getStrValue());
         RootPanel.get("content").clear();
-        RootPanel.get("content").add(new MoviePage());
+        RootPanel.get("content").add(new MoviePage(movieId));
     }
 }

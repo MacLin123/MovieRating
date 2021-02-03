@@ -1,31 +1,29 @@
 package com.movierating.client.ui.home;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Document;
+import com.google.gwt.core.client.ScriptInjector;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.*;
-import com.movierating.client.config.Pages;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.movierating.client.config.PosterConfig;
 import com.movierating.client.controller.HomeService;
+import com.movierating.client.controller.MovieService;
 import com.movierating.client.model.Movie;
 import com.movierating.client.resources.Resources;
 import com.movierating.client.resources.styles.MovieHeaderStyle;
-import com.movierating.client.ui.movie.MovieFormPanel;
-import com.movierating.client.ui.movie.MoviePage;
 import com.movierating.client.utils.ImageUtils;
 import com.movierating.client.widgets.GliderWrapper;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.List;
+import java.util.Locale;
 
 public class PosterMovieList extends Composite {
     interface PosterMovieListUiBinder extends UiBinder<HTMLPanel, PosterMovieList> {
@@ -34,6 +32,7 @@ public class PosterMovieList extends Composite {
     private static PosterMovieListUiBinder ourUiBinder = GWT.create(PosterMovieListUiBinder.class);
     private static Resources resources = GWT.create(Resources.class);
     private static final HomeService homeService = GWT.create(HomeService.class);
+    private static final MovieService movieService = GWT.create(MovieService.class);
 
     interface MyStyle extends CssResource {
 
@@ -67,16 +66,10 @@ public class PosterMovieList extends Composite {
 
     public PosterMovieList() {
         initWidget(ourUiBinder.createAndBindUi(this));
-//        getNewReleasesMovie();
-//        posterPanel.add(new MoviePoster(new Image(resources.emptyCover()), "title", 52));
-//        posterPanel.add(new MoviePoster(new Image(resources.emptyCover()), "title", 52));
-//        posterPanel.add(new MoviePoster(new Image(resources.emptyCover()), "title", 52));
-//        posterPanel.add(new MoviePoster(new Image(resources.emptyCover()), "title", 52));
-//        posterPanel.add(new MoviePoster(new Image(resources.emptyCover()), "title", 52));
-//        posterPanel.setSpacing(100);
     }
 
     public PosterMovieList(PosterConfig typeOfPoster) {
+        injectResources();
         initWidget(ourUiBinder.createAndBindUi(this));
         if (typeOfPoster.equals(PosterConfig.POSTER_NEW_RELEASES)) {
             getNewReleases();
@@ -85,6 +78,15 @@ public class PosterMovieList extends Composite {
             getUpcomingReleases();
             header.setInnerText("Upcoming Releases");
         }
+    }
+
+    public PosterMovieList(String genre) {
+        injectResources();
+        initWidget(ourUiBinder.createAndBindUi(this));
+
+        getSameGenreMovies(genre);
+        header.setInnerText("You might also like".toUpperCase());
+        viewAllBtn.setVisible(false);
     }
 
 
@@ -96,6 +98,11 @@ public class PosterMovieList extends Composite {
         homeService.getNewReleases(new MoviePosterCallback());
     }
 
+    private void getSameGenreMovies(String genre) {
+        GWT.log(genre);
+        movieService.getMoviesByGenre(genre, new MoviePosterCallback());
+    }
+
     public class MoviePosterCallback implements MethodCallback<List<Movie>> {
         @Override
         public void onFailure(Method method, Throwable exception) {
@@ -105,7 +112,6 @@ public class PosterMovieList extends Composite {
         @Override
         public void onSuccess(Method method, List<Movie> movies) {
             initGliderWrapper();
-//            GWT.debugger();
             for (Movie movie : movies) {
                 Image image = new Image(ImageUtils.getImageData(movie.getCoverImg()));
 //                image.addClickHandler(event -> {
@@ -115,7 +121,7 @@ public class PosterMovieList extends Composite {
 ////                    RootPanel.get("content").add(new MoviePage());
 //                });
                 MoviePoster moviePoster = new MoviePoster(image, movie.getTitle(), movie.getRating());
-                gliderWrapper.addItem(moviePoster.getElement());
+                gliderWrapper.addItem(moviePoster.getElement(), movie.getId());
             }
             //remove layering styles( js added these classes every timi
             gliderWrapper.getGliderElem().removeClassName("glider");
@@ -130,5 +136,12 @@ public class PosterMovieList extends Composite {
         gliderWrapper = new GliderWrapper();
         gliderWrapper.createGlider(newReleasesDiv);
         gliderWrapper.getGliderElem().addClassName(style.gliderStyle());
+    }
+
+    private void injectResources() {
+        ScriptInjector.fromString(Resources.INSTANCE.gliderJs().getText())
+                .setWindow(ScriptInjector.TOP_WINDOW)
+                .inject();
+        StyleInjector.inject(Resources.INSTANCE.gliderCss().getText());
     }
 }

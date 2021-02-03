@@ -53,21 +53,6 @@ public class AdminPanel extends Composite {
 
     private static final AdminService adminService = GWT.create(AdminService.class);
 
-    private static volatile AdminPanel instance;
-
-    public static AdminPanel getInstance() {
-        AdminPanel localInstance = instance;
-        if (localInstance == null) {
-            synchronized (AdminPanel.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new AdminPanel();
-                }
-            }
-        }
-        return localInstance;
-    }
-
     @UiField
     FlexTable movieList;
 
@@ -150,7 +135,7 @@ public class AdminPanel extends Composite {
         adminService.searchMovies(searchTitle, new MethodCallback<List<Movie>>() {
             @Override
             public void onFailure(Method method, Throwable exception) {
-
+                GWT.log(method.getResponse().getText(), exception);
             }
 
             @Override

@@ -8,6 +8,10 @@
             overflow: hidden;
         }
 
+        .home-panel img:hover {
+            cursor: pointer;
+        }
+
         .poster-panel {
             float: left;
         }

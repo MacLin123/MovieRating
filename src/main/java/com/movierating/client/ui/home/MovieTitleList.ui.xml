@@ -12,6 +12,9 @@
         .best-movies-list tr {
             border-bottom: 2px solid #f3f3f3;
         }
+        .best-movies-list tr:hover {
+            border-bottom: 2px solid #4285F4;
+        }
 
 
         .best-movies-list-cell-global {
@@ -37,6 +40,10 @@
 
             margin-bottom: 7px;
             margin-top: 20px;
+        }
+
+        .rating-label:hover{
+            cursor: pointer;
         }
 
     </ui:style>

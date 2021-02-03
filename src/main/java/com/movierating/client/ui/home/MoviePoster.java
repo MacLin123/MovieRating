@@ -11,6 +11,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
 import com.movierating.client.resources.styles.MovieScoreStyle;
+import com.movierating.client.utils.ScoreUtils;
 
 public class MoviePoster extends Composite implements HasClickHandlers {
 
@@ -64,7 +65,7 @@ public class MoviePoster extends Composite implements HasClickHandlers {
         if(rating == null) {
             return;
         }
-        initRatingStyle(rating);
+        ScoreUtils.initRatingMarkStyle(rating,ratingDiv,movieScoreStyle);
         ratingDiv.setInnerText(String.valueOf(rating));
 
 
@@ -74,15 +75,6 @@ public class MoviePoster extends Composite implements HasClickHandlers {
 //        posterPanel.insert(image, DockLayoutPanel.Direction.SOUTH,50,new Label(title));
     }
 
-    private void initRatingStyle(Integer rating) {
-        if (rating >= 70){
-            ratingDiv.addClassName(movieScoreStyle.positive());
-        }else if (rating < 50) {
-            ratingDiv.addClassName(movieScoreStyle.negative());
-        } else{
-            ratingDiv.addClassName(movieScoreStyle.mixed());
-        }
-    }
     @Override
     public HandlerRegistration addClickHandler(ClickHandler handler) {
         return addDomHandler(handler, ClickEvent.getType());

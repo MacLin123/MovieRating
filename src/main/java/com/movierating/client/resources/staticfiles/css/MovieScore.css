@@ -25,6 +25,11 @@
     background-color: #fc3;
 }
 
+.moviescore_w.neutral {
+    color: #FFF!important;
+    background-color: #ccc
+}
+
 .moviescore_w.large {
     font-size: 25px;
 }

@@ -34,10 +34,9 @@ public class HomePage extends Composite {
 
         @ClassName("movie-lists")
         String movieLists();
-    }
 
-    //    @UiField
-//    CarouselWidget carousel;
+        String first_td();
+    }
     @UiField(provided = true)
     PosterMovieList newReleaseMovies;
 
@@ -54,7 +53,7 @@ public class HomePage extends Composite {
     MovieTitleList prevYearMovieList;
 
     public HomePage() {
-        injectResources();
+//        injectResources();
         upcomingReleaseMovies = new PosterMovieList(PosterConfig.POSTER_UPCOMING);
         newReleaseMovies = new PosterMovieList(PosterConfig.POSTER_NEW_RELEASES);
         int currentYear = Integer.parseInt(DateTimeFormat.getFormat("yyyy").format(new Date()));
@@ -62,13 +61,5 @@ public class HomePage extends Composite {
         curYearMovieList = new MovieTitleList(currentYear);
 
         initWidget(ourUiBinder.createAndBindUi(this));
-    }
-
-    private void injectResources() {
-        ScriptInjector.fromString(Resources.INSTANCE.gliderJs().getText())
-                .setWindow(ScriptInjector.TOP_WINDOW)
-                .setRemoveTag(false)
-                .inject();
-        StyleInjector.inject(Resources.INSTANCE.gliderCss().getText());
     }
 }
