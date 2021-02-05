@@ -4,7 +4,7 @@ public enum Pages {
     CREATE_MOVIE("create-movie"),
     UPDATE_MOVIE("update-movie"),
     DETAILS_MOVIE("details-movie"),
-    ADMIN("admin"),
+    SEARCH_PANEL("search-panel"),
     HOME("home");
     private String strValue;
 

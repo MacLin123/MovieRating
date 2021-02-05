@@ -1,6 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <ui:style type="com.movierating.client.ui.home.PosterMovieList.MyStyle">
+    <ui:style type="com.movierating.client.ui.home.PosterMovieCarousels.MyStyle">
 
         .home-panel {
             padding-left: 16px;

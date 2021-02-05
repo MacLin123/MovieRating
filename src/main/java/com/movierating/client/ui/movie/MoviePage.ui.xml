@@ -201,7 +201,11 @@
             margin-left: 116px !important;
             margin-bottom: 27px !important;
         }
-    </ui:style>
+
+        .iframe_youtube_player {
+            border: none;
+
+        }</ui:style>
 
     <ui:style field="headerStyles" type="com.movierating.client.resources.styles.MovieHeaderStyle"
               src="../../resources/staticfiles/css/MovieHeader.css"/>
@@ -236,21 +240,15 @@
         </div>
         <g:LazyPanel ui:field="sameGenrePanel" addStyleNames="{style.same-genre-block}">
         </g:LazyPanel>
-        <!--        <div>-->
-        <!--            <div class="{style.block_title_text} {style.block_title}">-->
-        <!--                <span class="{style.title_span}">You might also like</span>-->
-        <!--                <my:PosterMovieList ui:field="sameGenreList"/>-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--        <g:HTML ui:field="mediaContainer" >-->
-        <!--            <video src="https://youtu.be/LOOC9yxqASw" autoplay="true" controls="controls" ui:field="mediaPlayer" height="100%" width="100%">-->
-        <!--            </video>-->
-        <!--        </g:HTML>-->
 
         <div class="{headerStyles.div-header}">
             <h2 class="{style.header_trailer} {headerStyles.releases-header} {headerStyles.h2}">Trailer</h2>
-            <div class="{style.player_youtube}" id="player_youtube" title="M7lc1UVf-VE" ></div>
+            <div class="{style.player_youtube}" id="player_youtube" title="M7lc1UVf-VE"></div>
         </div>
-<!--        <div class="{style.player_youtube}" id="player_youtube" title="M7lc1UVf-VE" ></div>-->
+
+        <div class="{style.player_youtube}">
+            <iframe ui:field="youtubePlayer" class="{style.iframe_youtube_player}" width="960" height="540">
+            </iframe>
+        </div>
     </g:HTMLPanel>
 </ui:UiBinder>

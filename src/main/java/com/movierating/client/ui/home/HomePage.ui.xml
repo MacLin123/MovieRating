@@ -31,10 +31,10 @@
         }
     </ui:style>
     <g:HTMLPanel>
-        <my:PosterMovieList ui:field="newReleaseMovies">
-        </my:PosterMovieList>
-        <my:PosterMovieList ui:field="upcomingReleaseMovies">
-        </my:PosterMovieList>
+        <my:PosterMovieCarousels ui:field="newReleaseMovies">
+        </my:PosterMovieCarousels>
+        <my:PosterMovieCarousels ui:field="upcomingReleaseMovies">
+        </my:PosterMovieCarousels>
 
         <g:HorizontalPanel addStyleNames="{style.movie-lists}">
             <my:MovieTitleList addStyleNames="{style.first_td}" ui:field="prevYearMovieList">

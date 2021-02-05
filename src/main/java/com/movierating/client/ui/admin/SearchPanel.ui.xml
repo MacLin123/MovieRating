@@ -1,6 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <ui:style type="com.movierating.client.ui.admin.AdminPanel.MyStyle">
+    <ui:style type="com.movierating.client.ui.admin.SearchPanel.MyStyle">
         body, html {
             font-family: 'Roboto', sans-serif;
             font-size: 16px;
@@ -8,7 +8,7 @@
             background-color: #FFFFFF;
         }
 
-        .admin-panel img:hover {
+        .search-panel img:hover {
             cursor: pointer;
         }
 
@@ -26,7 +26,7 @@
             width: 100%;
         }
 
-        .admin-panel {
+        .search-panel {
             background-color: #FFFFFF;
             width: 100%;
             height: 80%;
@@ -42,12 +42,12 @@
             padding-top: 80px;
         }
 
-        .header2 {
-            text-align: center;
-            margin: 0;
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
+        /*.header2 {*/
+        /*    text-align: center;*/
+        /*    margin: 0;*/
+        /*    padding-top: 20px;*/
+        /*    padding-bottom: 20px;*/
+        /*}*/
 
         .input-group-search {
             display: flex;
@@ -115,11 +115,13 @@
             border-bottom: 1px solid #c9c9c9;
             padding: 10px;
         }
-        .img-admin{
+
+        .img-search-panel {
             width: 80px;
             height: 120px;
         }
-        .flex_table tr,thead,tbody {
+
+        .flex_table tr, thead, tbody {
             display: table-row;
             vertical-align: center;
             border-color: inherit;
@@ -130,8 +132,8 @@
     </ui:style>
 
     <g:HTMLPanel addStyleNames="{style.center}">
-        <div class="{style.admin-panel}">
-            <h1 class="{style.header}">Admin Page</h1>
+        <div class="{style.search-panel}">
+            <h1 ui:field="pageHeader" class="{style.header}"></h1>
 
             <div class="{style.input-group-search}">
                 <g:TextBox ui:field="searchByTitleTextBox" addStyleNames="{style.input-group-search-text}"/>
@@ -140,28 +142,6 @@
 
             <g:FlexTable ui:field="movieList" addStyleNames="{style.flex_table}">
             </g:FlexTable>
-
-            <!--            <h2 class="{style.header2}">Create Movie</h2>-->
-
-            <!--            <div class="{style.input-group}">-->
-            <!--                <g:TextBox ui:field="movieTitleTextBox" addStyleNames="{style.input-group-text}"/>-->
-            <!--            </div>-->
-
-            <!--            <div class="{style.input-group}">-->
-            <!--                <g:TextBox ui:field="movieGenreTextBox" addStyleNames="{style.input-group-text}"/>-->
-            <!--            </div>-->
-
-            <!--            <div class="{style.input-group}">-->
-            <!--                <g:TextArea ui:field="movieDescrTextArea" addStyleNames="{style.input-group-text}"/>-->
-            <!--            </div>-->
-
-            <!--            <div class="{style.input-group}">-->
-            <!--                <g:TextBox ui:field="movieDateTextBox" addStyleNames="{style.input-group-text}"/>-->
-            <!--            </div>-->
-
-            <!--            <div class="{style.input-group}">-->
-            <!--                <g:Button ui:field="addMovieBtn" addStyleNames="{style.input-group-button}">Add</g:Button>-->
-            <!--            </div>-->
         </div>
     </g:HTMLPanel>
 </ui:UiBinder>

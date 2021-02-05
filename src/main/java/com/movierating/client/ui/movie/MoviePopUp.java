@@ -8,7 +8,7 @@
 //import com.google.gwt.user.client.ui.*;
 //import com.movierating.client.controller.AdminService;
 //import com.movierating.client.model.Movie;
-//import com.movierating.client.ui.admin.AdminPanel;
+//import com.movierating.client.ui.admin.SearchPanel;
 //import org.fusesource.restygwt.client.Method;
 //import org.fusesource.restygwt.client.MethodCallback;
 //
@@ -53,7 +53,7 @@
 //    Button closePopUpBtn;
 //
 ////    List<ClickHandler> clickHandlers = new ArrayList<>();
-////    private static AdminPanel adminPanel;
+////    private static SearchPanel adminPanel;
 //
 //    public MoviePopUp(final Movie movie) {
 //
@@ -66,7 +66,7 @@
 //        movieGenreTextBox.setText(movie.getGenre());
 //        movieDateTextBox.setText(movie.getPremierDateString());
 //
-////        adminPanel = AdminPanel.getInstance();
+////        adminPanel = SearchPanel.getInstance();
 //
 //        removeMovieBtn.addClickHandler(event -> {
 //            movieTitleTextBox.setText("");

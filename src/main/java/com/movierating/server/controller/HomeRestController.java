@@ -1,6 +1,7 @@
 package com.movierating.server.controller;
 
 import com.movierating.server.repository.MovieRepository;
+import com.movierating.server.services.MovieService;
 import com.movierating.server.utils.DateUtils;
 import com.movierating.server.views.MovieViewMdImg;
 import com.movierating.server.views.MovieViewSmImg;
@@ -13,10 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.Year;
-import java.time.temporal.ChronoField;
 import java.util.Date;
 import java.util.List;
 
@@ -26,24 +23,17 @@ public class HomeRestController {
 
     private final MovieRepository movieRepository;
     private final Logger logger = LoggerFactory.getLogger(HomeRestController.class);
+    private final MovieService movieService;
 
     @Autowired
-    public HomeRestController(MovieRepository movieRepository) {
+    public HomeRestController(MovieRepository movieRepository, MovieService movieService) {
         this.movieRepository = movieRepository;
+        this.movieService = movieService;
     }
 
     @RequestMapping(value = "new_releases", method = RequestMethod.GET)
     public List<MovieViewMdImg> getNewReleasesMovies() {
-        int daysInYear = 365;
-        if (Year.isLeap(Year.now().getLong(ChronoField.YEAR))) {
-            daysInYear++;
-        }
-        Instant now = Instant.now();
-        Instant before = now.minus(Duration.ofDays(daysInYear));
-        Date start = Date.from(before);
-        List<MovieViewMdImg> movieViews = movieRepository.findFirst10ByPremierDateBetween(start, new Date(), MovieViewMdImg.class);
-        logger.info("GET - " + movieViews);
-        return movieViews;
+        return movieService.get10NewMovieReleases();
     }
 
     @RequestMapping(value = "upcoming_releases", method = RequestMethod.GET)

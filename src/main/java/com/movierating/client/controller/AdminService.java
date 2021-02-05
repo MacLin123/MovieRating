@@ -10,13 +10,6 @@ import java.util.List;
 @Path("admin")
 public
 interface AdminService extends RestService {
-//    @GET
-//    void getPage(MethodCallback<Void> callback);
-
-
-//    @GET
-//    @Path("movies?amount={amount}")
-//    void getRecentMovies(String amount , MethodCallback<List<Movie>> callback);
 
     @POST
     @Path("movies")
@@ -25,14 +18,6 @@ interface AdminService extends RestService {
     @DELETE
     @Path("movies/remove/{id}")
     void deleteMovie(@PathParam("id") Long id, final MethodCallback<Void> callback);
-
-//    @PUT
-//    @Path("movies")
-//    void addMovie(final Movie movie, final MethodCallback<Void> callback);
-
-//    @POST
-//    @Path("movies/update/{id}")
-//    void updateMovie(@PathParam("id") Long id, final Movie movie, final MethodCallback<Void> callback);
 
     @GET
     @Path("movies/{id}")

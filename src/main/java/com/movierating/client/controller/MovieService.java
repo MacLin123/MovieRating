@@ -19,4 +19,13 @@ interface MovieService extends RestService {
     @GET
     @Path("/genre/{genre}")
     void getMoviesByGenre(@PathParam("genre") String genre, final MethodCallback<List<Movie>> callback);
+
+    @GET
+    @Path("upcoming_releases")
+    void getAllUpcomingReleases(final MethodCallback<List<Movie>> callback);
+
+    @GET
+    @Path("new_releases")
+    void getAllNewReleases(final MethodCallback<List<Movie>> callback);
+
 }

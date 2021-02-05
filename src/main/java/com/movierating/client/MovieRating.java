@@ -7,7 +7,8 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.movierating.client.config.Pages;
-import com.movierating.client.ui.admin.AdminPanel;
+import com.movierating.client.config.SearchPanelConfig;
+import com.movierating.client.ui.admin.SearchPanel;
 import com.movierating.client.ui.header.Header;
 import com.movierating.client.ui.home.HomePage;
 import com.movierating.client.ui.movie.MovieFormPanel;
@@ -16,11 +17,10 @@ import org.fusesource.restygwt.client.Defaults;
 
 public class MovieRating implements EntryPoint, ValueChangeHandler {
 
-
     public void onModuleLoad() {
         useCorrectRequestBaseUrl();
 
-        RootPanel.get("content").add(new AdminPanel());
+//        RootPanel.get("content").add(new HomePage());
         RootPanel.get("header").add(new Header());
 
 //        Hyperlink h1 = new Hyperlink("books","newpage");
@@ -28,7 +28,7 @@ public class MovieRating implements EntryPoint, ValueChangeHandler {
 
         History.addValueChangeHandler(this);
         if (History.getToken().isEmpty()) {
-            History.newItem(Pages.ADMIN.getStrValue());
+            History.newItem(Pages.HOME.getStrValue());
         } else {
             changePage(History.getToken());
         }
@@ -43,9 +43,9 @@ public class MovieRating implements EntryPoint, ValueChangeHandler {
         if (historyToken.equals(Pages.CREATE_MOVIE.getStrValue())) {
             RootPanel.get("content").clear();
             RootPanel.get("content").add(new MovieFormPanel("Create Movie"));
-        } else if (historyToken.equals(Pages.ADMIN.getStrValue())) {
+        } else if (historyToken.equals(Pages.SEARCH_PANEL.getStrValue())) {
             RootPanel.get("content").clear();
-            RootPanel.get("content").add(new AdminPanel());
+            RootPanel.get("content").add(new SearchPanel(SearchPanelConfig.ADMIN_SEARCH));
         } else if (historyToken.equals(Pages.HOME.getStrValue())) {
             RootPanel.get("content").clear();
             RootPanel.get("content").add(new HomePage());

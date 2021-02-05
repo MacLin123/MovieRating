@@ -7,16 +7,17 @@ import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.*;
+import com.movierating.client.config.Pages;
 import com.movierating.client.config.PosterConfig;
+import com.movierating.client.config.SearchPanelConfig;
 import com.movierating.client.controller.HomeService;
 import com.movierating.client.controller.MovieService;
 import com.movierating.client.model.Movie;
 import com.movierating.client.resources.Resources;
 import com.movierating.client.resources.styles.MovieHeaderStyle;
+import com.movierating.client.ui.admin.SearchPanel;
 import com.movierating.client.utils.ImageUtils;
 import com.movierating.client.widgets.GliderWrapper;
 import org.fusesource.restygwt.client.Method;
@@ -24,11 +25,11 @@ import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.List;
 
-public class PosterMovieList extends Composite {
-    interface PosterMovieListUiBinder extends UiBinder<HTMLPanel, PosterMovieList> {
+public class PosterMovieCarousels extends Composite {
+    interface PosterMovieCarouselsUiBinder extends UiBinder<HTMLPanel, PosterMovieCarousels> {
     }
 
-    private static PosterMovieListUiBinder ourUiBinder = GWT.create(PosterMovieListUiBinder.class);
+    private static PosterMovieCarouselsUiBinder ourUiBinder = GWT.create(PosterMovieCarouselsUiBinder.class);
     private static Resources resources = GWT.create(Resources.class);
     private static final HomeService homeService = GWT.create(HomeService.class);
     private static final MovieService movieService = GWT.create(MovieService.class);
@@ -63,23 +64,36 @@ public class PosterMovieList extends Composite {
     @UiField
     Element newReleasesDiv;
 
-    public PosterMovieList() {
+    public PosterMovieCarousels() {
         initWidget(ourUiBinder.createAndBindUi(this));
     }
 
-    public PosterMovieList(PosterConfig typeOfPoster) {
+    public PosterMovieCarousels(PosterConfig typeOfPoster) {
         injectResources();
         initWidget(ourUiBinder.createAndBindUi(this));
         if (typeOfPoster.equals(PosterConfig.POSTER_NEW_RELEASES)) {
             getNewReleases();
             header.setInnerText("New Releases");
+
+            viewAllBtn.addClickHandler(event -> {
+                History.newItem(Pages.SEARCH_PANEL.getStrValue());
+                RootPanel.get("content").clear();
+                RootPanel.get("content").add(new SearchPanel(SearchPanelConfig.USER_NEW_RELEASES));
+            });
+
         } else if (typeOfPoster.equals(PosterConfig.POSTER_UPCOMING)) {
             getUpcomingReleases();
             header.setInnerText("Upcoming Releases");
+
+            viewAllBtn.addClickHandler(event -> {
+                History.newItem(Pages.SEARCH_PANEL.getStrValue());
+                RootPanel.get("content").clear();
+                RootPanel.get("content").add(new SearchPanel(SearchPanelConfig.USER_UPCOMING_RELEASES));
+            });
         }
     }
 
-    public PosterMovieList(String genre) {
+    public PosterMovieCarousels(String genre) {
         injectResources();
         initWidget(ourUiBinder.createAndBindUi(this));
 
@@ -142,10 +156,5 @@ public class PosterMovieList extends Composite {
                 .setWindow(ScriptInjector.TOP_WINDOW)
                 .inject();
         StyleInjector.inject(Resources.INSTANCE.gliderCss().getText());
-    }
-
-    @Override
-    public void initializeClaimedElement() {
-        super.initializeClaimedElement();
     }
 }

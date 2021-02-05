@@ -6,7 +6,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.movierating.client.config.Pages;
 
@@ -32,7 +31,7 @@ public class Header extends Composite {
     public Header() {
         initWidget(ourUiBinder.createAndBindUi(this));
         home.setTargetHistoryToken(Pages.HOME.getStrValue());
-        admin.setTargetHistoryToken(Pages.ADMIN.getStrValue());
+        admin.setTargetHistoryToken(Pages.SEARCH_PANEL.getStrValue());
         createMovie.setTargetHistoryToken(Pages.CREATE_MOVIE.getStrValue());
     }
 }

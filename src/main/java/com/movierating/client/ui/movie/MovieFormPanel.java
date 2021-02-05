@@ -104,7 +104,7 @@ public class MovieFormPanel extends Composite {
         formPanel.addSubmitCompleteHandler(event -> {
             String results = event.getResults();
             Window.alert((results != null) ? results : "Submitted");
-            History.newItem(Pages.ADMIN.getStrValue());
+            History.newItem(Pages.SEARCH_PANEL.getStrValue());
         });
     }
 
@@ -270,7 +270,7 @@ public class MovieFormPanel extends Composite {
             @Override
             public void onSuccess(final Method method, final Void response) {
                 Window.alert(method.getResponse().getText());
-                History.newItem(Pages.ADMIN.getStrValue());
+                History.newItem(Pages.SEARCH_PANEL.getStrValue());
             }
         });
     }

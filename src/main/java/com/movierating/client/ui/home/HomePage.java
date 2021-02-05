@@ -1,8 +1,6 @@
 package com.movierating.client.ui.home;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.ScriptInjector;
-import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -38,10 +36,10 @@ public class HomePage extends Composite {
         String first_td();
     }
     @UiField(provided = true)
-    PosterMovieList newReleaseMovies;
+    PosterMovieCarousels newReleaseMovies;
 
     @UiField(provided = true)
-    PosterMovieList upcomingReleaseMovies;
+    PosterMovieCarousels upcomingReleaseMovies;
 
     @UiField
     MyStyle style;
@@ -54,8 +52,8 @@ public class HomePage extends Composite {
 
     public HomePage() {
 //        injectResources();
-        upcomingReleaseMovies = new PosterMovieList(PosterConfig.POSTER_UPCOMING);
-        newReleaseMovies = new PosterMovieList(PosterConfig.POSTER_NEW_RELEASES);
+        upcomingReleaseMovies = new PosterMovieCarousels(PosterConfig.POSTER_UPCOMING);
+        newReleaseMovies = new PosterMovieCarousels(PosterConfig.POSTER_NEW_RELEASES);
         int currentYear = Integer.parseInt(DateTimeFormat.getFormat("yyyy").format(new Date()));
         prevYearMovieList = new MovieTitleList(currentYear - 1);
         curYearMovieList = new MovieTitleList(currentYear);
