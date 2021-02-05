@@ -143,6 +143,10 @@
                 <g:TextBox name="genre" maxLength="255" ui:field="movieGenreTextBox" addStyleNames="{style.input-group-text}"/>
                 <g:Label ui:field="movieGenreChars" addStyleNames="{style.char-label}">0/255</g:Label>
 
+                <g:Label ui:field="youtubeIdLabel" addStyleNames="{style.label-group}">Youtube video id</g:Label>
+                <g:TextBox name="youtubeId" maxLength="255" ui:field="youtubeIdTextBox" addStyleNames="{style.input-group-text}"/>
+                <g:Label ui:field="youtubeIdChars" addStyleNames="{style.char-label}">0/255</g:Label>
+
                 <g:TextBox name="date" maxLength="255" ui:field="movieDateTextBox"
                            addStyleNames="{style.input-group-text}"/>
 

@@ -32,30 +32,53 @@ public class Movie {
     @Column(name = "premier_date")
     private Date premierDate;
 
-    public Movie(String title, String description, String genre, Date premierDate) {
+    @Column(name="youtube_id")
+    private String youtubeId;
+
+
+//    public Movie(String title, String description, String genre, Date premierDate) {
+//        this.title = title;
+//        this.description = description;
+//        this.genre = genre;
+//        this.premierDate = premierDate;
+//        initMovieRating();
+//    }
+
+    public Movie(String title, String description, String genre, Date premierDate,String youtubeId) {
         this.title = title;
         this.description = description;
         this.genre = genre;
         this.premierDate = premierDate;
         initMovieRating();
-//        this.rating = new Random().nextInt(ConfigMovie.MAX_RATING.getValue() + 1);
+        this.youtubeId = youtubeId;
     }
 
-    public Movie(String title, String description, String genre, Date premierDate,
-                 byte[] coverImg, byte[] mediumImg, byte[] largeImg) {
-        this.title = title;
-        this.description = description;
-        this.genre = genre;
-        this.premierDate = premierDate;
-        this.coverImg = coverImg;
-        this.mediumImg = mediumImg;
-        this.largeImg = largeImg;
-        initMovieRating();
-//        this.rating = new Random().nextInt(ConfigMovie.MAX_RATING.getValue() + 1);
-    }
+//    public Movie(String title, String description, String genre, Date premierDate,
+//                 byte[] coverImg, byte[] mediumImg, byte[] largeImg) {
+//        this.title = title;
+//        this.description = description;
+//        this.genre = genre;
+//        this.premierDate = premierDate;
+//        this.coverImg = coverImg;
+//        this.mediumImg = mediumImg;
+//        this.largeImg = largeImg;
+//        initMovieRating();
+//    }
+
+//    public Movie(String title, String description, String genre, Date premierDate,
+//                 HashMap<String, byte[]> imgMap) {
+//        this.title = title;
+//        this.description = description;
+//        this.genre = genre;
+//        this.premierDate = premierDate;
+//        this.coverImg = imgMap.get(ConfigMovie.IMG_COVER_KEY.getText());
+//        this.mediumImg = imgMap.get(ConfigMovie.IMG_MEDIUM_KEY.getText());
+//        this.largeImg = imgMap.get(ConfigMovie.IMG_LARGE_KEY.getText());
+//        initMovieRating();
+//    }
 
     public Movie(String title, String description, String genre, Date premierDate,
-                 HashMap<String, byte[]> imgMap) {
+                 String youtubeId, HashMap<String, byte[]> imgMap) {
         this.title = title;
         this.description = description;
         this.genre = genre;
@@ -63,20 +86,19 @@ public class Movie {
         this.coverImg = imgMap.get(ConfigMovie.IMG_COVER_KEY.getText());
         this.mediumImg = imgMap.get(ConfigMovie.IMG_MEDIUM_KEY.getText());
         this.largeImg = imgMap.get(ConfigMovie.IMG_LARGE_KEY.getText());
-//        this.rating = new Random().nextInt(ConfigMovie.MAX_RATING.getValue() + 1);
         initMovieRating();
+        this.youtubeId = youtubeId;
     }
 
-    public Movie(Long id, String title, String description, String genre, Date premierDate,
-                 byte[] coverImg) {
-        this.title = title;
-        this.description = description;
-        this.genre = genre;
-        this.premierDate = premierDate;
-        this.coverImg = coverImg;
-//        this.rating = new Random().nextInt(ConfigMovie.MAX_RATING.getValue() + 1);
-        initMovieRating();
-    }
+//    public Movie(Long id, String title, String description, String genre, Date premierDate,
+//                 byte[] coverImg) {
+//        this.title = title;
+//        this.description = description;
+//        this.genre = genre;
+//        this.premierDate = premierDate;
+//        this.coverImg = coverImg;
+//        initMovieRating();
+//    }
 
     public Movie() {
 
@@ -154,6 +176,14 @@ public class Movie {
         this.largeImg = largeImg;
     }
 
+    public String getYoutubeId() {
+        return youtubeId;
+    }
+
+    public void setYoutubeId(String youtubeId) {
+        this.youtubeId = youtubeId;
+    }
+
     @Override
     public String toString() {
         String strDate = DateUtils.dateToString(premierDate);
@@ -163,6 +193,7 @@ public class Movie {
                 ", rating=" + rating +
                 ", genre='" + genre + '\'' +
                 ", premierDate=" + strDate +
+                ", youtubeId= " + youtubeId +
                 '}';
     }
 

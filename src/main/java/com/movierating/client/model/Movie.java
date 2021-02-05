@@ -12,20 +12,24 @@ public class Movie {
     private Integer rating;
     private String genre;
     private byte[] coverImg;
-
     private Date premierDate;
+    private String youtubeId;
 
-    public Movie(Long id, String title, String description, String genre, Integer rating, Date premierDate) {
+
+    public Movie(Long id, String title, String description, String genre, Integer rating,
+                 Date premierDate, String youtubeId) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.rating = rating;
         this.genre = genre;
         this.premierDate = premierDate;
+        this.youtubeId = youtubeId;
     }
 
-    public Movie(Long id, String title, String description, String genre, Integer rating, Date premierDate, byte[] coverImg) {
-        this(id, title, description, genre, rating, premierDate);
+    public Movie(Long id, String title, String description, String genre,
+                 Integer rating, Date premierDate, byte[] coverImg, String youtubeId) {
+        this(id, title, description, genre, rating, premierDate, youtubeId);
         this.coverImg = coverImg;
     }
 
@@ -82,6 +86,14 @@ public class Movie {
 
     public Date getPremierDate() {
         return premierDate;
+    }
+
+    public String getYoutubeId() {
+        return youtubeId;
+    }
+
+    public void setYoutubeId(String youtubeId) {
+        this.youtubeId = youtubeId;
     }
 
     public String getPremierDateString() {

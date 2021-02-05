@@ -142,21 +142,6 @@ public class AdminPanel extends Composite {
             public void onSuccess(Method method, List<Movie> response) {
                 movieList.removeAllRows();
                 for (final Movie movie : response) {
-//                    final MovieLabel movieLabel = new MovieLabel(movie);
-
-//                    MoviePopUp moviePopUp = new MoviePopUp(movie);
-////                    moviePopUp.addClickHandler(event-> refreshMovies());
-//                    moviePopUp.addCloseClickHandler(event -> {
-//                        refreshMovies();
-//                        moviePopUp.hide();
-//                    });
-//                    movieLabel.addClickHandler(movie1 -> {
-//                        moviePopUp.setPopupPositionAndShow((offsetWidth, offsetHeight) -> {
-//                            int left = (Window.getClientWidth() - offsetWidth) / 3;
-//                            int top = (Window.getClientHeight() - offsetHeight) / 3;
-//                            moviePopUp.setPopupPosition(left, top);
-//                        });
-//                    });
 
 //                    movieLabel.addClickHandler(movieToRemove -> removeMovie(movieToRemove));
                     int row = movieList.getRowCount();

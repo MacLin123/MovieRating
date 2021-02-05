@@ -7,9 +7,10 @@ CREATE TABLE IF NOT EXISTS movies
     rating       INTEGER,
     genre        VARCHAR(255),
     premier_date DATE,
-    cover_img BYTEA,
-    medium_img BYTEA,
-    large_img BYTEA
+    cover_img    BYTEA,
+    medium_img   BYTEA,
+    large_img    BYTEA,
+    youtube_id   VARCHAR (255)
 );
 
 -- INSERT INTO movies(title, description, genre, premier_date) VALUES ('Citizen Kane', 'good film', 'Drama','1941-09-04');

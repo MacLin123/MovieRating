@@ -17,6 +17,8 @@ public class MovieViewLgImg {
 
     private Date premierDate;
 
+    private String youtubeId;
+
     public MovieViewLgImg(Movie movie) {
         this.id = movie.getId();
         this.title = movie.getTitle();
@@ -25,6 +27,7 @@ public class MovieViewLgImg {
         this.genre = movie.getGenre();
         this.premierDate = movie.getPremierDate();
         this.coverImg = movie.getLargeImg();
+        this.youtubeId = movie.getYoutubeId();
     }
 
     public MovieViewLgImg() {
@@ -87,6 +90,14 @@ public class MovieViewLgImg {
         this.coverImg = coverImg;
     }
 
+    public String getYoutubeId() {
+        return youtubeId;
+    }
+
+    public void setYoutubeId(String youtubeId) {
+        this.youtubeId = youtubeId;
+    }
+
     @Override
     public String toString() {
         String strDate = DateUtils.dateToString(premierDate);
@@ -96,6 +107,7 @@ public class MovieViewLgImg {
                 ", rating=" + rating +
                 ", genre='" + genre + '\'' +
                 ", premierDate=" + strDate +
+                ", youtubeId= " + youtubeId +
                 '}';
     }
 

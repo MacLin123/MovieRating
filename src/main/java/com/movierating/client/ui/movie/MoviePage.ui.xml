@@ -187,13 +187,24 @@
 
         .same-genre-block {
             margin-left: 100px;
-
         }
 
         .player_youtube {
             margin-left: 60px;
+        }
 
-        }</ui:style>
+        {
+
+        }
+
+        .header_trailer {
+            margin-left: 116px !important;
+            margin-bottom: 27px !important;
+        }
+    </ui:style>
+
+    <ui:style field="headerStyles" type="com.movierating.client.resources.styles.MovieHeaderStyle"
+              src="../../resources/staticfiles/css/MovieHeader.css"/>
 
     <ui:style type="com.movierating.client.resources.styles.MovieScoreStyle"
               field="movieScoreStyle" src="../../resources/staticfiles/css/MovieScore.css"/>
@@ -224,7 +235,6 @@
             </div>
         </div>
         <g:LazyPanel ui:field="sameGenrePanel" addStyleNames="{style.same-genre-block}">
-            <!--            <my:PosterMovieList ui:field="sameGenreList"/>-->
         </g:LazyPanel>
         <!--        <div>-->
         <!--            <div class="{style.block_title_text} {style.block_title}">-->
@@ -237,6 +247,10 @@
         <!--            </video>-->
         <!--        </g:HTML>-->
 
-        <div class="{style.player_youtube}" id="player_youtube" title="M7lc1UVf-VE" ></div>
+        <div class="{headerStyles.div-header}">
+            <h2 class="{style.header_trailer} {headerStyles.releases-header} {headerStyles.h2}">Trailer</h2>
+            <div class="{style.player_youtube}" id="player_youtube" title="M7lc1UVf-VE" ></div>
+        </div>
+<!--        <div class="{style.player_youtube}" id="player_youtube" title="M7lc1UVf-VE" ></div>-->
     </g:HTMLPanel>
 </ui:UiBinder>

@@ -5,7 +5,7 @@ import com.movierating.server.repository.MovieRepository;
 import com.movierating.server.utils.DateUtils;
 import com.movierating.server.utils.ImageUtils;
 import com.movierating.server.utils.MoviesUtils;
-import com.movierating.server.views.MovieViewMdImg;
+import com.movierating.server.views.MovieViewLgImg;
 import com.movierating.server.views.MovieViewSmImg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,8 +73,8 @@ public class AdminRestController {
 
     @RequestMapping(value = "movies/update/{id}", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> updateMovie(@PathVariable("id") Long id, @RequestParam MultipartFile file,
-                                       @RequestParam String date, @RequestParam String title,
-                                       @RequestParam String description, @RequestParam String genre) throws IOException {
+                                              @RequestParam String date, @RequestParam String title,
+                                              @RequestParam String description, @RequestParam String genre) throws IOException {
         if (!movieRepository.existsById(id)) {
             return ResponseEntity.badRequest()
                     .body("movie not found");
@@ -107,18 +107,19 @@ public class AdminRestController {
     }
 
     @RequestMapping(value = "movies/{id}", method = RequestMethod.GET)
-    public MovieViewMdImg getMovie(@PathVariable("id") Long id) {
+    public MovieViewLgImg getMovie(@PathVariable("id") Long id) {
         if (!movieRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "movie not found");
         }
         logger.info("GET - id = " + id);
-        return movieRepository.getById(id, MovieViewMdImg.class);
+        return movieRepository.getById(id, MovieViewLgImg.class);
     }
 
     @RequestMapping(value = "movies/create", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> createMovie(@RequestParam MultipartFile file,
-                                       @RequestParam String date, @RequestParam String title,
-                                       @RequestParam String description, @RequestParam String genre) throws IOException {
+                                              @RequestParam String date, @RequestParam String title,
+                                              @RequestParam String description, @RequestParam String genre,
+                                              @RequestParam String youtubeId) throws IOException {
         if (movieRepository.existsByTitleIgnoreCase(title)) {
             return ResponseEntity.badRequest()
                     .body("the movie you want to add already exists");
@@ -129,7 +130,7 @@ public class AdminRestController {
                     .body("image extension is not valid");
         }
 
-        Movie movie = MoviesUtils.createMovie(file.getBytes(), title, description, genre, DateUtils.convertStringToDate(date));
+        Movie movie = MoviesUtils.createMovie(file.getBytes(), title, description, genre, DateUtils.convertStringToDate(date), youtubeId);
 //        Movie movie = new Movie(title, description, genre, DateUtils.convertStringToDate(date), file.getBytes());
         movieRepository.save(movie);
         logger.info("saved - " + movie);

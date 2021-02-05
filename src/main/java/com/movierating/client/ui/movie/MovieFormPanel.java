@@ -1,11 +1,13 @@
 package com.movierating.client.ui.movie;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.*;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.HeadingElement;
+import com.google.gwt.dom.client.InputElement;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.*;
+import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.movierating.client.config.FileConfig;
 import com.movierating.client.config.Pages;
@@ -51,6 +53,13 @@ public class MovieFormPanel extends Composite {
     Label movieGenreChars;
     @UiField
     TextBox movieGenreTextBox;
+
+    @UiField
+    Label youtubeIdLabel;
+    @UiField
+    Label youtubeIdChars;
+    @UiField
+    TextBox youtubeIdTextBox;
 
     @UiField
     Label dateLabel;
@@ -129,6 +138,7 @@ public class MovieFormPanel extends Composite {
             return 0;
         }
     }-*/;
+
     private native boolean fileValidation(final Element fileInput) /*-{
 
         var filePath = fileInput.value;
@@ -168,18 +178,18 @@ public class MovieFormPanel extends Composite {
 
     private void initSubmitButtonHandler() {
         submitMovieBtn.addClickHandler(event -> {
-        int size = getFileSize(fileUpload.getElement());
-        if (size > FileConfig.MAX_FILE_SIZE.getValue()) {
-            Window.alert("Max size of file is 5MB");
-            return;
-        }
-        if((size != 0) && !fileValidation(fileUpload.getElement())) {
-            Window.alert("Invalid file extension, you should upload an image");
-            return;
-        }
-        movieDateTextBox.setText(dateElem.getValue());
-        formPanel.submit();
-    });
+            int size = getFileSize(fileUpload.getElement());
+            if (size > FileConfig.MAX_FILE_SIZE.getValue()) {
+                Window.alert("Max size of file is 5MB");
+                return;
+            }
+            if ((size != 0) && !fileValidation(fileUpload.getElement())) {
+                Window.alert("Invalid file extension, you should upload an image");
+                return;
+            }
+            movieDateTextBox.setText(dateElem.getValue());
+            formPanel.submit();
+        });
     }
 
     private void initTextBoxLenHandler() {
@@ -196,15 +206,22 @@ public class MovieFormPanel extends Composite {
             String genreLen = String.valueOf(movieGenreTextBox.getText().length());
             movieGenreChars.setText(genreLen + "/255");
         });
+
+        youtubeIdTextBox.addKeyUpHandler(event -> {
+            String genreLen = String.valueOf(youtubeIdTextBox.getText().length());
+            youtubeIdChars.setText(genreLen + "/255");
+        });
     }
 
     private void initTextBoxCharLen() {
         String titleLen = String.valueOf(movieTitleTextBox.getText().length());
         String descrLen = String.valueOf(movieDescrTextArea.getText().length());
         String genreLen = String.valueOf(movieGenreTextBox.getText().length());
+        String youtubeIdLen = String.valueOf(youtubeIdTextBox.getText().length());
         movieTitleChars.setText(titleLen + "/255");
         movieDescrChars.setText(descrLen + "/500");
         movieGenreChars.setText(genreLen + "/255");
+        youtubeIdChars.setText(youtubeIdLen + "/255");
     }
 
 
@@ -221,6 +238,7 @@ public class MovieFormPanel extends Composite {
                 movieTitleTextBox.setText(movie.getTitle());
                 movieDescrTextArea.setText(movie.getDescription());
                 movieGenreTextBox.setText(movie.getGenre());
+                youtubeIdTextBox.setText(movie.getYoutubeId());
                 dateElem.setValue(movie.getPremierDateString());
                 coverImg.setUrl(ImageUtils.getImageData(movie.getCoverImg()));
 
@@ -229,6 +247,7 @@ public class MovieFormPanel extends Composite {
                     movieTitleTextBox.setText("");
                     movieDescrTextArea.setText("");
                     movieGenreTextBox.setText("");
+                    youtubeIdTextBox.setText("");
                     removeMovie(movie.getId());
                 });
                 initTextBoxCharLen();

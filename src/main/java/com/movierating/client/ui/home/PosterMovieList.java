@@ -23,7 +23,6 @@ import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
 import java.util.List;
-import java.util.Locale;
 
 public class PosterMovieList extends Composite {
     interface PosterMovieListUiBinder extends UiBinder<HTMLPanel, PosterMovieList> {
@@ -143,5 +142,10 @@ public class PosterMovieList extends Composite {
                 .setWindow(ScriptInjector.TOP_WINDOW)
                 .inject();
         StyleInjector.inject(Resources.INSTANCE.gliderCss().getText());
+    }
+
+    @Override
+    public void initializeClaimedElement() {
+        super.initializeClaimedElement();
     }
 }
