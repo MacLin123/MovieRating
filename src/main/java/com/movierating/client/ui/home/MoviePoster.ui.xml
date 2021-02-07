@@ -1,6 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <ui:style type="com.movierating.client.ui.home.MoviePoster.MyStyle">
+    <ui:style>
         .poster {
             display: inline-block;
             margin-right: 1.6rem;
@@ -34,17 +34,15 @@
               field="movieScoreStyle" src="../../resources/staticfiles/css/MovieScore.css"/>
     <g:HTMLPanel addStyleNames="{style.poster}">
         <div ui:field="imgDiv" class="{style.img_wrapper}">
-            <g:Image ui:field="posterImage"></g:Image>
+            <g:Image ui:field="posterImage"/>
         </div>
 
         <div ui:field="titleDiv" class="{style.title_wrapper}">
-            <g:Label ui:field="titleLabel"></g:Label>
+            <g:Label ui:field="titleLabel"/>
         </div>
 
         <div ui:field="ratingDiv"
              class="{movieScoreStyle.moviescore_w} {movieScoreStyle.large} {movieScoreStyle.moviescore_w_img}">
         </div>
-        <!--                <g:VerticalPanel ui:field="posterPanel">-->
-        <!--                </g:VerticalPanel>-->
     </g:HTMLPanel>
 </ui:UiBinder>

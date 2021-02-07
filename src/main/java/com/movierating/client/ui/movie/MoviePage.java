@@ -22,7 +22,7 @@ public class MoviePage extends Composite {
     interface MoviePageUiBinder extends UiBinder<HTMLPanel, MoviePage> {
     }
 
-    private static MoviePageUiBinder ourUiBinder = GWT.create(MoviePageUiBinder.class);
+    private static final MoviePageUiBinder ourUiBinder = GWT.create(MoviePageUiBinder.class);
 
     private static final MovieService movieService = GWT.create(MovieService.class);
 

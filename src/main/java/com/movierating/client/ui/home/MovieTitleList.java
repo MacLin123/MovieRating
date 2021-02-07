@@ -23,10 +23,7 @@ public class MovieTitleList extends Composite {
     interface MovieTitleListUiBinder extends UiBinder<HTMLPanel, MovieTitleList> {
     }
 
-    private static MovieTitleListUiBinder ourUiBinder = GWT.create(MovieTitleListUiBinder.class);
-
-//    @UiField
-//    VerticalPanel bestMoviesPanel;
+    private static final MovieTitleListUiBinder ourUiBinder = GWT.create(MovieTitleListUiBinder.class);
 
     interface MyStyle extends CssResource {
 
@@ -73,7 +70,6 @@ public class MovieTitleList extends Composite {
 
     public MovieTitleList(int year) {
         initWidget(ourUiBinder.createAndBindUi(this));
-//        int currentYear = Integer.parseInt(DateTimeFormat.getFormat("yyyy").format(new Date()));
         bestMoviesHeader.setInnerText("Best Movies " + year);
         getBestMovies(year);
 
@@ -127,7 +123,6 @@ public class MovieTitleList extends Composite {
 
     private void initCellStyle(int row) {
         bestMoviesTable.getCellFormatter().addStyleName(row, 0, style.bestMoviesListCellTitle());
-//        bestMoviesTable.getCellFormatter().addStyleName(row, 0, style.ratingLabel());
         bestMoviesTable.getCellFormatter().addStyleName(row, 1, style.bestMoviesListCellGlobal());
 
         for (int i = 0; i < COL_AMOUNT; i++) {

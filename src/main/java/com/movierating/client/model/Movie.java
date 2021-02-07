@@ -15,31 +15,6 @@ public class Movie {
     private Date premierDate;
     private String youtubeId;
 
-
-    public Movie(Long id, String title, String description, String genre, Integer rating,
-                 Date premierDate, String youtubeId) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.rating = rating;
-        this.genre = genre;
-        this.premierDate = premierDate;
-        this.youtubeId = youtubeId;
-    }
-
-    public Movie(Long id, String title, String description, String genre,
-                 Integer rating, Date premierDate, byte[] coverImg, String youtubeId) {
-        this(id, title, description, genre, rating, premierDate, youtubeId);
-        this.coverImg = coverImg;
-    }
-
-//    public Movie(String title, String description, String genre, Date premierDate) {
-//        this.title = title;
-//        this.description = description;
-//        this.genre = genre;
-//        this.premierDate = premierDate;
-//    }
-
     public Movie() {
 
     }
@@ -98,8 +73,7 @@ public class Movie {
 
     public String getPremierDateString() {
         DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat("yyyy-MM-dd");
-        String dateStr = dateTimeFormat.format(premierDate);
-        return dateStr;
+        return dateTimeFormat.format(premierDate);
     }
 
     public void setPremierDate(Date premierDate) {

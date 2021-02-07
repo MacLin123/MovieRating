@@ -1,6 +1,5 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'
->
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <ui:style>
         .score-panel-wrap {
             padding: 0;
@@ -14,11 +13,6 @@
             grid-gap: 0;
         }
 
-        /*.mop-ratings-wrap.score_panel {*/
-        /*    margin: 0;*/
-        /*    min-height: 0;*/
-        /*}*/
-
         .mop-ratings-wrap {
             font-family: "Open Sans", Arial, "Trebuchet MS", Verdana, sans-serif;
             background: #efefef;
@@ -27,18 +21,14 @@
             margin-bottom: 15px;
             border-bottom: 3px solid #fff;
             padding-bottom: 25px;
-            margin-left: 0px;
-
+            margin-left: 0;
             height: 480px;
         }
-
 
         .mop-ratings-wrap__title_top {
             font-family: "Open Sans", Arial, "Trebuchet MS", Verdana, sans-serif;
             position: relative;
-            /*left: 50px;*/
             letter-spacing: 0.5px;
-            /*transform: translateX(-10%);*/
             display: flex;
             flex-wrap: nowrap;
             padding: 50px 0 0 0;
@@ -54,27 +44,6 @@
             height: 480px;
         }
 
-        .header-line {
-            display: flex;
-            align-items: center;
-            text-align: center;
-        }
-
-        .header-line::before, .separator::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid #000;
-        }
-
-        .header-line::before {
-            margin-right: .25em;
-        }
-
-        .header-line::after {
-            margin-left: .25em;
-        }
-
-
         .infoDiv {
             padding-top: 5px;
             padding-bottom: 5px;
@@ -84,7 +53,6 @@
             border-top: 1px solid rgba(66, 66, 66, 0.5);
             border-bottom: 1px solid rgba(66, 66, 66, 0.5);
             padding-right: 5px;
-
         }
 
         .release_year {
@@ -109,9 +77,6 @@
             padding-top: 5px;
             display: flex;
             opacity: 0.7;
-        }
-
-        .release {
         }
 
         .genres {
@@ -141,11 +106,6 @@
             font-weight: 700;
             font-size: 2.0rem;
             text-transform: uppercase;
-
-        }
-
-        .description {
-
         }
 
         .score-div {
@@ -161,28 +121,10 @@
         .descr-label {
             margin-block-start: 1em;
             margin-block-end: 1em;
-            margin-inline-start: 0px;
-            margin-inline-end: 0px;
+            margin-inline-start: 0;
+            margin-inline-end: 0;
             font-family: 'Source Sans Pro', Arial, sans-serif;
             line-height: 1.5em;
-        }
-
-        .block_title {
-            font-family: "Open Sans", Arial, "Trebuchet MS", Verdana, sans-serif;
-            position: relative;
-            letter-spacing: 0.5px;
-            display: flex;
-            flex-wrap: nowrap;
-            padding: 0;
-            max-width: 75%;
-            margin-left: 400px;
-        }
-
-        .block_title_text {
-            white-space: nowrap;
-            color: #000;
-            font-weight: 700;
-            font-size: 2.0rem;
         }
 
         .same-genre-block {
@@ -193,10 +135,6 @@
             margin-left: 60px;
         }
 
-        {
-
-        }
-
         .header_trailer {
             margin-left: 116px !important;
             margin-bottom: 27px !important;
@@ -205,24 +143,25 @@
         .iframe_youtube_player {
             border: none;
 
-        }</ui:style>
+        }
+    </ui:style>
 
     <ui:style field="headerStyles" type="com.movierating.client.resources.styles.MovieHeaderStyle"
               src="../../resources/staticfiles/css/MovieHeader.css"/>
 
-    <ui:style type="com.movierating.client.resources.styles.MovieScoreStyle"
-              field="movieScoreStyle" src="../../resources/staticfiles/css/MovieScore.css"/>
+    <ui:style field="movieScoreStyle" type="com.movierating.client.resources.styles.MovieScoreStyle"
+              src="../../resources/staticfiles/css/MovieScore.css"/>
 
     <g:HTMLPanel addStyleNames="{style.movie-page-styles}">
         <div class="{style.score-panel-wrap} {style.cover-wrap}">
-            <g:Image addStyleNames="{style.coverLargeImage}" ui:field="coverMedium"></g:Image>
+            <g:Image addStyleNames="{style.coverLargeImage}" ui:field="coverMedium"/>
             <div class="{style.mop-ratings-wrap} {style.score-panel-wrap} {style.score-div}">
                 <div class="{style.title_text} {style.mop-ratings-wrap__title_top}">
-                    <span ui:field="titleElem" class="{style.title_span}"></span>
-                    <span ui:field="yearElem" class="{style.release_year}"></span>
+                    <span ui:field="titleElem" class="{style.title_span}"/>
+                    <span ui:field="yearElem" class="{style.release_year}"/>
                 </div>
                 <div class="{style.facts}">
-                    <span ui:field="premierDateElem" class="{style.release}">
+                    <span ui:field="premierDateElem">
                     </span>
                     <span ui:field="genreElem" class="{style.genres}">
                     </span>
@@ -232,9 +171,9 @@
                     <div ui:field="ratingDiv" class=" {movieScoreStyle.moviescore_w} {movieScoreStyle.larger}">
                     </div>
                 </div>
-                <div class="{style.description}">
+                <div>
                     <h3 class="{style.descr-header}">Description</h3>
-                    <g:Label ui:field="descrLabel" addStyleNames="{style.descr-label}"></g:Label>
+                    <g:Label ui:field="descrLabel" addStyleNames="{style.descr-label}"/>
                 </div>
             </div>
         </div>
@@ -243,7 +182,7 @@
 
         <div class="{headerStyles.div-header}">
             <h2 class="{style.header_trailer} {headerStyles.releases-header} {headerStyles.h2}">Trailer</h2>
-            <div class="{style.player_youtube}" id="player_youtube" title="M7lc1UVf-VE"></div>
+            <div class="{style.player_youtube}" id="player_youtube" title="M7lc1UVf-VE"/>
         </div>
 
         <div class="{style.player_youtube}">

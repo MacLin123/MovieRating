@@ -23,9 +23,7 @@ public class MovieFormPanel extends Composite {
     interface MovieFormPanelUiBinder extends UiBinder<HTMLPanel, MovieFormPanel> {
     }
 
-    private static MovieFormPanelUiBinder ourUiBinder = GWT.create(MovieFormPanelUiBinder.class);
-
-//    private static Resources resources = GWT.create(Resources.class);
+    private static final MovieFormPanelUiBinder ourUiBinder = GWT.create(MovieFormPanelUiBinder.class);
 
     private static final AdminService adminService = GWT.create(AdminService.class);
     private static final String URL_REQUEST_CREATE = Defaults.getServiceRoot() + "admin/movies/create";
@@ -91,8 +89,8 @@ public class MovieFormPanel extends Composite {
     /**
      * Update movie constructor
      *
-     * @param id
-     * @param headerText
+     * @param id         id of movie
+     * @param headerText main header text of movie update panel
      */
     public MovieFormPanel(final Long id, String headerText) {
         getMovie(id);
@@ -104,14 +102,14 @@ public class MovieFormPanel extends Composite {
         formPanel.addSubmitCompleteHandler(event -> {
             String results = event.getResults();
             Window.alert((results != null) ? results : "Submitted");
-            History.newItem(Pages.SEARCH_PANEL.getStrValue());
+            History.newItem(Pages.ADMIN_SEARCH_PANEL.getStrValue());
         });
     }
 
     /**
      * Create movie constructor
      *
-     * @param headerText
+     * @param headerText main header text of movie create panel
      */
     public MovieFormPanel(String headerText) {
         initCommonFormElements();
@@ -229,7 +227,7 @@ public class MovieFormPanel extends Composite {
         adminService.getMovie(id, new MethodCallback<Movie>() {
             @Override
             public void onFailure(Method method, Throwable exception) {
-                Window.alert(exception.getMessage());
+                Window.alert(method.getResponse().getText());
             }
 
             @Override
@@ -258,19 +256,19 @@ public class MovieFormPanel extends Composite {
     /**
      * Remove movie from the server
      *
-     * @param idMovieToRemove
+     * @param idMovieToRemove id of movie you want to remove
      */
     private void removeMovie(final Long idMovieToRemove) {
         adminService.deleteMovie(idMovieToRemove, new MethodCallback<Void>() {
             @Override
             public void onFailure(final Method method, final Throwable exception) {
-
+                GWT.log(method.getResponse().getText(), exception);
             }
 
             @Override
             public void onSuccess(final Method method, final Void response) {
                 Window.alert(method.getResponse().getText());
-                History.newItem(Pages.SEARCH_PANEL.getStrValue());
+                History.newItem(Pages.ADMIN_SEARCH_PANEL.getStrValue());
             }
         });
     }

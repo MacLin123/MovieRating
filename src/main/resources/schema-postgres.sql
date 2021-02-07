@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS movies;
 CREATE TABLE IF NOT EXISTS movies
 (
     id           bigserial PRIMARY key,
@@ -12,6 +11,3 @@ CREATE TABLE IF NOT EXISTS movies
     large_img    BYTEA,
     youtube_id   VARCHAR (255)
 );
-
--- INSERT INTO movies(title, description, genre, premier_date) VALUES ('Citizen Kane', 'good film', 'Drama','1941-09-04');
--- INSERT INTO movies(title, description, genre, premier_date) VALUES ('The Godfather', 'good film', 'Drama','1972-03-11');

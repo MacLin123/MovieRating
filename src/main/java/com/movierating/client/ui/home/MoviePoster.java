@@ -6,7 +6,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
@@ -18,20 +17,7 @@ public class MoviePoster extends Composite implements HasClickHandlers {
     interface MoviePosterUiBinder extends UiBinder<HTMLPanel, MoviePoster> {
     }
 
-    private static MoviePosterUiBinder ourUiBinder = GWT.create(MoviePosterUiBinder.class);
-
-    interface MyStyle extends CssResource {
-
-        String img_wrapper();
-
-
-        String poster();
-
-        String title_wrapper();
-    }
-
-    @UiField
-    MyStyle style;
+    private static final MoviePosterUiBinder ourUiBinder = GWT.create(MoviePosterUiBinder.class);
 
     @UiField
     Image posterImage;
@@ -67,12 +53,6 @@ public class MoviePoster extends Composite implements HasClickHandlers {
         }
         ScoreUtils.initRatingMarkStyle(rating,ratingDiv,movieScoreStyle);
         ratingDiv.setInnerText(String.valueOf(rating));
-
-
-//        posterPanel.add(image);
-//        posterPanel.add(new Label(title));
-//        posterPanel.add(new Label(title));
-//        posterPanel.insert(image, DockLayoutPanel.Direction.SOUTH,50,new Label(title));
     }
 
     @Override

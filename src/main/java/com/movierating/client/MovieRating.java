@@ -12,7 +12,6 @@ import com.movierating.client.ui.admin.SearchPanel;
 import com.movierating.client.ui.header.Header;
 import com.movierating.client.ui.home.HomePage;
 import com.movierating.client.ui.movie.MovieFormPanel;
-import com.movierating.client.ui.movie.MoviePage;
 import org.fusesource.restygwt.client.Defaults;
 
 public class MovieRating implements EntryPoint, ValueChangeHandler {
@@ -20,11 +19,7 @@ public class MovieRating implements EntryPoint, ValueChangeHandler {
     public void onModuleLoad() {
         useCorrectRequestBaseUrl();
 
-//        RootPanel.get("content").add(new HomePage());
         RootPanel.get("header").add(new Header());
-
-//        Hyperlink h1 = new Hyperlink("books","newpage");
-//        RootPanel.get("newpage").add(h1);
 
         History.addValueChangeHandler(this);
         if (History.getToken().isEmpty()) {
@@ -39,19 +34,16 @@ public class MovieRating implements EntryPoint, ValueChangeHandler {
     }
 
     public void changePage(String token) {
-        String historyToken = History.getToken();
+        String historyToken = token;
         if (historyToken.equals(Pages.CREATE_MOVIE.getStrValue())) {
             RootPanel.get("content").clear();
             RootPanel.get("content").add(new MovieFormPanel("Create Movie"));
-        } else if (historyToken.equals(Pages.SEARCH_PANEL.getStrValue())) {
+        } else if (historyToken.equals(Pages.ADMIN_SEARCH_PANEL.getStrValue())) {
             RootPanel.get("content").clear();
             RootPanel.get("content").add(new SearchPanel(SearchPanelConfig.ADMIN_SEARCH));
         } else if (historyToken.equals(Pages.HOME.getStrValue())) {
             RootPanel.get("content").clear();
             RootPanel.get("content").add(new HomePage());
-        } else if (historyToken.equals("mp")) {
-            RootPanel.get("content").clear();
-            RootPanel.get("content").add(new MoviePage(1L));
         }
     }
 

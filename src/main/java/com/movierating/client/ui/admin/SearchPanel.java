@@ -33,26 +33,23 @@ public class SearchPanel extends Composite {
 
         String flex_table();
 
+        @ClassName("img-search-panel")
+        String imgSearchPanel();
+
         @ClassName("input-group-search")
         String inputGroupSearch();
 
-        @ClassName("input-group-button")
-        String inputGroupButton();
+        @ClassName("search-panel")
+        String searchPanel();
 
         @ClassName("input-group-search-text")
         String inputGroupSearchText();
 
         @ClassName("input-group-search-button")
         String inputGroupSearchButton();
-
-        @ClassName("search-panel")
-        String searchPanel();
-
-        @ClassName("img-search-panel")
-        String imgSearchPanel();
     }
 
-    private static SearchPanelUiBinder ourUiBinder = GWT.create(SearchPanelUiBinder.class);
+    private static final SearchPanelUiBinder ourUiBinder = GWT.create(SearchPanelUiBinder.class);
 
     private static final AdminService adminService = GWT.create(AdminService.class);
 
@@ -72,27 +69,25 @@ public class SearchPanel extends Composite {
     @UiField
     HeadingElement pageHeader;
 
-    private SearchPanelConfig panelType;
+    private static SearchPanelConfig panelType = null;
 
 
-    public SearchPanel(SearchPanelConfig panelType) {
-        this.panelType = panelType;
+    public SearchPanel(SearchPanelConfig panelTypeIn) {
+        panelType = panelTypeIn;
         initWidget(ourUiBinder.createAndBindUi(this));
 
-        if (panelType.equals(SearchPanelConfig.ADMIN_SEARCH)) {
+        if (panelTypeIn.equals(SearchPanelConfig.ADMIN_SEARCH)) {
             pageHeader.setInnerText("Admin Page");
-            searchMovieBtn.addClickHandler(event -> {
-                refreshAdminMovies();
-            });
+            searchMovieBtn.addClickHandler(event -> refreshAdminMovies());
             searchByTitleTextBox.getElement().setAttribute("placeholder", "title to search");
-        } else if (panelType.equals(SearchPanelConfig.USER_NEW_RELEASES)) {
-            pageHeader.setInnerText("Search Page"); // maybe indicate "New releases" etc ...
+        } else if (panelTypeIn.equals(SearchPanelConfig.USER_NEW_RELEASES)) {
+            pageHeader.setInnerText("New Releases");
             searchMovieBtn.setVisible(false);
             searchByTitleTextBox.setVisible(false);
 
             movieService.getAllNewReleases(new SearchPanelCallback());
-        } else if (panelType.equals(SearchPanelConfig.USER_UPCOMING_RELEASES)) {
-            pageHeader.setInnerText("Search Page"); // maybe indicate "New releases" etc ...
+        } else if (panelTypeIn.equals(SearchPanelConfig.USER_UPCOMING_RELEASES)) {
+            pageHeader.setInnerText("Upcoming Releases");
             searchMovieBtn.setVisible(false);
             searchByTitleTextBox.setVisible(false);
 
@@ -100,11 +95,6 @@ public class SearchPanel extends Composite {
         }
 
     }
-
-//    private void refreshNewReleasesMovies() {
-//        movieService.getAllNewReleases(new SearchPanelCallback());
-//    }
-
 
     /**
      * get data from the server and refresh front-end in admin seach
@@ -131,13 +121,6 @@ public class SearchPanel extends Composite {
 
                 Image img = new Image(ImageUtils.getImageData(movie.getCoverImg()));
                 img.addStyleName(style.imgSearchPanel());
-
-//                img.addClickHandler(event -> {
-//                    History.newItem(Pages.UPDATE_MOVIE.getStrValue());
-//                    RootPanel.get("content").clear();
-//                    RootPanel.get("content").add(new MovieFormPanel(movie.getId(), "Update Movie"));
-//
-//                });
 
                 initImgClickHandler(img, movie.getId());
 

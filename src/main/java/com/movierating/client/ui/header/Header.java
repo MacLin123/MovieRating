@@ -13,7 +13,7 @@ public class Header extends Composite {
     interface HeaderUiBinder extends UiBinder<HTMLPanel, Header> {
     }
 
-    private static HeaderUiBinder ourUiBinder = GWT.create(HeaderUiBinder.class);
+    private static final HeaderUiBinder ourUiBinder = GWT.create(HeaderUiBinder.class);
 
     @UiField
     UListElement header;
@@ -31,7 +31,7 @@ public class Header extends Composite {
     public Header() {
         initWidget(ourUiBinder.createAndBindUi(this));
         home.setTargetHistoryToken(Pages.HOME.getStrValue());
-        admin.setTargetHistoryToken(Pages.SEARCH_PANEL.getStrValue());
+        admin.setTargetHistoryToken(Pages.ADMIN_SEARCH_PANEL.getStrValue());
         createMovie.setTargetHistoryToken(Pages.CREATE_MOVIE.getStrValue());
     }
 }

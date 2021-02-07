@@ -29,8 +29,7 @@ public class PosterMovieCarousels extends Composite {
     interface PosterMovieCarouselsUiBinder extends UiBinder<HTMLPanel, PosterMovieCarousels> {
     }
 
-    private static PosterMovieCarouselsUiBinder ourUiBinder = GWT.create(PosterMovieCarouselsUiBinder.class);
-    private static Resources resources = GWT.create(Resources.class);
+    private static final PosterMovieCarouselsUiBinder ourUiBinder = GWT.create(PosterMovieCarouselsUiBinder.class);
     private static final HomeService homeService = GWT.create(HomeService.class);
     private static final MovieService movieService = GWT.create(MovieService.class);
 
@@ -38,9 +37,6 @@ public class PosterMovieCarousels extends Composite {
 
         @ClassName("glider-style")
         String gliderStyle();
-
-        @ClassName("poster-panel")
-        String posterPanel();
 
         @ClassName("home-panel")
         String homePanel();
@@ -76,7 +72,7 @@ public class PosterMovieCarousels extends Composite {
             header.setInnerText("New Releases");
 
             viewAllBtn.addClickHandler(event -> {
-                History.newItem(Pages.SEARCH_PANEL.getStrValue());
+                History.newItem(Pages.NEW_SEARCH_PANEL.getStrValue());
                 RootPanel.get("content").clear();
                 RootPanel.get("content").add(new SearchPanel(SearchPanelConfig.USER_NEW_RELEASES));
             });
@@ -86,7 +82,7 @@ public class PosterMovieCarousels extends Composite {
             header.setInnerText("Upcoming Releases");
 
             viewAllBtn.addClickHandler(event -> {
-                History.newItem(Pages.SEARCH_PANEL.getStrValue());
+                History.newItem(Pages.UPCOMING_SEARCH_PANEL.getStrValue());
                 RootPanel.get("content").clear();
                 RootPanel.get("content").add(new SearchPanel(SearchPanelConfig.USER_UPCOMING_RELEASES));
             });
@@ -127,16 +123,11 @@ public class PosterMovieCarousels extends Composite {
             initGliderWrapper();
             for (Movie movie : movies) {
                 Image image = new Image(ImageUtils.getImageData(movie.getCoverImg()));
-//                image.addClickHandler(event -> {
-//                    Window.alert("fsdfsf");
-//                    History.newItem(Pages.DETAILS_MOVIE.getStrValue());
-//                    RootPanel.get("content").clear();
-////                    RootPanel.get("content").add(new MoviePage());
-//                });
+
                 MoviePoster moviePoster = new MoviePoster(image, movie.getTitle(), movie.getRating());
                 gliderWrapper.addItem(moviePoster.getElement(), movie.getId());
             }
-            //remove layering styles( js added these classes every timi
+            //remove layering styles js added these classes every time
             gliderWrapper.getGliderElem().removeClassName("glider");
             gliderWrapper.getGliderElem().removeClassName("glider-contain");
 

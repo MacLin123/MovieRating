@@ -16,8 +16,5 @@ public interface Resources extends ClientBundle {
     @Source("staticfiles/Glider/glider.min.css")
     TextResource gliderCss();
 
-    @Source("staticfiles/js/youtubePlayer.js")
-    TextResource youtubePlayer();
-
 
 }
