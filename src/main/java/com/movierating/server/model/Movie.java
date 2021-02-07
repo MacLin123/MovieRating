@@ -35,15 +35,6 @@ public class Movie {
     @Column(name="youtube_id")
     private String youtubeId;
 
-
-//    public Movie(String title, String description, String genre, Date premierDate) {
-//        this.title = title;
-//        this.description = description;
-//        this.genre = genre;
-//        this.premierDate = premierDate;
-//        initMovieRating();
-//    }
-
     public Movie(String title, String description, String genre, Date premierDate,String youtubeId) {
         this.title = title;
         this.description = description;
@@ -52,30 +43,6 @@ public class Movie {
         initMovieRating();
         this.youtubeId = youtubeId;
     }
-
-//    public Movie(String title, String description, String genre, Date premierDate,
-//                 byte[] coverImg, byte[] mediumImg, byte[] largeImg) {
-//        this.title = title;
-//        this.description = description;
-//        this.genre = genre;
-//        this.premierDate = premierDate;
-//        this.coverImg = coverImg;
-//        this.mediumImg = mediumImg;
-//        this.largeImg = largeImg;
-//        initMovieRating();
-//    }
-
-//    public Movie(String title, String description, String genre, Date premierDate,
-//                 HashMap<String, byte[]> imgMap) {
-//        this.title = title;
-//        this.description = description;
-//        this.genre = genre;
-//        this.premierDate = premierDate;
-//        this.coverImg = imgMap.get(ConfigMovie.IMG_COVER_KEY.getText());
-//        this.mediumImg = imgMap.get(ConfigMovie.IMG_MEDIUM_KEY.getText());
-//        this.largeImg = imgMap.get(ConfigMovie.IMG_LARGE_KEY.getText());
-//        initMovieRating();
-//    }
 
     public Movie(String title, String description, String genre, Date premierDate,
                  String youtubeId, HashMap<String, byte[]> imgMap) {
@@ -89,16 +56,6 @@ public class Movie {
         initMovieRating();
         this.youtubeId = youtubeId;
     }
-
-//    public Movie(Long id, String title, String description, String genre, Date premierDate,
-//                 byte[] coverImg) {
-//        this.title = title;
-//        this.description = description;
-//        this.genre = genre;
-//        this.premierDate = premierDate;
-//        this.coverImg = coverImg;
-//        initMovieRating();
-//    }
 
     public Movie() {
 

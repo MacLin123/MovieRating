@@ -5,8 +5,8 @@ import com.movierating.server.repository.MovieRepository;
 import com.movierating.server.utils.DateUtils;
 import com.movierating.server.utils.ImageUtils;
 import com.movierating.server.utils.MoviesUtils;
-import com.movierating.server.views.MovieViewLgImg;
-import com.movierating.server.views.MovieViewSmImg;
+import com.movierating.server.dtos.MovieDtoSmImg;
+import com.movierating.server.dtos.MovieDtoLgImg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +34,9 @@ public class AdminRestController {
 
     @ResponseBody
     @RequestMapping(value = "movies", method = RequestMethod.POST)
-    public List<MovieViewSmImg> getSearchedMovies(@RequestBody String title) {
+    public List<MovieDtoSmImg> getSearchedMovies(@RequestBody String title) {
         logger.info("Search querry");
-        List<MovieViewSmImg> movieViews = movieRepository.findByTitleContainingIgnoreCase(title, MovieViewSmImg.class);
+        List<MovieDtoSmImg> movieViews = movieRepository.findByTitleContainingIgnoreCase(title, MovieDtoSmImg.class);
         logger.info(movieViews.toString());
         return movieViews;
     }
@@ -107,12 +107,12 @@ public class AdminRestController {
     }
 
     @RequestMapping(value = "movies/{id}", method = RequestMethod.GET)
-    public MovieViewLgImg getMovie(@PathVariable("id") Long id) {
+    public MovieDtoLgImg getMovie(@PathVariable("id") Long id) {
         if (!movieRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "movie not found");
         }
         logger.info("GET - id = " + id);
-        return movieRepository.getById(id, MovieViewLgImg.class);
+        return movieRepository.getById(id, MovieDtoLgImg.class);
     }
 
     @RequestMapping(value = "movies/create", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)

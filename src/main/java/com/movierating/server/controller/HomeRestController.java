@@ -3,8 +3,8 @@ package com.movierating.server.controller;
 import com.movierating.server.repository.MovieRepository;
 import com.movierating.server.services.MovieService;
 import com.movierating.server.utils.DateUtils;
-import com.movierating.server.views.MovieViewMdImg;
-import com.movierating.server.views.MovieViewSmImg;
+import com.movierating.server.dtos.MovieDtoMdImg;
+import com.movierating.server.dtos.MovieDtoSmImg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,24 +32,24 @@ public class HomeRestController {
     }
 
     @RequestMapping(value = "new_releases", method = RequestMethod.GET)
-    public List<MovieViewMdImg> getNewReleasesMovies() {
+    public List<MovieDtoMdImg> getNewReleasesMovies() {
         return movieService.get10NewMovieReleases();
     }
 
     @RequestMapping(value = "upcoming_releases", method = RequestMethod.GET)
-    public List<MovieViewMdImg> getUpcomingReleases() {
-        List<MovieViewMdImg> movieViews = movieRepository.findFirst10ByPremierDateAfter(new Date(), MovieViewMdImg.class);
+    public List<MovieDtoMdImg> getUpcomingReleases() {
+        List<MovieDtoMdImg> movieViews = movieRepository.findFirst10ByPremierDateAfter(new Date(), MovieDtoMdImg.class);
         logger.info("GET - " + movieViews);
         return movieViews;
     }
 
     @RequestMapping(value = "best_movies/{year}", method = RequestMethod.GET)
-    public List<MovieViewSmImg> getBestMoviesByYear(@PathVariable("year") int year) {
+    public List<MovieDtoSmImg> getBestMoviesByYear(@PathVariable("year") int year) {
 
         Date start = DateUtils.convertStringToDate(year + "-01-01");
         Date end = DateUtils.convertStringToDate(year + "-12-31");
 
-        List<MovieViewSmImg> movieViews = movieRepository.
+        List<MovieDtoSmImg> movieViews = movieRepository.
                 findFirst10BestMovies(start, end, PageRequest.of(0, 10));
         logger.info("GET - " + movieViews);
         return movieViews;

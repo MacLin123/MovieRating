@@ -25,8 +25,6 @@ class LoadDatabase {
 
         ArrayList<Movie> movies = new ArrayList<>();
 
-//        String imgPath0 = "static/imgs/no_img.jpg";
-
         Date date1 = DateUtils.convertStringToDate("1941-09-04");
         String imgPath1 = "static/imgs/citizen_kane.jpg";
         String description1 = "When a reporter is assigned to decipher newspaper magnate Charles Foster Kane's (Orson Welles) dying words, his investigation gradually reveals the fascinating portrait of a complex man who rose from obscurity to staggering heights. Though Kane's friend and colleague Jedediah Leland (Joseph Cotten), and his mistress, Susan Alexander (Dorothy Comingore), shed fragments of light on Kane's life, the reporter fears he may never penetrate the mystery of the elusive man's final word, \"Rosebud.\"";
@@ -45,7 +43,7 @@ class LoadDatabase {
         movies.add(createMovie(imgPath3, "Terminator Genisys", description3, "Action",
                 date3, "FqbOFjl7ZWE"));
 
-//        //new releases
+        //new releases
         Date date4 = DateUtils.convertStringToDate("2020-12-25");
         String imgPath4 = "static/imgs/ww1984.jpg";
         String description4 = "Diana Prince lives quietly among mortals in the vibrant, sleek 1980s -- an era of excess driven by the pursuit of having it all. Though she's come into her full powers, she maintains a low profile by curating ancient artifacts, and only performing heroic acts incognito. But soon, Diana will have to muster all of her strength, wisdom and courage as she finds herself squaring off against Maxwell Lord and the Cheetah, a villainess who possesses superhuman strength and agility.";

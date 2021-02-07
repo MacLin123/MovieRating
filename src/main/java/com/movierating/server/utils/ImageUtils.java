@@ -16,7 +16,6 @@ public class ImageUtils {
     private static final Logger log = LoggerFactory.getLogger(ImageUtils.class);
 
     /**
-     *
      * @param bi
      * @param format of file (jpg,png, etc...)
      * @return
@@ -66,7 +65,7 @@ public class ImageUtils {
             bufImage = ImageIO.read(is);
             imgBytes = ImageUtils.toByteArray(bufImage, "jpg");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.warn("Image read problem, message = " + e.getMessage());
         }
         return imgBytes;
     }
@@ -81,10 +80,11 @@ public class ImageUtils {
             bufImage = ImageUtils.resize(bufImage, width, height);
             imgBytes = ImageUtils.toByteArray(bufImage, "jpg");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.warn("Image read problem, message = " + e.getMessage());
         }
         return imgBytes;
     }
+
     public static BufferedImage getResourceImgBuf(String imgPath, Object obj, int width, int height) {
         InputStream is = obj.getClass().getClassLoader().getResourceAsStream(imgPath);
 
@@ -93,10 +93,11 @@ public class ImageUtils {
             bufImage = ImageIO.read(is);
             bufImage = ImageUtils.resize(bufImage, width, height);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.warn("Image read problem, message = " + e.getMessage());
         }
         return bufImage;
     }
+
     public static BufferedImage getResourceImgBuf(String imgPath, Object obj) {
         InputStream is = obj.getClass().getClassLoader().getResourceAsStream(imgPath);
 
@@ -104,7 +105,7 @@ public class ImageUtils {
         try {
             bufImage = ImageIO.read(is);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.warn("Image read problem, message = " + e.getMessage());
         }
         return bufImage;
     }

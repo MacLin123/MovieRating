@@ -1,7 +1,7 @@
 package com.movierating.server.services;
 
+import com.movierating.server.dtos.MovieDtoMdImg;
 import com.movierating.server.repository.MovieRepository;
-import com.movierating.server.views.MovieViewMdImg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +25,16 @@ public class MovieService {
         this.movieRepository = movieRepository;
     }
 
-    public List<MovieViewMdImg> get10NewMovieReleases() {
+    public List<MovieDtoMdImg> get10NewMovieReleases() {
         Date start = getDateLastYear();
-        List<MovieViewMdImg> movieViews = movieRepository.findFirst10ByPremierDateBetween(start, new Date(), MovieViewMdImg.class);
+        List<MovieDtoMdImg> movieViews = movieRepository.findFirst10ByPremierDateBetween(start, new Date(), MovieDtoMdImg.class);
         logger.info("GET - " + movieViews);
         return movieViews;
     }
 
-    public List<MovieViewMdImg> getAllNewMovieReleases() {
+    public List<MovieDtoMdImg> getAllNewMovieReleases() {
         Date start = getDateLastYear();
-        List<MovieViewMdImg> movieViews = movieRepository.findByPremierDateBetween(start, new Date(), MovieViewMdImg.class);
+        List<MovieDtoMdImg> movieViews = movieRepository.findByPremierDateBetween(start, new Date(), MovieDtoMdImg.class);
         logger.info("GET - " + movieViews);
         return movieViews;
     }

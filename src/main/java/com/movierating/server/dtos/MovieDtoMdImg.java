@@ -1,4 +1,4 @@
-package com.movierating.server.views;
+package com.movierating.server.dtos;
 
 import com.movierating.server.model.Movie;
 import com.movierating.server.utils.DateUtils;
@@ -6,7 +6,7 @@ import com.movierating.server.utils.DateUtils;
 import java.util.Date;
 import java.util.Objects;
 
-public class MovieViewLgImg {
+public class MovieDtoMdImg {
     private Long id;
     private String title;
     private String description;
@@ -17,20 +17,17 @@ public class MovieViewLgImg {
 
     private Date premierDate;
 
-    private String youtubeId;
-
-    public MovieViewLgImg(Movie movie) {
+    public MovieDtoMdImg(Movie movie) {
         this.id = movie.getId();
         this.title = movie.getTitle();
         this.description = movie.getDescription();
         this.rating = movie.getRating();
         this.genre = movie.getGenre();
         this.premierDate = movie.getPremierDate();
-        this.coverImg = movie.getLargeImg();
-        this.youtubeId = movie.getYoutubeId();
+        this.coverImg = movie.getMediumImg();
     }
 
-    public MovieViewLgImg() {
+    public MovieDtoMdImg() {
 
     }
 
@@ -90,24 +87,15 @@ public class MovieViewLgImg {
         this.coverImg = coverImg;
     }
 
-    public String getYoutubeId() {
-        return youtubeId;
-    }
-
-    public void setYoutubeId(String youtubeId) {
-        this.youtubeId = youtubeId;
-    }
-
     @Override
     public String toString() {
         String strDate = DateUtils.dateToString(premierDate);
-        return "MovieViewMdImg{" +
+        return "MovieDtoMdImg{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", rating=" + rating +
                 ", genre='" + genre + '\'' +
                 ", premierDate=" + strDate +
-                ", youtubeId= " + youtubeId +
                 '}';
     }
 
@@ -115,7 +103,7 @@ public class MovieViewLgImg {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MovieViewLgImg movie = (MovieViewLgImg) o;
+        MovieDtoMdImg movie = (MovieDtoMdImg) o;
         return id.equals(movie.id) && title.equals(movie.title);
     }
 
