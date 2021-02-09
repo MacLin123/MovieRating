@@ -168,7 +168,7 @@ public class MovieFormPanel extends Composite {
             final String genre = movieGenreTextBox.getText().trim();
             final String dateString = dateElem.getValue();
             if (title.isEmpty() || description.isEmpty() || dateString.isEmpty() || genre.isEmpty()) {
-                Window.alert("All fields except cover photo should be filled");
+                Window.alert("All fields except cover photo and youtubeId should be filled");
                 event.cancel();
             }
         });
