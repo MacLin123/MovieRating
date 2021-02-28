@@ -1,12 +1,12 @@
 package com.movierating.server.controller;
 
+import com.movierating.server.dtos.MovieDtoLgImg;
+import com.movierating.server.dtos.MovieDtoSmImg;
 import com.movierating.server.model.Movie;
 import com.movierating.server.repository.MovieRepository;
 import com.movierating.server.utils.DateUtils;
 import com.movierating.server.utils.ImageUtils;
 import com.movierating.server.utils.MoviesUtils;
-import com.movierating.server.dtos.MovieDtoSmImg;
-import com.movierating.server.dtos.MovieDtoLgImg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,24 +52,6 @@ public class AdminRestController {
         return ResponseEntity.ok()
                 .body("movie has been deleted");
     }
-
-//    @RequestMapping(value = "movies", method = RequestMethod.PUT)
-//    void addMovie(@RequestBody final Movie movie) {
-//        if (movieRepository.existsByTitleIgnoreCase(movie.getTitle())) {
-//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "the movie you want to add already exists");
-//        }
-//        movieRepository.save(movie);
-//        logger.info("saved - " + movie);
-//    }
-
-//    @RequestMapping(value = "movies/{id}", method = RequestMethod.POST)
-//    void updateMovie(@PathVariable("id") Long id, @RequestBody final Movie movie) {
-//        if (!movieRepository.existsById(movie.getId())) {
-//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "movie not found");
-//        }
-//        movieRepository.save(movie);
-//        logger.info("updated - " + movie);
-//    }
 
     @RequestMapping(value = "movies/update/{id}", method = RequestMethod.POST, produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> updateMovie(@PathVariable("id") Long id, @RequestParam MultipartFile file,
@@ -131,7 +113,6 @@ public class AdminRestController {
         }
 
         Movie movie = MoviesUtils.createMovie(file.getBytes(), title, description, genre, DateUtils.convertStringToDate(date), youtubeId);
-//        Movie movie = new Movie(title, description, genre, DateUtils.convertStringToDate(date), file.getBytes());
         movieRepository.save(movie);
         logger.info("saved - " + movie);
         return ResponseEntity.ok()
